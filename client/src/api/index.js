@@ -22,6 +22,18 @@ export const deleteInvoice =(id) => API.delete(`/invoices/${id}`)
 
 
 
+export const fetchOrders =() => API.get('/orders')
+export const fetchOrder =(id) => API.get(`/orders/${id}`)
+export const fetchOrdersByClient = (id) => API.get(`/orders/clients/${id}`);
+
+export const addOrder =( invoice ) => API.post('/orders', invoice)
+export const updateOrder = (id, updatedOrder) => API.patch(`/orders/${id}`, updatedOrder)
+export const deleteOrder =(id) => API.delete(`/orders/${id}`)
+
+
+
+
+
 export const fetchClient = (id) => API.get(`/clients/${id}`);
 //export const fetchClients = (page) => API.get(`/clients?page=${page}`);
 export const addClient =( client ) => API.post('/clients', client)
