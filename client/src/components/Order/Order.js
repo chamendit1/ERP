@@ -4,12 +4,10 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import moment from 'moment'
 import { useHistory } from 'react-router-dom'
-import { toCommas } from '../../utils/utils'
 
 import IconButton from '@material-ui/core/IconButton';
 import DeleteOutlineRoundedIcon from '@material-ui/icons/DeleteOutlineRounded';
-import DateFnsUtils from '@date-io/date-fns';
-import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
+
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { makeStyles } from '@material-ui/core/styles';
@@ -29,8 +27,7 @@ import SaveIcon from '@material-ui/icons/Save';
 import Button from '@material-ui/core/Button';
 import Chip from '@material-ui/core/Chip';
 
-import {initialState} from '../../initialState'
-import currencies from '../../currencies.json'
+import { initialStateOrder } from '../../initialState'
 import { createOrder, getOrder, updateOrder } from '../../actions/orderActions';
 import { getClientsByUser } from '../../actions/clientActions'
 import AddClient from './AddClient';
@@ -62,12 +59,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Order = () => {
 
-    const [orderData, setOrderData] = useState(initialState)
-    const [ rates, setRates] = useState(0)
-    const [vat, setVat] = useState(0)
-    const [currency, setCurrency] = useState(currencies[0].value)
-    const [subTotal, setSubTotal] = useState(0)
-    const [total, setTotal] = useState(0)
+    const [orderData, setOrderData] = useState(initialStateOrder)
     const today = new Date();
     const [selectedDate, setSelectedDate] = useState(today.getTime() + 7 * 24 * 60 * 60 * 1000);
     const [ client, setClient] = useState(null)
@@ -96,7 +88,6 @@ const Order = () => {
         if(order) {
             //Automatically set the default order values as the ones in the order to be updated
             setOrderData(order)
-            setRates(order.rates)
             setClient(order.client)
             setType(order.type)
             setStatus(order.status)
@@ -113,10 +104,6 @@ const Order = () => {
         }
     },[type])
     
-    const defaultProps = {
-        options: currencies,
-        getOptionLabel: (option) => option.label
-      };
 
     const clientsProps = {
         options: clients,
@@ -124,14 +111,6 @@ const Order = () => {
       };
       
     
-    const handleDateChange = (date) => {
-      setSelectedDate(date);
-    };
-
-  const handleRates =(e) => {
-    setRates(e.target.value)
-    setOrderData((prevState) => ({...prevState, tax: e.target.value}))
-  }
 
     // console.log(orderData)
     // Change handler for dynamically added input field
@@ -142,43 +121,10 @@ const Order = () => {
         
     }
 
-    useEffect(() => {
-            //Get the subtotal
-            const subTotal =()=> {
-            var arr = document.getElementsByName("amount");
-            var subtotal = 0;
-            for(var i = 0; i < arr.length; i++) {
-                if(arr[i].value) {
-                    subtotal += +arr[i].value;
-                }
-                // document.getElementById("subtotal").value = subtotal;
-                setSubTotal(subtotal)
-            }
-        }
-
-        subTotal()
-       
-    }, [orderData])
-
-
-    useEffect(() => {
-        const total =() => {
-            
-            //Tax rate is calculated as (input / 100 ) * subtotal + subtotal 
-            const overallSum = rates /100 * subTotal + subTotal
-            //VAT is calculated as tax rates /100 * subtotal
-            setVat(rates /100 * subTotal)
-            setTotal(overallSum)
-
-
-        }
-        total()
-    }, [orderData, rates, subTotal])
-    
 
     const handleAddField = (e) => {
         e.preventDefault()
-        setOrderData((prevState) => ({...prevState, items: [...prevState.items,  {itemName: '', unitPrice: '', quantity: '', discount: '', amount: '' }]}))
+        setOrderData((prevState) => ({...prevState, items: [...prevState.items,  {itemName: ''}]}))
     }
 
     const handleRemoveField =(index) => {
@@ -193,12 +139,6 @@ const Order = () => {
         if(order) {
          dispatch(updateOrder( order._id, {
              ...orderData, 
-             subTotal: subTotal, 
-             total: total, 
-             vat: vat, 
-             rates: rates, 
-             currency: currency, 
-             dueDate: selectedDate, 
              client, 
              type: type, 
              status: status 
@@ -208,16 +148,9 @@ const Order = () => {
 
         dispatch(createOrder({
             ...orderData, 
-            subTotal: subTotal, 
-            total: total, 
-            vat: vat, 
-            rates: rates, 
-            currency: currency, 
-            dueDate: selectedDate, 
             client, 
             type: type, 
             status: status, 
-            paymentRecords: [], 
             creator: [user?.result?._id || user?.result?.googleId],
             owner: client._id}, 
             history
@@ -315,8 +248,6 @@ const Order = () => {
                         <Typography variant="body2" gutterBottom>{moment().format("MMM Do YYYY")}</Typography>
                         <Typography variant="overline" style={{color: 'gray'}} gutterBottom>Due Date</Typography>
                         <Typography variant="body2" gutterBottom>{selectedDate? moment(selectedDate).format("MMM Do YYYY") : '27th Sep 2021'}</Typography>
-                        <Typography variant="overline" gutterBottom>Amount</Typography>
-                        <Typography variant="h6" gutterBottom>{currency} {toCommas(total)}</Typography>
                     </Grid>
                 </Grid>
             </Container>
@@ -330,9 +261,6 @@ const Order = () => {
             <TableRow>
                 <TableCell>Item</TableCell>
                 <TableCell >Qty</TableCell>
-                <TableCell>Price</TableCell>
-                <TableCell >Disc(%)</TableCell>
-                <TableCell >Amount</TableCell>
                 <TableCell >Action</TableCell>
             </TableRow>
             </TableHead>
@@ -341,9 +269,6 @@ const Order = () => {
                 <TableRow key={index}>
                 <TableCell  scope="row" style={{width: '40%' }}> <InputBase style={{width: '100%'}} outline="none" sx={{ ml: 1, flex: 1 }} type="text" name="itemName" onChange={e => handleChange(index, e)} value={itemField.itemName} placeholder="Item name or description" /> </TableCell>
                 <TableCell align="right"> <InputBase sx={{ ml: 1, flex: 1 }} type="number" name="quantity" onChange={e => handleChange(index, e)} value={itemField.quantity} placeholder="0" /> </TableCell>
-                <TableCell align="right"> <InputBase sx={{ ml: 1, flex: 1 }} type="number" name="unitPrice" onChange={e => handleChange(index, e)} value={itemField.unitPrice} placeholder="0" /> </TableCell>
-                <TableCell align="right"> <InputBase sx={{ ml: 1, flex: 1 }} type="number" name="discount"  onChange={e => handleChange(index, e)} value={itemField.discount} placeholder="0" /> </TableCell>
-                <TableCell align="right"> <InputBase sx={{ ml: 1, flex: 1 }} type="number" name="amount" onChange={e => handleChange(index, e)}  value={(itemField.quantity * itemField.unitPrice) - (itemField.quantity * itemField.unitPrice) * itemField.discount / 100} disabled /> </TableCell>
                 <TableCell align="right"> 
                     <IconButton onClick={() =>handleRemoveField(index)}>
                         <DeleteOutlineRoundedIcon style={{width: '20px', height: '20px'}}/>
@@ -360,75 +285,6 @@ const Order = () => {
             </div>
     </div>
                     
-        <div className={styles.orderSummary}>
-            <div className={styles.summary}>Order Summary</div>
-            <div className={styles.summaryItem}>
-                <p>Sub total:</p>
-                <h4>{subTotal}</h4>
-            </div>
-            <div className={styles.summaryItem}>
-                <p>VAT(%):</p>
-                <h4>{vat}</h4>
-            </div>
-            <div className={styles.summaryItem}>
-                <p>Total</p>
-                <h4 style={{color: "black", fontSize: "18px", lineHeight: "8px"}}>{currency} {toCommas(total)}</h4>
-            </div>
-            
-        </div>
-
-        
-        <div className={styles.toolBar}>
-            <Container >
-                <Grid container >
-                    <Grid item style={{marginTop: '16px', marginRight: 10}}>
-                        <TextField 
-                            type="text" 
-                            step="any" 
-                            name="rates" 
-                            id="rates" 
-                            value={rates} 
-                            onChange={handleRates} 
-                            placeholder="e.g 10" 
-                            label="Tax Rates(%)"
-                            
-                        />
-                    </Grid>
-                    <Grid item style={{marginRight: 10}} >
-                        
-                        <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                            <KeyboardDatePicker
-                                margin="normal"
-                                id="date-picker-dialog"
-                                label="Due date"
-                                format="MM/dd/yyyy"
-                                value={selectedDate}
-                                onChange={handleDateChange}
-                                KeyboardButtonProps={{
-                                    'aria-label': 'change date',
-                                }}
-                            />
-                        </ MuiPickersUtilsProvider>
-                    </Grid>
-                    <Grid item style={{ width: 270, marginRight: 10 }}>
-                        <Autocomplete
-                                {...defaultProps}
-                                id="debug"
-                                debug
-                                    renderInput={(params) => <TextField {...params} 
-                                    label="Select currency" 
-                                    margin="normal" 
-                                    />}
-                                value={currency.value}
-                                onChange={(event, value) => setCurrency(value.value)}
-                                
-                            
-                        />
-                    </Grid>
-                </Grid>
-                
-            </Container>
-        </div>
             <div className={styles.note}>
                 <h4>Notes/Terms</h4>
                 <textarea 

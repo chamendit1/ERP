@@ -6,7 +6,7 @@ import Invoice from './components/Invoice/Invoice';
 import Invoices from './components/Invoices/Invoices';
 import InvoiceDetails from './components/InvoiceDetails/InvoiceDetails'
 import Order from './components/Order/Order';
-import Orders from './components/Orders/ClientList';
+import Orders from './components/Orders/Orders';
 import ClientList from './components/Clients/ClientList'
 import Client from './components/Client/Client'
 import NavBar from './components/NavBar/NavBar';

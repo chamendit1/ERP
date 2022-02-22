@@ -2,7 +2,7 @@ import mongoose from 'mongoose'
 
 const OrderSchema = mongoose.Schema({
     dueDate: Date,
-    items: [ { itemName: String, unitPrice: String, quantity: String, discount: String } ],
+    items: [ { itemName: String,  quantity: String } ],
     notes: String,
     status: String,
     invoiceNumber: String,

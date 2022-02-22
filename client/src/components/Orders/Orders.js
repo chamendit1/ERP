@@ -23,7 +23,7 @@ import DeleteOutlineRoundedIcon from '@material-ui/icons/DeleteOutlineRounded';
 import BorderColorIcon from '@material-ui/icons/BorderColor';
 //import { useLocation } from 'react-router-dom';
 
-import { deleteOrder, getOrders } from '../../actions/orderActions';
+import { deleteInvoice, getInvoices } from '../../actions/invoiceActions';
 import NoData from '../svgIcons/NoData';
 import Spinner from '../Spinner/Spinner'
 import { useSnackbar } from 'react-simple-snackbar'
@@ -127,19 +127,16 @@ const Orders = () => {
 
 
      useEffect(() => {
-         dispatch(getOrders());
+         dispatch(getInvoices());
      }, [dispatch]);
 
     //useEffect(() => {
-      //dispatch(getOrdersByUser({ search: user?.result?._id || user?.result?.googleId}));
+      //dispatch(getInvoicesByUser({ search: user?.result?._id || user?.result?.googleId}));
       // eslint-disable-next-line
     //},[location])
 
      console.log(rows)
 
-   const toCommas = (value) => {
-        return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-    }
 
 
   const classes = useStyles2();
@@ -158,12 +155,12 @@ const Orders = () => {
   };
 
 
-  const editOrder = (id) => {
-    history.push(`/edit/order/${id}`)
+  const editInvoice = (id) => {
+    history.push(`/edit/invoice/${id}`)
   }
 
-  const openOrder = (id) => {
-    history.push(`/order/${id}`)
+  const openInvoice = (id) => {
+    history.push(`/invoice/${id}`)
   }
 
   if(!user) {
@@ -189,7 +186,7 @@ const Orders = () => {
   if(rows.length === 0) {
     return  <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', paddingTop: '20px', margin: '80px'}}>
       <NoData />
-    <p style={{padding: '40px', color: 'gray', textAlign: 'center'}}>No order yet. Click the plus icon to create order</p>
+    <p style={{padding: '40px', color: 'gray', textAlign: 'center'}}>No invoice yet. Click the plus icon to create invoice</p>
   
     </div>
   }
@@ -210,7 +207,6 @@ const Orders = () => {
           <TableRow>
             <TableCell style={headerStyle}>Number</TableCell>
             <TableCell style={headerStyle}>Client</TableCell>
-            <TableCell style={headerStyle}>Amount</TableCell>
             <TableCell style={headerStyle}>Due Date</TableCell>
             <TableCell style={headerStyle}>Status</TableCell>
             <TableCell style={headerStyle}>Edit</TableCell>
@@ -224,19 +220,18 @@ const Orders = () => {
             : rows
           ).map((row) => (
             <TableRow key={row._id} style={{cursor: 'pointer'}} >
-                <TableCell style={tableStyle} onClick={() => openOrder(row._id)}> {row.orderNumber} </TableCell>
-                <TableCell  style={tableStyle} onClick={() => openOrder(row._id)} > {row.client.name} </TableCell>
-                <TableCell style={tableStyle} onClick={() => openOrder(row._id)} >{row.currency} {row.total? toCommas(row.total): row.total} </TableCell>
-                <TableCell style={tableStyle} onClick={() => openOrder(row._id)} > {moment(row.dueDate).fromNow()} </TableCell>
-                <TableCell style={tableStyle} onClick={() => openOrder(row._id)} > <button style={checkStatus(row.status)}>{row.status}</button></TableCell>
+                <TableCell style={tableStyle} onClick={() => openInvoice(row._id)}> {row.invoiceNumber} </TableCell>
+                <TableCell  style={tableStyle} onClick={() => openInvoice(row._id)} > {row.client.name} </TableCell>
+                <TableCell style={tableStyle} onClick={() => openInvoice(row._id)} > {moment(row.dueDate).fromNow()} </TableCell>
+                <TableCell style={tableStyle} onClick={() => openInvoice(row._id)} > <button style={checkStatus(row.status)}>{row.status}</button></TableCell>
              
                 <TableCell style={{...tableStyle, width: '10px'}}>
-                  <IconButton onClick={() => editOrder(row._id)}>
+                  <IconButton onClick={() => editInvoice(row._id)}>
                     <BorderColorIcon  style={{width: '20px', height: '20px'}} />
                   </IconButton>
               </TableCell>
               <TableCell style={{...tableStyle, width: '10px'}}>
-                  <IconButton onClick={() => dispatch(deleteOrder(row._id, openSnackbar))}>
+                  <IconButton onClick={() => dispatch(deleteInvoice(row._id, openSnackbar))}>
                     <DeleteOutlineRoundedIcon  style={{width: '20px', height: '20px'}} />
                   </IconButton>
               </TableCell>

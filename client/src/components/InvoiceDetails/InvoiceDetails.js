@@ -235,6 +235,12 @@ if(!invoice) {
                 /> 
                 Record Payment
                 </button>
+
+                <button 
+                  className={styles.btn} 
+                  onClick={() => setOpen((prev) => !prev)}> 
+                  Create Order
+                </button>
             </div>
              )}
 
