@@ -1,7 +1,7 @@
 import express from 'express'
 import mongoose from 'mongoose'
 
-import OrderModel from '../models/InvoiceModel.js'
+import OrderModel from '../models/OrderModel.js'
 
 
 export const getOrdersByClient = async (req, res) => { 
@@ -32,15 +32,16 @@ export const getOrders = async (req, res) => {
     
 }
 
-export const createOrer = async (req, res) => {
+export const createOrder = async (req, res) => {
 
-    const invoice = req.body
+    const order = req.body
 
-    const newInvoice = new OrderModel(invoice)
+    const newOrder = new OrderModel(order)
+    console.log("created")
 
     try {
-        await newInvoice.save()
-        res.status(201).json(newInvoice)
+        await newOrder.save()
+        res.status(201).json(newOrder)
     } catch (error) {
         res.status(409).json(error.message)
     }

@@ -45,12 +45,14 @@ export const getOrder = (id) => async (dispatch)=> {
     }
 }
 
-export const createOrder =(invoice, history) => async (dispatch) => {
+export const createOrder =(order, history) => async (dispatch) => {
     try {
         dispatch({ type: START_LOADING })
-        const { data } = await api.addOrder(invoice)
+        console.log(order)
+        const { data } = await api.addOrder(order)
+        console.log(data)
         dispatch({ type: ADD_NEW, payload: data })
-        history.push(`/invoice/${data._id}`)
+        history.push(`/order/${data._id}`)
         dispatch({ type: END_LOADING })
     } catch (error) {
         console.log(error)

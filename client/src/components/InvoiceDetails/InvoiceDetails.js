@@ -30,6 +30,7 @@ import axios from 'axios';
 import { saveAs } from 'file-saver';
 import Modal from '../Payments/Modal'
 import PaymentHistory from './PaymentHistory'
+import { createOrder } from '../../actions/orderActions'
 
 const InvoiceDetails = () => {
 
@@ -179,6 +180,21 @@ const InvoiceDetails = () => {
       })
   }
 
+  //Create Order
+  const createO = async () => {
+    dispatch(createOrder({
+      ...invoiceData, 
+      dueDate: selectedDate, 
+      client, 
+      type: type, 
+      status: status, 
+      paymentRecords: [], 
+      creator: [user?.result?._id || user?.result?.googleId],
+      owner: client._id}, 
+      history
+      ))
+  }
+
 
 const iconSize = {height: '18px', width: '18px', marginRight: '10px', color: 'gray'}
 const [open, setOpen ] = useState(false)
@@ -238,7 +254,7 @@ if(!invoice) {
 
                 <button 
                   className={styles.btn} 
-                  onClick={() => setOpen((prev) => !prev)}> 
+                  onClick={createO}>
                   Create Order
                 </button>
             </div>

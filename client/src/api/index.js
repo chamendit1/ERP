@@ -26,7 +26,7 @@ export const fetchOrders =() => API.get('/orders')
 export const fetchOrder =(id) => API.get(`/orders/${id}`)
 export const fetchOrdersByClient = (id) => API.get(`/orders/clients/${id}`);
 
-export const addOrder =( invoice ) => API.post('/orders', invoice)
+export const addOrder =( order ) => API.post('/orders', order)
 export const updateOrder = (id, updatedOrder) => API.patch(`/orders/${id}`, updatedOrder)
 export const deleteOrder =(id) => API.delete(`/orders/${id}`)
 

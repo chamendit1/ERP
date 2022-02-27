@@ -1,5 +1,5 @@
 import express from 'express'
-import { getOrdersByClient, getOrders, createOrder, updateOrder, deleteOrder, getOrder } from '../controllers/invoices.js'
+import { getOrdersByClient, getOrders, createOrder, updateOrder, deleteOrder, getOrder } from '../controllers/orders.js'
 
 const router = express.Router()
 
