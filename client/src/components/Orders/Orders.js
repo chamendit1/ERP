@@ -220,7 +220,7 @@ const Orders = () => {
             : rows
           ).map((row) => (
             <TableRow key={row._id} style={{cursor: 'pointer'}} >
-                <TableCell style={tableStyle} onClick={() => openOrder(row._id)}> {row.invoiceNumber} </TableCell>
+                <TableCell style={tableStyle} onClick={() => openOrder(row._id)}> {row.orderNumber} </TableCell>
                 <TableCell  style={tableStyle} onClick={() => openOrder(row._id)} > {row.client.name} </TableCell>
                 <TableCell style={tableStyle} onClick={() => openOrder(row._id)} > {moment(row.dueDate).fromNow()} </TableCell>
                 <TableCell style={tableStyle} onClick={() => openOrder(row._id)} > <button style={checkStatus(row.status)}>{row.status}</button></TableCell>

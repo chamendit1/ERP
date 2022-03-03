@@ -67,7 +67,7 @@ const Order = () => {
     const [status, setStatus ] = useState('')
     const { id } = useParams()
     const clients = useSelector((state) => state.clients.clients)
-    const { order } = useSelector((state) => state.invoices);
+    const { order } = useSelector((state) => state.orders);
     const dispatch = useDispatch()
     const history = useHistory()
     const user = JSON.parse(localStorage.getItem('profile'))
@@ -172,9 +172,11 @@ const Order = () => {
         history.push('/login')
       }
     
+      console.log(client)
+      console.log(orderData)
 
     return (
-    <div className={styles.orderLayout}>
+    <div className={styles.invoiceLayout}>
         <form onSubmit={handleSubmit} className="mu-form">
             <AddClient setOpen={setOpen} open={open} />
             <Container  className={classes.headerContainer}>

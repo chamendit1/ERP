@@ -29,8 +29,6 @@ import ProgressButton from 'react-progress-button'
 import axios from 'axios';
 import { saveAs } from 'file-saver';
 import Modal from '../Payments/Modal'
-import PaymentHistory from './PaymentHistory'
-import { createOrder } from '../../actions/orderActions'
 
 const OrderDetails = () => {
 
@@ -39,8 +37,6 @@ const OrderDetails = () => {
     const [orderData, setOrderData] = useState(initialStateOrder)
     const [selectedDate, setSelectedDate] = useState(new Date());
     const [ client, setClient] = useState([])
-    const [type, setType] = React.useState('')
-    const [status, setStatus ] = useState('')
     const [company, setCompany] = useState({})
     const { id } = useParams()
     const { order } = useSelector((state) => state.orders)
@@ -90,8 +86,6 @@ const OrderDetails = () => {
             //Automatically set the default order values as the ones in the order to be updated
             setOrderData(order)
             setClient(order.client)
-            setType(order.type)
-            setStatus(order.status)
             setSelectedDate(order.dueDate)
             setCompany(order?.businessDetails?.data?.data)
            
@@ -116,12 +110,8 @@ const OrderDetails = () => {
       date: order.createdAt,
       id: order.invoiceNumber,
       notes: order.notes,
-      subTotal: toCommas(order.subTotal),
-      total: toCommas(order.total),
       type: order.type,
-      vat: order.vat,
       items: order.items,
-      status: order.status,
       company: company,
   })
       .then(() => axios.get(`${process.env.REACT_APP_API}/fetch-pdf`, { responseType: 'blob' }))
@@ -168,12 +158,47 @@ const iconSize = {height: '18px', width: '18px', marginRight: '10px', color: 'gr
 const [open, setOpen ] = useState(false)
 
 
-console.log(orderData)
-
-
+if(!order) {
+  return (
+    <Spinner />
+  )
+}
 
     return (
         <div className={styles.PageLayout}>
+          <div className={styles.buttons}>
+              <ProgressButton 
+                onClick={sendPdf} 
+                state={sendStatus}
+                onSuccess={()=> openSnackbar("Invoice sent successfully")}
+              >
+              Send to Customer
+              </ProgressButton>
+            
+              <ProgressButton 
+                onClick={createAndDownloadPdf} 
+                state={downloadStatus}>
+                Download PDF
+              </ProgressButton>
+
+              <button 
+              className={styles.btn}  
+              onClick={() => editOrder(orderData._id)}
+              > 
+              <BorderColorIcon style={iconSize} 
+              />
+              Edit Invoice
+              </button>
+
+              <button 
+                // disabled={status === 'Paid' ? true : false}
+                className={styles.btn} 
+                onClick={() => setOpen((prev) => !prev)}> 
+                <MonetizationOnIcon style={iconSize} 
+              /> 
+              Record Payment
+              </button>
+          </div>
 
             <Modal open={open} setOpen={setOpen} order={order}/>
             <div className={styles.invoiceLayout}>
@@ -195,7 +220,7 @@ console.log(orderData)
             )}
                 <Grid item style={{marginRight: 40, textAlign: 'right'}}>
                     <Typography variant="overline" style={{color: 'gray'}} >No: </Typography>
-                    <Typography variant="body2">{order?.invoiceNumber}</Typography>
+                    <Typography variant="body2">{orderData?.orderNumber}</Typography>
                 </Grid>
             </Grid >
         </Container>
