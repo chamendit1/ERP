@@ -35,6 +35,15 @@ const FabButton = () => {
               </Action>
             )}
 
+            {location.pathname !== '/order' && (
+              <Action
+                  text="New Order"
+                  onClick={() => window.location.href='/order'}
+                >
+                  <CreateIcon />
+              </Action>
+            )}
+
             <Action
                 text="New Customer"
                 onClick={() => setOpen((prev) => !prev)}

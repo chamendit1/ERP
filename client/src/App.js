@@ -5,6 +5,9 @@ import Home from './components/Home/Home';
 import Invoice from './components/Invoice/Invoice';
 import Invoices from './components/Invoices/Invoices';
 import InvoiceDetails from './components/InvoiceDetails/InvoiceDetails'
+import Order from './components/Order/Order';
+import Orders from './components/Orders/Orders';
+import OrderDetails from './components/OrderDetails/OrderDetails';
 import ClientList from './components/Clients/ClientList'
 import Client from './components/Client/Client'
 import NavBar from './components/NavBar/NavBar';
@@ -34,6 +37,13 @@ function App() {
           <Route path="/edit/invoice/:id" exact component={Invoice} />
           <Route path="/invoice/:id" exact component={InvoiceDetails} />
           <Route path="/invoices" exact component={Invoices} />
+
+          <Route path="/order" exact component={Order} />
+          <Route path="/edit/order/:id" exact component={Order} />
+          <Route path="/order/:id" exact component={OrderDetails} />
+          <Route path="/orders" exact component={Orders} />
+
+
 
           <Route path="/customers" exact component={ClientList} />
           <Route path="/customers/:id" exact component={Client} />

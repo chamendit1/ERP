@@ -4,9 +4,12 @@ export const ADD_NEW = "ADD_NEW"
 export const UPDATE = "UPDATE"
 export const DELETE = "DELETE"
 export const GET_INVOICE = "GET_INVOICE"
+
 export const FETCH_INVOICE_BY_USER = "FETCH_INVOICE_BY_USER"
 export const FETCH_INVOICE_BY_CLIENT = "FETCH_INVOICE_BY_CLIENT"
 
+export const GET_ORDER = "GET_ORDER"
+export const FETCH_ORDER_BY_USER = "FETCH_ORDER_BY_USER"
 
 export const ALL_CLIENTS = "ALL_CLIENTS"
 export const UPDATE_CLIENT = "UPDATE_CLIENT"

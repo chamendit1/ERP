@@ -12,7 +12,7 @@ export const initialState = {
     status: '',
     type: 'Invoice',
     creator: '',
-    ownwe: '',
+    owner: '',
 }
 
 
@@ -22,4 +22,16 @@ export const clientState = {
     phone: '',
     address: '',
     type: 'Client',
+}
+
+export const initialStateOrder = {
+    items: [
+        {itemName: '', quantity: ''},
+    ],
+    notes: '',
+    orderNumber: Math.floor(Math.random() * 100000),
+    status: '',
+    type: 'Order',
+    creator: '',
+    owner: '',
 }
