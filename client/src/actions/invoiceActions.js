@@ -66,8 +66,6 @@ export const getInvoice = (id) => async (dispatch)=> {
         const { data } = await api.fetchInvoice(id)
         const businessDetails = await api.fetchProfilesByUser({search: user?.result?._id || user?.result?.googleId})
         const invoiceData = {...data, businessDetails}
-        console.log(invoiceData)
-        console.log(id)
         dispatch({ type: GET_INVOICE, payload: invoiceData  })
     } catch (error) {
         console.log(error)

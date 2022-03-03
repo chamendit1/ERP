@@ -3,8 +3,8 @@ import React, { useState, useEffect } from 'react'
 import { useSnackbar } from 'react-simple-snackbar'
 import { useLocation, useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { initialState } from '../../initialState'
-import { getInvoice } from '../../actions/invoiceActions'
+import { initialStateOrder } from '../../initialState' 
+import { getOrder } from '../../actions/orderActions' 
 import { toCommas } from '../../utils/utils'
 import styles from './InvoiceDetails.module.css'
 import moment from 'moment'
@@ -30,23 +30,20 @@ import axios from 'axios';
 import { saveAs } from 'file-saver';
 import Modal from '../Payments/Modal'
 import PaymentHistory from './PaymentHistory'
+import { createOrder } from '../../actions/orderActions'
 
-const InvoiceDetails = () => {
+const OrderDetails = () => {
+
 
     const location = useLocation()
-    const [invoiceData, setInvoiceData] = useState(initialState)
-    const [ rates, setRates] = useState(0)
-    const [vat, setVat] = useState(0)
-    const [currency, setCurrency] = useState('')
-    const [subTotal, setSubTotal] = useState(0)
-    const [total, setTotal] = useState(0)
+    const [orderData, setOrderData] = useState(initialStateOrder)
     const [selectedDate, setSelectedDate] = useState(new Date());
     const [ client, setClient] = useState([])
     const [type, setType] = React.useState('')
     const [status, setStatus ] = useState('')
     const [company, setCompany] = useState({})
     const { id } = useParams()
-    const { invoice } = useSelector((state) => state.invoices)
+    const { order } = useSelector((state) => state.orders)
     const dispatch = useDispatch()
     const history = useHistory()
     const [sendStatus, setSendStatus] = useState(null)
@@ -85,64 +82,53 @@ const InvoiceDetails = () => {
 
 
     useEffect(() => {
-        dispatch(getInvoice(id));
+        dispatch(getOrder(id));
       },[id, dispatch, location]);
 
       useEffect(() => {
-        if(invoice) {
-            //Automatically set the default invoice values as the ones in the invoice to be updated
-            setInvoiceData(invoice)
-            setRates(invoice.rates)
-            setClient(invoice.client)
-            setType(invoice.type)
-            setStatus(invoice.status)
-            setSelectedDate(invoice.dueDate)
-            setVat(invoice.vat)
-            setCurrency(invoice.currency)
-            setSubTotal(invoice.subTotal)
-            setTotal(invoice.total)
-            setCompany(invoice?.businessDetails?.data?.data)
+        if(order) {
+            //Automatically set the default order values as the ones in the order to be updated
+            setOrderData(order)
+            setClient(order.client)
+            setType(order.type)
+            setStatus(order.status)
+            setSelectedDate(order.dueDate)
+            setCompany(order?.businessDetails?.data?.data)
            
         }
-    }, [invoice])
-
-    //Get the total amount paid
-    let totalAmountReceived = 0
-    for(var i = 0; i < invoice?.paymentRecords?.length; i++) {
-        totalAmountReceived += Number(invoice?.paymentRecords[i]?.amountPaid)
-    }
+    }, [order])
 
 
-  const editInvoice = (id) => {
-    history.push(`/edit/invoice/${id}`)
+    console.log(orderData)
+
+  const editOrder = (id) => {
+    history.push(`/edit/order/${id}`)
   }
 
   const createAndDownloadPdf = () => {
     setDownloadStatus('loading')
     axios.post(`${process.env.REACT_APP_API}/create-pdf`, 
-    { name: invoice.client.name,
-      address: invoice.client.address,
-      phone: invoice.client.phone,
-      email: invoice.client.email,
-      dueDate: invoice.dueDate,
-      date: invoice.createdAt,
-      id: invoice.invoiceNumber,
-      notes: invoice.notes,
-      subTotal: toCommas(invoice.subTotal),
-      total: toCommas(invoice.total),
-      type: invoice.type,
-      vat: invoice.vat,
-      items: invoice.items,
-      status: invoice.status,
-      totalAmountReceived: toCommas(totalAmountReceived),
-      balanceDue: toCommas(total - totalAmountReceived),
+    { name: order.client.name,
+      address: order.client.address,
+      phone: order.client.phone,
+      email: order.client.email,
+      dueDate: order.dueDate,
+      date: order.createdAt,
+      id: order.invoiceNumber,
+      notes: order.notes,
+      subTotal: toCommas(order.subTotal),
+      total: toCommas(order.total),
+      type: order.type,
+      vat: order.vat,
+      items: order.items,
+      status: order.status,
       company: company,
   })
       .then(() => axios.get(`${process.env.REACT_APP_API}/fetch-pdf`, { responseType: 'blob' }))
       .then((res) => {
         const pdfBlob = new Blob([res.data], { type: 'application/pdf' });
 
-        saveAs(pdfBlob, 'invoice.pdf')
+        saveAs(pdfBlob, 'order.pdf')
       }).then(() =>  setDownloadStatus('success'))
   }
 
@@ -152,26 +138,24 @@ const InvoiceDetails = () => {
     e.preventDefault()
     setSendStatus('loading')
     axios.post(`${process.env.REACT_APP_API}/send-pdf`, 
-    { name: invoice.client.name,
-      address: invoice.client.address,
-      phone: invoice.client.phone,
-      email: invoice.client.email,
-      dueDate: invoice.dueDate,
-      date: invoice.createdAt,
-      id: invoice.invoiceNumber,
-      notes: invoice.notes,
-      subTotal: toCommas(invoice.subTotal),
-      total: toCommas(invoice.total),
-      type: invoice.type,
-      vat: invoice.vat,
-      items: invoice.items,
-      status: invoice.status,
-      totalAmountReceived: toCommas(totalAmountReceived),
-      balanceDue: toCommas(total - totalAmountReceived),
-      link: `${process.env.REACT_APP_URL}/invoice/${invoice._id}`,
+    { name: order.client.name,
+      address: order.client.address,
+      phone: order.client.phone,
+      email: order.client.email,
+      dueDate: order.dueDate,
+      date: order.createdAt,
+      id: order.invoiceNumber,
+      notes: order.notes,
+      subTotal: toCommas(order.subTotal),
+      total: toCommas(order.total),
+      type: order.type,
+      vat: order.vat,
+      items: order.items,
+      status: order.status,
+      link: `${process.env.REACT_APP_URL}/order/${order._id}`,
       company: company,
   })
-  // .then(() => console.log("invoice sent successfully"))
+  // .then(() => console.log("order sent successfully"))
   .then(() => setSendStatus('success'))
       .catch((error) => {
         console.log(error)
@@ -184,70 +168,19 @@ const iconSize = {height: '18px', width: '18px', marginRight: '10px', color: 'gr
 const [open, setOpen ] = useState(false)
 
 
-  function checkStatus() {
-    return totalAmountReceived >= total ? "green"
-         : status === "Partial" ? "#1976d2"
-         : status === "Paid" ? "green"
-         : status === "Unpaid" ? "red"
-         : "red";
-}
+console.log(orderData)
 
-
-if(!invoice) {
-  return (
-    <Spinner />
-  )
-}
 
 
     return (
         <div className={styles.PageLayout}>
-           {invoice?.creator?.includes(user?.result?._id || user?.result?.googleId) && (
-            <div className={styles.buttons}>
-                  <ProgressButton 
-                    onClick={sendPdf} 
-                    state={sendStatus}
-                    onSuccess={()=> openSnackbar("Invoice sent successfully")}
-                  >
-                  Send to Customer
-                  </ProgressButton>
-              
-                <ProgressButton 
-                  onClick={createAndDownloadPdf} 
-                  state={downloadStatus}>
-                  Download PDF
-                </ProgressButton>
 
-                <button 
-                className={styles.btn}  
-                onClick={() => editInvoice(invoiceData._id)}
-                > 
-                <BorderColorIcon style={iconSize} 
-                />
-                Edit Invoice
-                </button>
-
-                <button 
-                  // disabled={status === 'Paid' ? true : false}
-                  className={styles.btn} 
-                  onClick={() => setOpen((prev) => !prev)}> 
-                  <MonetizationOnIcon style={iconSize} 
-                /> 
-                Record Payment
-                </button>
-            </div>
-             )}
-
-             {invoice?.paymentRecords.length !== 0 && (
-                <PaymentHistory paymentRecords={invoiceData?.paymentRecords} />
-             )}
-        
-            <Modal open={open} setOpen={setOpen} invoice={invoice}/>
+            <Modal open={open} setOpen={setOpen} order={order}/>
             <div className={styles.invoiceLayout}>
         <Container  className={classes.headerContainer}>
         
             <Grid container justifyContent="space-between" style={{padding: '30px 0px' }}>
-            {!invoice?.creator?.includes(user?.result._id || user?.result?.googleId) ? 
+            {!order?.creator?.includes(user?.result._id || user?.result?.googleId) ? 
             (
               <Grid item>
               </Grid>
@@ -261,9 +194,8 @@ if(!invoice) {
                 </Grid>
             )}
                 <Grid item style={{marginRight: 40, textAlign: 'right'}}>
-                    <Typography style={{lineSpacing: 1, fontSize: 45, fontWeight: 700, color: 'gray'}} >{Number(total - totalAmountReceived) <= 0 ? 'Receipt' : type}</Typography>
                     <Typography variant="overline" style={{color: 'gray'}} >No: </Typography>
-                    <Typography variant="body2">{invoiceData?.invoiceNumber}</Typography>
+                    <Typography variant="body2">{order?.invoiceNumber}</Typography>
                 </Grid>
             </Grid >
         </Container>
@@ -271,13 +203,13 @@ if(!invoice) {
         <Container>
             <Grid container justifyContent="space-between" style={{marginTop: '40px'}} >
                 <Grid item>
-                    {invoice?.creator?.includes(user?.result._id) && (
+                    {order?.creator?.includes(user?.result._id) && (
                       <Container style={{marginBottom: '20px'}}>
                         <Typography variant="overline" style={{color: 'gray'}} gutterBottom>From</Typography>
-                        <Typography variant="subtitle2">{invoice?.businessDetails?.data?.data?.businessName}</Typography>
-                        <Typography variant="body2">{invoice?.businessDetails?.data?.data?.email}</Typography>
-                        <Typography variant="body2">{invoice?.businessDetails?.data?.data?.phoneNumber}</Typography>
-                        <Typography variant="body2" gutterBottom>{invoice?.businessDetails?.data?.data?.address}</Typography>
+                        <Typography variant="subtitle2">{order?.businessDetails?.data?.data?.businessName}</Typography>
+                        <Typography variant="body2">{order?.businessDetails?.data?.data?.email}</Typography>
+                        <Typography variant="body2">{order?.businessDetails?.data?.data?.phoneNumber}</Typography>
+                        <Typography variant="body2" gutterBottom>{order?.businessDetails?.data?.data?.address}</Typography>
                       </Container>
                     )}
                     <Container>
@@ -290,14 +222,11 @@ if(!invoice) {
                 </Grid>
 
                 <Grid item style={{marginRight: 20, textAlign: 'right'}}>
-                    <Typography variant="overline" style={{color: 'gray'}} gutterBottom>Status</Typography>
-                    <Typography variant="h6" gutterBottom style={{color: checkStatus()}}>{totalAmountReceived >= total ? 'Paid':status}</Typography>
                     <Typography variant="overline" style={{color: 'gray'}} gutterBottom>Date</Typography>
                     <Typography variant="body2" gutterBottom>{moment().format("MMM Do YYYY")}</Typography>
                     <Typography variant="overline" style={{color: 'gray'}} gutterBottom>Due Date</Typography>
                     <Typography variant="body2" gutterBottom>{selectedDate? moment(selectedDate).format("MMM Do YYYY") : '27th Sep 2021'}</Typography>
-                    <Typography variant="overline" gutterBottom>Amount</Typography>
-                    <Typography variant="h6" gutterBottom>{currency} {toCommas(total)}</Typography>
+ 
                 </Grid>
             </Grid>
         </Container>
@@ -311,22 +240,14 @@ if(!invoice) {
           <TableRow>
             <TableCell>Item</TableCell>
             <TableCell >Qty</TableCell>
-            <TableCell>Price</TableCell>
-            <TableCell >Disc(%)</TableCell>
-            <TableCell >Amount</TableCell>
            
           </TableRow>
         </TableHead>
         <TableBody>
-          {invoiceData?.items?.map((itemField, index) => (
+          {orderData?.items?.map((itemField, index) => (
             <TableRow key={index}>
               <TableCell  scope="row" style={{width: '40%' }}> <InputBase style={{width: '100%'}} outline="none" sx={{ ml: 1, flex: 1 }} type="text" name="itemName" value={itemField.itemName} placeholder="Item name or description" readOnly /> </TableCell>
               <TableCell align="right"> <InputBase sx={{ ml: 1, flex: 1 }} type="number" name="quantity" value={itemField?.quantity} placeholder="0" readOnly /> </TableCell>
-              <TableCell align="right"> <InputBase sx={{ ml: 1, flex: 1 }} type="number" name="unitPrice" value={itemField?.unitPrice} placeholder="0" readOnly /> </TableCell>
-              <TableCell align="right"> <InputBase sx={{ ml: 1, flex: 1 }} type="number" name="discount"  value={itemField?.discount} readOnly /> </TableCell>
-              <TableCell align="right"> <InputBase sx={{ ml: 1, flex: 1 }} type="number" name="amount"  value={(itemField?.quantity * itemField.unitPrice) - (itemField.quantity * itemField.unitPrice) * itemField.discount / 100} readOnly /> </TableCell>
-              
-              
             </TableRow>
           ))}
         </TableBody>
@@ -336,38 +257,12 @@ if(!invoice) {
                 </div>
             </div>
                 
-                <div className={styles.invoiceSummary}>
-                    <div className={styles.summary}>Invoice Summary</div>
-                    <div className={styles.summaryItem}>
-                        <p>Subtotal:</p>
-                        <h4>{subTotal}</h4>
-                    </div>
-                    <div className={styles.summaryItem}>
-                        <p>{`VAT(${rates}%):`}</p>
-                        <h4>{vat}</h4>
-                    </div>
-                    <div className={styles.summaryItem}>
-                        <p>Total</p>
-                        <h4>{currency} {toCommas(total)}</h4>
-                    </div>
-                    <div className={styles.summaryItem}>
-                        <p>Paid</p>
-                        <h4>{currency} {toCommas(totalAmountReceived)}</h4>
-                    </div>
-
-                    <div className={styles.summaryItem}>
-                        <p>Balance</p>
-                        <h4 style={{color: "black", fontSize: "18px", lineHeight: "8px"}}>{currency} {toCommas(total - totalAmountReceived)}</h4>
-                    </div>
-                    
-                </div>
 
                 <div className={styles.note}>
                     <h4>Notes/Terms</h4>
-                    <Typography>{invoiceData.notes}</Typography>
+                    <Typography>{orderData.notes}</Typography>
                 </div>
 
-            {/* <button className={styles.submitButton} type="submit">Save and continue</button> */}
         </form>
     </div>
         </div>
@@ -375,4 +270,4 @@ if(!invoice) {
     )
 }
 
-export default InvoiceDetails
+export default OrderDetails

@@ -28,9 +28,8 @@ export const initialStateOrder = {
     items: [
         {itemName: '', quantity: ''},
     ],
-    total: 0,
     notes: '',
-    invoiceNumber: Math.floor(Math.random() * 100000),
+    orderNumber: Math.floor(Math.random() * 100000),
     status: '',
     type: 'Order',
     creator: '',

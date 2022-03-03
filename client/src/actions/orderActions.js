@@ -1,7 +1,7 @@
 
 import * as api from '../api/index'
 
-import { ADD_NEW, UPDATE, DELETE, GET_INVOICE, START_LOADING, END_LOADING, FETCH_ALL } from './constants'
+import { ADD_NEW, UPDATE, DELETE, GET_ORDER, START_LOADING, END_LOADING, FETCH_ALL } from './constants'
 
  export const getOrders = () => async (dispatch)=> {
      try {
@@ -36,10 +36,9 @@ export const getOrder = (id) => async (dispatch)=> {
     try {
         const { data } = await api.fetchOrder(id)
         const businessDetails = await api.fetchProfilesByUser({search: user?.result?._id || user?.result?.googleId})
-        const invoiceData = {...data, businessDetails}
-        console.log(invoiceData)
-        console.log(id)
-        dispatch({ type: GET_INVOICE, payload: invoiceData  })
+        const orderData = {...data, businessDetails}
+        dispatch({ type: GET_ORDER, payload: orderData  })
+        console.log(orderData)
     } catch (error) {
         console.log(error)
     }

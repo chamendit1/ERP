@@ -89,6 +89,8 @@ const InvoiceDetails = () => {
         dispatch(getInvoice(id));
       },[id, dispatch, location]);
 
+      console.log(invoice)
+
       useEffect(() => {
         if(invoice) {
             //Automatically set the default invoice values as the ones in the invoice to be updated

@@ -5,7 +5,7 @@ const OrderSchema = mongoose.Schema({
     items: [ { itemName: String,  quantity: String } ],
     notes: String,
     status: String,
-    invoiceNumber: String,
+    orderNumber: String,
     type: String,
     creator: [String],
     owner: [String],
