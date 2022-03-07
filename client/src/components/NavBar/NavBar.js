@@ -12,7 +12,7 @@ const NavBar = () => {
 
 
   const body = document.querySelector('body'),
-  sidebar = body.querySelector('nav'),
+  //sidebar = body.querySelector('nav'),
   modeText = body.querySelector(".mode-text");
 
 
@@ -32,19 +32,9 @@ const NavBar = () => {
     return (
         <div>
           <nav className="sidebar close" 
-           onMouseEnter={() => sidebar.classList.toggle("close")}
-           onMouseLeave={() => sidebar.classList.toggle("close")}>
-           <header>
-            <div class="image-text">
-                  <span class="image"></span>
-                  <div class="text logo-text">
-                      <span class="name">Codinglab</span>
-                      <span class="profession">Web developer</span>
-                  </div>
-            </div>
-
-              <i class='bx bx-chevron-right toggle'></i>
-          </header>
+           //onMouseEnter={() => sidebar.classList.toggle("close")}
+           //onMouseLeave={() => sidebar.classList.toggle("close")}
+           >
 
           <div class="menu-bar">
             <div class="menu">
