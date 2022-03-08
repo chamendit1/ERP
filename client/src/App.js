@@ -20,6 +20,9 @@ import Forgot from './components/Password/Forgot'
 import Reset from './components/Password/Reset'
 import Sales from './components/Sales/Sales'
 
+import Inventory from './components/Inventory/Inventory';
+import Inventories from './components/Inventory/Inventories'
+
 function App() {
 
   const user = JSON.parse(localStorage.getItem('profile'))
@@ -42,6 +45,9 @@ function App() {
           <Route path="/edit/order/:id" exact component={Order} />
           <Route path="/order/:id" exact component={OrderDetails} />
           <Route path="/orders" exact component={Orders} />
+
+          <Route path="/inventory" exact component={Inventory} />
+          <Route path="/inventories" exact component={Inventories} />
 
 
 

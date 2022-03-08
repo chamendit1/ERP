@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const InventoryType = ({ type, setType }) => {
+const InvoiceType = ({ type, setType }) => {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   
@@ -81,4 +81,4 @@ const InventoryType = ({ type, setType }) => {
   );
 }
 
-export default InventoryType
+export default InvoiceType
