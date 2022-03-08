@@ -171,9 +171,7 @@ const Order = () => {
       if(!user) {
         history.push('/login')
       }
-    
-      console.log(client)
-      console.log(orderData)
+
 
     return (
     <div className={styles.invoiceLayout}>

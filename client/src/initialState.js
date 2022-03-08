@@ -41,9 +41,8 @@ export const initialStateInventory = {
         {itemName: '', quantity: ''},
     ],
     notes: '',
-    orderNumber: Math.floor(Math.random() * 100000),
+    inventoryNumber: Math.floor(Math.random() * 100000),
     status: '',
     type: 'Inventory',
     creator: '',
-    owner: '',
 }

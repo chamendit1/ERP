@@ -1,7 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
-import moment from 'moment'
 import PropTypes from 'prop-types';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
@@ -155,12 +154,12 @@ const Inventories = () => {
   };
 
 
-  const editInvoice = (id) => {
-    history.push(`/edit/invoice/${id}`)
+  const editInventory = (id) => {
+    history.push(`/edit/inventory/${id}`)
   }
 
-  const openOrder = (id) => {
-    history.push(`/order/${id}`)
+  const openInventory = (id) => {
+    history.push(`/inventory/${id}`)
   }
 
   if(!user) {
@@ -168,14 +167,6 @@ const Inventories = () => {
   }
 
 
-
-  function checkStatus(status) {
-    return status === "Partial" ? {border: 'solid 0px #1976d2', backgroundColor: '#baddff', padding: '8px 18px', borderRadius: '20px' }
-        : status === "Paid" ? {border: 'solid 0px green', backgroundColor: '#a5ffcd', padding: '8px 18px', borderRadius: '20px' }
-        : status === "Unpaid" ? {border: 'solid 0px red', backgroundColor: '#ffaa91', padding: '8px 18px', borderRadius: '20px' }
-        : "red";
-          
-}
 
   if(isLoading) {
     return  <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', paddingTop: '20px'}}>
@@ -215,13 +206,13 @@ const Inventories = () => {
             : rows
           ).map((row) => (
             <TableRow key={row._id} style={{cursor: 'pointer'}} >
-                <TableCell style={tableStyle} onClick={() => openOrder()}> </TableCell>
-                <TableCell  style={tableStyle} onClick={() => openOrder()} >  </TableCell>
-                <TableCell style={tableStyle} onClick={() => openOrder()} >  </TableCell>
-                <TableCell style={tableStyle} onClick={() => openOrder()} > </TableCell>
+                <TableCell style={tableStyle} onClick={() => openInventory(row._id)}> </TableCell>
+                <TableCell  style={tableStyle} onClick={() => openInventory(row._id)} >  </TableCell>
+                <TableCell style={tableStyle} onClick={() => openInventory(row._id)} >  </TableCell>
+                <TableCell style={tableStyle} onClick={() => openInventory(row._id)} > </TableCell>
              
                 <TableCell style={{...tableStyle, width: '10px'}}>
-                  <IconButton onClick={() => editInvoice(row._id)}>
+                  <IconButton onClick={() => editInventory(row._id)}>
                     <BorderColorIcon  style={{width: '20px', height: '20px'}} />
                   </IconButton>
               </TableCell>
