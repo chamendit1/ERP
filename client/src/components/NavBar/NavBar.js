@@ -88,6 +88,13 @@ const NavBar = () => {
                       </Link>
                   </li>
 
+                  <li class="nav-link">
+                      <Link to="/manufacturing" className="nav-link">
+                          <i class='bx bx-wallet icon' >Manufacturing</i>
+                          <span class="text nav-text"></span>
+                      </Link>
+                  </li>
+
               </ul>
             </div>
 

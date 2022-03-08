@@ -23,6 +23,7 @@ import Sales from './components/Sales/Sales'
 import Inventory from './components/Inventory/Inventory';
 import Inventories from './components/Inventory/Inventories'
 import InventoryDetails from './components/Inventory/InventoryDetails'
+import Manufacturing from './components/Manufacturing/Manufacturing';
 
 function App() {
 
@@ -51,6 +52,8 @@ function App() {
           <Route path="/inventories" exact component={Inventories} />
           <Route path="/edit/inventory/:id" exact component={Inventory} />
           <Route path="/inventory/:id" exact component={InventoryDetails} />
+
+          <Route path="/manufacturing" exact component={Manufacturing} />
 
 
 
