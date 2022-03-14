@@ -20,6 +20,12 @@ import Forgot from './components/Password/Forgot'
 import Reset from './components/Password/Reset'
 import Sales from './components/Sales/Sales'
 
+import Inventory from './components/Inventory/Inventory';
+import Inventories from './components/Inventory/Inventories'
+import InventoryDetails from './components/Inventory/InventoryDetails'
+import Manufacturing from './components/Manufacturing/Manufacturing';
+
+
 function App() {
 
   const user = JSON.parse(localStorage.getItem('profile'))
@@ -43,6 +49,13 @@ function App() {
           <Route path="/order/:id" exact component={OrderDetails} />
           <Route path="/orders" exact component={Orders} />
 
+          <Route path="/inventory" exact component={Inventory} />
+          <Route path="/inventories" exact component={Inventories} />
+          <Route path="/edit/inventory/:id" exact component={Inventory} />
+          <Route path="/inventory/:id" exact component={InventoryDetails} />
+
+          <Route path="/manufacturing" exact component={Manufacturing} />
+ 
 
 
           <Route path="/customers" exact component={ClientList} />

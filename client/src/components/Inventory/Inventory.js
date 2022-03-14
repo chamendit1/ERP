@@ -1,15 +1,13 @@
 import React, { useState, useEffect} from 'react'
-import styles from './Order.module.css'
+import styles from './Inventory.module.css'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
-import moment from 'moment'
+
 import { useHistory } from 'react-router-dom'
 
 import IconButton from '@material-ui/core/IconButton';
 import DeleteOutlineRoundedIcon from '@material-ui/icons/DeleteOutlineRounded';
 
-import TextField from '@material-ui/core/TextField';
-import Autocomplete from '@material-ui/lab/Autocomplete';
 import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -21,17 +19,14 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import InputBase from '@material-ui/core/InputBase';
 import { Container, Grid } from '@material-ui/core';
-import Avatar from '@material-ui/core/Avatar';
 import Divider from '@material-ui/core/Divider';
 import SaveIcon from '@material-ui/icons/Save';
 import Button from '@material-ui/core/Button';
-import Chip from '@material-ui/core/Chip';
 
-import { initialStateOrder } from '../../initialState'
-import { createOrder, getOrder, updateOrder } from '../../actions/orderActions';
-import { getClientsByUser } from '../../actions/clientActions'
+import { initialStateInventory } from '../../initialState'
+import { createInventory, getInventory, updateInventory } from '../../actions/inventoryActions';
 import AddClient from './AddClient';
-import OrderType from './OrderType';
+import InventoryType from './InventoryType';
 // import SelectType from './SelectType'
 
 const useStyles = makeStyles((theme) => ({
@@ -57,43 +52,34 @@ const useStyles = makeStyles((theme) => ({
     }
   }));
 
-const Order = () => {
+const Inventory = () => {
 
-    const [orderData, setOrderData] = useState(initialStateOrder)
-    const today = new Date();
-    const [selectedDate, setSelectedDate] = useState(today.getTime() + 7 * 24 * 60 * 60 * 1000);
-    const [ client, setClient] = useState(null)
-    const [type, setType] = React.useState('Order')
+    const [inventoryData, setInventoryData] = useState(initialStateInventory)
+    const [type, setType] = React.useState('Inventory')
     const [status, setStatus ] = useState('')
     const { id } = useParams()
-    const clients = useSelector((state) => state.clients.clients)
-    const { order } = useSelector((state) => state.orders);
+    //const clients = useSelector((state) => state.clients.clients)
+    const { inventory } = useSelector((state) => state.inventories);
     const dispatch = useDispatch()
     const history = useHistory()
     const user = JSON.parse(localStorage.getItem('profile'))
 
 
     useEffect(() => {
-        dispatch(getOrder(id));
+        dispatch(getInventory(id));
         // eslint-disable-next-line
       }, [id]);
 
-    useEffect(() => {
-        dispatch(getClientsByUser({search: user?.result._id || user?.result?.googleId}));
-        // eslint-disable-next-line
-    }, [dispatch]);
-
     
     useEffect(() => {
-        if(order) {
+        if(inventory) {
             //Automatically set the default order values as the ones in the order to be updated
-            setOrderData(order)
-            setClient(order.client)
-            setType(order.type)
-            setStatus(order.status)
-            setSelectedDate(order.dueDate)
+            setInventoryData(inventory)
+            setType(inventory.type)
+            setStatus(inventory.status)
+            //setSelectedDate(order.dueDate)
         }
-    }, [order])
+    }, [inventory])
 
  
     useEffect(() => {
@@ -104,73 +90,65 @@ const Order = () => {
         }
     },[type])
     
-
-    const clientsProps = {
-        options: clients,
-        getOptionLabel: (option) => option.name
-      };
       
     
 
     // console.log(orderData)
     // Change handler for dynamically added input field
     const handleChange =(index, e) => {
-        const values = [...orderData.items]
+        const values = [...inventoryData.items]
         values[index][e.target.name] = e.target.value
-        setOrderData({...orderData, items: values})
+        setInventoryData({...inventoryData, items: values})
         
     }
+
+    console.log(inventory)
 
 
     const handleAddField = (e) => {
         e.preventDefault()
-        setOrderData((prevState) => ({...prevState, items: [...prevState.items,  {itemName: ''}]}))
+        setInventoryData((prevState) => ({...prevState, items: [...prevState.items,  {itemName: ''}]}))
     }
 
     const handleRemoveField =(index) => {
-        const values = orderData.items
+        const values = inventoryData.items
         values.splice(index, 1)
-        setOrderData((prevState) => ({...prevState, values}))
+        setInventoryData((prevState) => ({...prevState, values}))
         // console.log(values)
     }
     
     const handleSubmit =  async (e ) => {
         e.preventDefault()
-        if(order) {
-         dispatch(updateOrder( order._id, {
-             ...orderData, 
-             client, 
+        if(inventory) {
+         dispatch(updateInventory( inventory._id, {
+             ...inventoryData, 
              type: type, 
              status: status 
             })) 
-         history.push(`/order/${order._id}`)
+         history.push(`/inventory/${inventory._id}`)
         } else {
 
-        dispatch(createOrder({
-            ...orderData, 
-            client, 
+        dispatch(createInventory({
+            ...inventoryData, 
             type: type, 
             status: status, 
-            creator: [user?.result?._id || user?.result?.googleId],
-            owner: client._id}, 
+            creator: [user?.result?._id || user?.result?.googleId]}, 
             history
             ))
         }
 
-        // setOrderData(initialState)
+        // setInventoryData(initialState)
     }
 
     const classes = useStyles()
     const [open, setOpen] = useState(false);
 
-    const CustomPaper = (props) => {
-        return <Paper elevation={3} {...props} />;
-      };
 
 
       if(!user) {
         history.push('/login')
       }
+    
 
 
     return (
@@ -187,9 +165,9 @@ const Order = () => {
                         {/* <div style={{paddingTop: '20px'}}>
                             <SelectType  type={type} setType={setType} />
                         </div> */}
-                        <OrderType type={type} setType={setType} />
-                        <Typography variant="overline" style={{color: 'gray'}} >Order#: </Typography>
-                        <InputBase defaultValue={orderData.orderNumber}/>
+                        <InventoryType type={type} setType={setType} />
+                        <Typography variant="overline" style={{color: 'gray'}} >Inventory#: </Typography>
+                        <InputBase defaultValue={inventoryData.orderNumber}/>
                     </Grid>
                 </Grid >
             </Container>
@@ -198,56 +176,13 @@ const Order = () => {
                 <Grid container justifyContent="space-between" style={{marginTop: '40px'}} >
                     <Grid item style={{width: '50%'}}>
                         <Container>
-                            <Typography variant="overline" style={{color: 'gray', paddingRight: '3px'}} gutterBottom>Bill to</Typography>
-                            
-
-                            {client  && (
-                                <>
-                                    <Typography variant="subtitle2" gutterBottom>{client.name}</Typography>
-                                    <Typography variant="body2" >{client.email}</Typography>
-                                    <Typography variant="body2" >{client.phone}</Typography>
-                                    <Typography variant="body2">{client.address}</Typography>
-                                    <Button color="primary" size="small" style={{textTransform: 'none'}} onClick={()=> setClient(null)}>Change</Button>
-                                </>
-                            )}
-                            <div style={client? {display: 'none'} :  {display: 'block'}}>
-                                <Autocomplete
-                                            {...clientsProps}
-                                            PaperComponent={CustomPaper}
-                                                renderInput={(params) => <TextField {...params}
-                                                required={!order && true} 
-                                                label="Select Customer" 
-                                                margin="normal" 
-                                                variant="outlined"
-                                                />}
-                                            value={clients?.name}
-                                            onChange={(event, value) => setClient(value)}
-                                            
-                                    />
-
-                            </div>
-                            {!client && 
-                                <>
-                                <Grid item style={{paddingBottom: '10px'}}>
-                                    <Chip
-                                        avatar={<Avatar>+</Avatar>}
-                                        label="New Customer"
-                                        onClick={() => setOpen(true)}
-                                        variant="outlined"
-                                    />
-                                </Grid>
-                                </>
-                            }
+                        {// Empty
+                        }
                         </Container>
                     </Grid>
 
                     <Grid item style={{marginRight: 20, textAlign: 'right'}}>
-                        <Typography variant="overline" style={{color: 'gray'}} gutterBottom>Status</Typography>
-                        <Typography variant="h6" gutterBottom style={{color: (type === 'Receipt' ? 'green' : 'red')}}>{(type === 'Receipt' ? 'Paid' : 'Unpaid')}</Typography>
-                        <Typography variant="overline" style={{color: 'gray'}} gutterBottom>Date</Typography>
-                        <Typography variant="body2" gutterBottom>{moment().format("MMM Do YYYY")}</Typography>
-                        <Typography variant="overline" style={{color: 'gray'}} gutterBottom>Due Date</Typography>
-                        <Typography variant="body2" gutterBottom>{selectedDate? moment(selectedDate).format("MMM Do YYYY") : '27th Sep 2021'}</Typography>
+                        <Typography  >{(type === 'Receipt' ? 'Paid' : 'Unpaid')}</Typography>
                     </Grid>
                 </Grid>
             </Container>
@@ -265,7 +200,7 @@ const Order = () => {
             </TableRow>
             </TableHead>
             <TableBody>
-            {orderData.items.map((itemField, index) => (
+            {inventoryData.items.map((itemField, index) => (
                 <TableRow key={index}>
                 <TableCell  scope="row" style={{width: '40%' }}> <InputBase style={{width: '100%'}} outline="none" sx={{ ml: 1, flex: 1 }} type="text" name="itemName" onChange={e => handleChange(index, e)} value={itemField.itemName} placeholder="Item name or description" /> </TableCell>
                 <TableCell align="right"> <InputBase sx={{ ml: 1, flex: 1 }} type="number" name="quantity" onChange={e => handleChange(index, e)} value={itemField.quantity} placeholder="0" /> </TableCell>
@@ -289,8 +224,8 @@ const Order = () => {
                 <h4>Notes/Terms</h4>
                 <textarea 
                     placeholder="Provide additional details or terms of service"
-                    onChange={(e) => setOrderData({...orderData, notes: e.target.value})}
-                    value={orderData.notes}
+                    onChange={(e) => setInventoryData({...inventoryData, notes: e.target.value})}
+                    value={inventoryData.notes}
                 />
             </div>
 
@@ -313,4 +248,4 @@ const Order = () => {
     )
 }
 
-export default Order
+export default Inventory

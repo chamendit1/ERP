@@ -12,7 +12,7 @@ const NavBar = () => {
 
 
   const body = document.querySelector('body'),
-  sidebar = body.querySelector('nav'),
+  //sidebar = body.querySelector('nav'),
   modeText = body.querySelector(".mode-text");
 
 
@@ -32,19 +32,9 @@ const NavBar = () => {
     return (
         <div>
           <nav className="sidebar close" 
-           onMouseEnter={() => sidebar.classList.toggle("close")}
-           onMouseLeave={() => sidebar.classList.toggle("close")}>
-           <header>
-            <div class="image-text">
-                  <span class="image"></span>
-                  <div class="text logo-text">
-                      <span class="name">Codinglab</span>
-                      <span class="profession">Web developer</span>
-                  </div>
-            </div>
-
-              <i class='bx bx-chevron-right toggle'></i>
-          </header>
+           //onMouseEnter={() => sidebar.classList.toggle("close")}
+           //onMouseLeave={() => sidebar.classList.toggle("close")}
+           >
 
           <div class="menu-bar">
             <div class="menu">
@@ -58,43 +48,57 @@ const NavBar = () => {
 
                 <li className="nav-link">
                   <Link to="/dashboard" className="nav-link">
-                    <i class='bx bx-home-alt icon' ></i>
+                    <i class='bx bx-home-alt icon' >Dashboard</i>
                     <span class="text nav-text">Dashboard</span>
                   </Link>
                 </li>
 
                 <li class="nav-link">
                 <Link to="/customers" className="nav-link">
-                          <i class='bx bx-bar-chart-alt-2 icon' ></i>
+                          <i class='bx bx-bar-chart-alt-2 icon' >Customers</i>
                           <span class="text nav-text">Orders</span>
                           </Link>
                   </li>
 
                   <li class="nav-link">
                   <Link to="/invoices" className="nav-link">
-                          <i class='bx bx-bell icon'></i>
+                          <i class='bx bx-bell icon'>invoices</i>
                           <span class="text nav-text">Notifications</span>
                           </Link>
                   </li>
 
                   <li class="nav-link">
                   <Link to="/orders" className="nav-link">
-                          <i class='bx bx-pie-chart-alt icon' ></i>
+                          <i class='bx bx-pie-chart-alt icon' >Orders</i>
                           <span class="text nav-text">Analytics</span>
                           </Link>
                   </li>
 
                   <li class="nav-link">
                   <Link to="/settings" className="nav-link">
-                          <i class='bx bx-heart icon' ></i>
+                          <i class='bx bx-heart icon' >Profile</i>
                           <span class="text nav-text">Likes</span>
                           </Link>
                   </li>
 
                   <li class="nav-link">
-                      <Link to="/dashboard" className="nav-link">
-                          <i class='bx bx-wallet icon' ></i>
-                          <span class="text nav-text">Wallets</span>
+                      <Link to="/inventories" className="nav-link">
+                          <i class='bx bx-wallet icon' >Inventories</i>
+                          <span class="text nav-text"></span>
+                      </Link>
+                  </li>
+
+                  <li class="nav-link">
+                      <Link to="/manufacturing" className="nav-link">
+                          <i class='bx bx-wallet icon' >Manufacturing</i>
+                          <span class="text nav-text"></span>
+                      </Link>
+                  </li>
+
+                  <li class="nav-link">
+                      <Link to="/table" className="nav-link">
+                          <i class='bx bx-wallet icon' >Table</i>
+                          <span class="text nav-text"></span>
                       </Link>
                   </li>
 

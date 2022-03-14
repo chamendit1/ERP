@@ -174,12 +174,12 @@ p {
 
 :root{
     /* ===== Colors ===== */
-    --body-color: #E4E9F7;
-    --sidebar-color: #FFF;
-    --primary-color: #695CFE;
-    --primary-color-light: #F6F5FF;
-    --toggle-color: #DDD;
-    --text-color: #707070;
+    --body-color: #8696c2;
+    --sidebar-color: rgb(47, 155, 222);
+    --primary-color: #8881d7;
+    --primary-color-light: #cdcde4;
+    --toggle-color: rgb(255, 255, 255);
+    --text-color: #d79494;
 
     /* ====== Transition ====== */
     --tran-03: all 0.2s ease;
@@ -192,11 +192,6 @@ body{
     min-height: 100vh;
     background-color: var(--body-color);
     transition: var(--tran-05);
-}
-
-::selection{
-    background-color: var(--primary-color);
-    color: #fff;
 }
 
 body.dark{
@@ -264,60 +259,7 @@ body.dark{
 .sidebar.close .text{
     opacity: 0;
 }
-/* =========================== */
 
-.sidebar header{
-    position: relative;
-}
-
-.sidebar header .image-text{
-    display: flex;
-    align-items: center;
-}
-.sidebar header .logo-text{
-    display: flex;
-    flex-direction: column;
-}
-header .image-text .name {
-    margin-top: 2px;
-    font-size: 18px;
-    font-weight: 600;
-}
-
-header .image-text .profession{
-    font-size: 16px;
-    margin-top: -2px;
-    display: block;
-}
-
-.sidebar header .image{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.sidebar header .image img{
-    width: 40px;
-    border-radius: 6px;
-}
-
-.sidebar header .toggle{
-    position: absolute;
-    top: 50%;
-    right: -25px;
-    transform: translateY(-50%) rotate(180deg);
-    height: 25px;
-    width: 25px;
-    background-color: var(--primary-color);
-    color: var(--sidebar-color);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 22px;
-    cursor: pointer;
-    transition: var(--tran-05);
-}
 
 body.dark .sidebar header .toggle{
     color: var(--text-color);
@@ -353,7 +295,7 @@ body.dark .sidebar header .toggle{
 .sidebar li a{
     list-style: none;
     height: 100%;
-    background-color: transparent;
+    background-color: var(--primary-color-light);
     display: flex;
     align-items: center;
     height: 100%;

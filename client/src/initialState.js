@@ -35,3 +35,14 @@ export const initialStateOrder = {
     creator: '',
     owner: '',
 }
+
+export const initialStateInventory = {
+    items: [
+        {itemName: '', quantity: ''},
+    ],
+    notes: '',
+    inventoryNumber: Math.floor(Math.random() * 100000),
+    status: '',
+    type: 'Inventory',
+    creator: '',
+}

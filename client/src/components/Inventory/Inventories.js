@@ -1,7 +1,6 @@
-import React, {useState } from 'react';
-import { useDispatch } from 'react-redux'
-import styles from './Clients.module.css'
-// import moment from 'moment'
+import React, {useState, useEffect} from 'react';
+import { useDispatch, useSelector } from 'react-redux'
+import { useHistory } from 'react-router-dom'
 import PropTypes from 'prop-types';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
@@ -21,27 +20,12 @@ import LastPageIcon from '@material-ui/icons/LastPage';
 import Container from '@material-ui/core/Container'
 import DeleteOutlineRoundedIcon from '@material-ui/icons/DeleteOutlineRounded';
 import BorderColorIcon from '@material-ui/icons/BorderColor';
-import { Button } from '@material-ui/core';
+//import { useLocation } from 'react-router-dom';
+
+import { deleteInventory, getInventories } from '../../actions/inventoryActions';
+import NoData from '../svgIcons/NoData';
+import Spinner from '../Spinner/Spinner'
 import { useSnackbar } from 'react-simple-snackbar'
-
-import { deleteClient } from '../../actions/clientActions';
-// import clients from '../../clients.json'
-
-import { useHistory } from 'react-router-dom'
-
-
-
-/*
-
-Table Component
-
-*/
-
-
-
-
-
-
 
 const useStyles1 = makeStyles((theme) => ({
   root: {
@@ -74,7 +58,7 @@ function TablePaginationActions(props) {
   };
 
   return (
-    <div className={classes.root}>
+    <div className={classes.root} >
       <IconButton
         onClick={handleFirstPageButtonClick}
         disabled={page === 0}
@@ -115,6 +99,7 @@ TablePaginationActions.propTypes = {
 const useStyles2 = makeStyles(theme => ({
   table: {
     minWidth: 500,
+    
   },
 
   tablecell: {
@@ -122,19 +107,42 @@ const useStyles2 = makeStyles(theme => ({
 }
 }));
 
+const tableStyle = { width: 160, fontSize: 14, cursor: 'pointer', borderBottom: 'none',  padding: '8px', textAlign: 'center' }
+const headerStyle = { borderBottom: 'none', textAlign: 'center'}
 
-const Clients = ({ setOpen, setCurrentId, clients }) => {
+
+const Inventories = () => {
     
+  const dispatch = useDispatch()
+  //const location = useLocation()
+  const history = useHistory()
+  const user = JSON.parse(localStorage.getItem('profile'))
+  const rows = useSelector(state => state.invoices.invoices)
+  const isLoading = useSelector(state => state.invoices.isLoading)
+        // eslint-disable-next-line 
+  const [openSnackbar, closeSnackbar] = useSnackbar()
+
+  // const rows = []
+
+
+     useEffect(() => {
+         dispatch(getInventories());
+     }, [dispatch]);
+
+    //useEffect(() => {
+      //dispatch(getInvoicesByUser({ search: user?.result?._id || user?.result?.googleId}));
+      // eslint-disable-next-line
+    //},[location])
+
+     console.log(rows)
+
+
+
   const classes = useStyles2();
   const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(clients.length);
-      // eslint-disable-next-line 
-      const [openSnackbar, closeSnackbar] = useSnackbar()
+  const [rowsPerPage, setRowsPerPage] = useState(rows.length);
 
-  const dispatch = useDispatch()
-  const rows = clients
-  
-  const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows?.length - page * rowsPerPage);
+  const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -146,41 +154,47 @@ const Clients = ({ setOpen, setCurrentId, clients }) => {
   };
 
 
-  const handleEdit = (selectedInvoice) => {
-    setOpen((prevState) => !prevState)
-    setCurrentId(selectedInvoice)
-  }
-  const history = useHistory()
-  const openClient = (id) => {
-    history.push(`/customers/${id}`)
+  const editInventory = (id) => {
+    history.push(`/edit/inventory/${id}`)
   }
 
+  const openInventory = (id) => {
+    history.push(`/inventory/${id}`)
+  }
 
-  const tableStyle = { width: 160, fontSize: 14, cursor: 'pointer', borderBottom: 'none',  padding: '8px', textAlign: 'center' }
-  const headerStyle = { borderBottom: 'none', textAlign: 'center', sort: true}
+  if(!user) {
+    history.push('/login')
+  }
 
 
+
+  if(isLoading) {
+    return  <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', paddingTop: '20px'}}>
+        <Spinner />
+    </div>
+  }
+
+  if(rows.length === 0) {
+    return  <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', paddingTop: '20px', margin: '80px'}}>
+      <NoData />
+    <p style={{padding: '40px', color: 'gray', textAlign: 'center'}}>No invoice yet. Click the plus icon to create invoice</p>
+  
+    </div>
+  }
+  
   return (
-    <div className={styles.pageLayout}>
-    
-    <Container style={{width: '85%'}}>
-
-
-    <Container>
-          <h1> /Customers</h1>
-          <h2> Display all Customers</h2>
-    </Container>
-
-    
-  <TableContainer component={Paper} elevation={0}>
+    <div>
+    <Container style={{width: '85%', paddingTop: '70px', paddingBottom: '50px', border: 'none'}} >
+    <TableContainer component={Paper} elevation={0}>
       <Table className={classes.table} aria-label="custom pagination table">
+      
 
-        <TableHead>
+      <TableHead>
           <TableRow>
-            <TableCell style={{...headerStyle, width: '10px'}}>Number</TableCell>
-            <TableCell style={headerStyle}>Name</TableCell>
-            <TableCell style={headerStyle}>Email</TableCell>
-            <TableCell style={headerStyle}>Phone</TableCell>
+            <TableCell style={headerStyle}>Number</TableCell>
+            <TableCell style={headerStyle}>Client</TableCell>
+            <TableCell style={headerStyle}>Due Date</TableCell>
+            <TableCell style={headerStyle}>Status</TableCell>
             <TableCell style={headerStyle}>Edit</TableCell>
             <TableCell style={headerStyle}>Delete</TableCell>
           </TableRow>
@@ -188,22 +202,23 @@ const Clients = ({ setOpen, setCurrentId, clients }) => {
 
         <TableBody>
           {(rowsPerPage > 0
-            ? rows?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+            ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
             : rows
-          ).map((row, index) => (
-            <TableRow key={row._id} styel={{cursor: 'pointer'}} >
-              <TableCell style={{...tableStyle, width: '10px'}} onClick={() => openClient(row._id)}>{index + 1}</TableCell>
-              <TableCell  style={tableStyle} scope="row" > <Button style={{textTransform: 'none'}}  > {row.name} </Button></TableCell>
-              <TableCell style={tableStyle}>{row.email}</TableCell>
-              <TableCell style={tableStyle}>{row.phone}</TableCell>
-              <TableCell style={{...tableStyle, width: '10px'}}>
-                  <IconButton onClick={() => handleEdit(row._id)}>
-                    <BorderColorIcon style={{width: '20px', height: '20px'}} />
+          ).map((row) => (
+            <TableRow key={row._id} style={{cursor: 'pointer'}} >
+                <TableCell style={tableStyle} onClick={() => openInventory(row._id)}> </TableCell>
+                <TableCell  style={tableStyle} onClick={() => openInventory(row._id)} >  </TableCell>
+                <TableCell style={tableStyle} onClick={() => openInventory(row._id)} >  </TableCell>
+                <TableCell style={tableStyle} onClick={() => openInventory(row._id)} > </TableCell>
+             
+                <TableCell style={{...tableStyle, width: '10px'}}>
+                  <IconButton onClick={() => editInventory(row._id)}>
+                    <BorderColorIcon  style={{width: '20px', height: '20px'}} />
                   </IconButton>
               </TableCell>
               <TableCell style={{...tableStyle, width: '10px'}}>
-                  <IconButton onClick={() => dispatch(deleteClient(row._id, openSnackbar))}>
-                    <DeleteOutlineRoundedIcon style={{width: '20px', height: '20px'}} />
+                  <IconButton onClick={() => dispatch(deleteInventory(row._id, openSnackbar))}>
+                    <DeleteOutlineRoundedIcon  style={{width: '20px', height: '20px'}} />
                   </IconButton>
               </TableCell>
             </TableRow>
@@ -215,7 +230,6 @@ const Clients = ({ setOpen, setCurrentId, clients }) => {
             </TableRow>
           )}
         </TableBody>
-
         <TableFooter>
           <TableRow>
             <TablePagination
@@ -237,8 +251,8 @@ const Clients = ({ setOpen, setCurrentId, clients }) => {
       </Table>
     </TableContainer>
     </Container>
-    </div>
+  </div>
   );
 }
 
-export default Clients
+export default Inventories

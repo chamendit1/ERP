@@ -51,6 +51,13 @@ const FabButton = () => {
                 <PersonAddIcon />
             </Action>
 
+            <Action
+                text="New Inventory"
+                onClick={() => window.location.href='/inventory'}
+              >
+                <PersonAddIcon />
+            </Action>
+
           </Fab>
         </div>
     )
