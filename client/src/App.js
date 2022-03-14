@@ -25,6 +25,7 @@ import Inventories from './components/Inventory/Inventories'
 import InventoryDetails from './components/Inventory/InventoryDetails'
 import Manufacturing from './components/Manufacturing/Manufacturing';
 
+
 function App() {
 
   const user = JSON.parse(localStorage.getItem('profile'))
@@ -54,7 +55,7 @@ function App() {
           <Route path="/inventory/:id" exact component={InventoryDetails} />
 
           <Route path="/manufacturing" exact component={Manufacturing} />
-
+ 
 
 
           <Route path="/customers" exact component={ClientList} />

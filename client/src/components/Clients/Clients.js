@@ -29,6 +29,20 @@ import { deleteClient } from '../../actions/clientActions';
 
 import { useHistory } from 'react-router-dom'
 
+
+
+/*
+
+Table Component
+
+*/
+
+
+
+
+
+
+
 const useStyles1 = makeStyles((theme) => ({
   root: {
     flexShrink: 0,
@@ -133,10 +147,8 @@ const Clients = ({ setOpen, setCurrentId, clients }) => {
 
 
   const handleEdit = (selectedInvoice) => {
-    
     setOpen((prevState) => !prevState)
     setCurrentId(selectedInvoice)
-
   }
   const history = useHistory()
   const openClient = (id) => {
@@ -145,23 +157,25 @@ const Clients = ({ setOpen, setCurrentId, clients }) => {
 
 
   const tableStyle = { width: 160, fontSize: 14, cursor: 'pointer', borderBottom: 'none',  padding: '8px', textAlign: 'center' }
-const headerStyle = { borderBottom: 'none', textAlign: 'center'}
+  const headerStyle = { borderBottom: 'none', textAlign: 'center', sort: true}
 
 
   return (
     <div className={styles.pageLayout}>
     
     <Container style={{width: '85%'}}>
-        <TableContainer component={Paper} elevation={0}>
 
-        <Container>
+
+    <Container>
           <h1> /Customers</h1>
           <h2> Display all Customers</h2>
-        </Container>
-        
+    </Container>
+
+    
+  <TableContainer component={Paper} elevation={0}>
       <Table className={classes.table} aria-label="custom pagination table">
 
-      <TableHead>
+        <TableHead>
           <TableRow>
             <TableCell style={{...headerStyle, width: '10px'}}>Number</TableCell>
             <TableCell style={headerStyle}>Name</TableCell>
@@ -169,7 +183,6 @@ const headerStyle = { borderBottom: 'none', textAlign: 'center'}
             <TableCell style={headerStyle}>Phone</TableCell>
             <TableCell style={headerStyle}>Edit</TableCell>
             <TableCell style={headerStyle}>Delete</TableCell>
-            
           </TableRow>
         </TableHead>
 
@@ -202,6 +215,7 @@ const headerStyle = { borderBottom: 'none', textAlign: 'center'}
             </TableRow>
           )}
         </TableBody>
+
         <TableFooter>
           <TableRow>
             <TablePagination
