@@ -21,12 +21,12 @@ import { Container, Grid } from '@material-ui/core';
 import Divider from '@material-ui/core/Divider';
 import BorderColorIcon from '@material-ui/icons/BorderColor';
 import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
-import Spinner from '../Spinner/Spinner'
+import Spinner from '../../components/Spinner/Spinner'
 
-import Modal from '../Payments/Modal'
+import Modal from '../../components/Payments/Modal'
 import { getInventory } from '../../actions/inventoryActions'
 
-const InventoryDetails = () => {
+const Details = () => {
 
 
     const location = useLocation()
@@ -191,4 +191,4 @@ if(!inventory) {
     )
 }
 
-export default InventoryDetails
+export default Details

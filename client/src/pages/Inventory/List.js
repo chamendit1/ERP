@@ -23,8 +23,8 @@ import BorderColorIcon from '@material-ui/icons/BorderColor';
 //import { useLocation } from 'react-router-dom';
 
 import { deleteInventory, getInventories } from '../../actions/inventoryActions';
-import NoData from '../svgIcons/NoData';
-import Spinner from '../Spinner/Spinner'
+import NoData from '../../components/svgIcons/NoData';
+import Spinner from '../../components/Spinner/Spinner';
 import { useSnackbar } from 'react-simple-snackbar'
 
 const useStyles1 = makeStyles((theme) => ({
@@ -111,7 +111,7 @@ const tableStyle = { width: 160, fontSize: 14, cursor: 'pointer', borderBottom: 
 const headerStyle = { borderBottom: 'none', textAlign: 'center'}
 
 
-const Inventories = () => {
+const List = () => {
     
   const dispatch = useDispatch()
   //const location = useLocation()
@@ -192,8 +192,7 @@ const Inventories = () => {
       <TableHead>
           <TableRow>
             <TableCell style={headerStyle}>Number</TableCell>
-            <TableCell style={headerStyle}>Client</TableCell>
-            <TableCell style={headerStyle}>Due Date</TableCell>
+            <TableCell style={headerStyle}>Name</TableCell>
             <TableCell style={headerStyle}>Status</TableCell>
             <TableCell style={headerStyle}>Edit</TableCell>
             <TableCell style={headerStyle}>Delete</TableCell>
@@ -206,10 +205,9 @@ const Inventories = () => {
             : rows
           ).map((row) => (
             <TableRow key={row._id} style={{cursor: 'pointer'}} >
-                <TableCell style={tableStyle} onClick={() => openInventory(row._id)}> </TableCell>
-                <TableCell  style={tableStyle} onClick={() => openInventory(row._id)} >  </TableCell>
-                <TableCell style={tableStyle} onClick={() => openInventory(row._id)} >  </TableCell>
-                <TableCell style={tableStyle} onClick={() => openInventory(row._id)} > </TableCell>
+                <TableCell style={tableStyle} onClick={() => openInventory(row._id)}> {row.inventorynumber}</TableCell>
+                <TableCell style={tableStyle} onClick={() => openInventory(row._id)} > {row.type}</TableCell>
+                <TableCell style={tableStyle} onClick={() => openInventory(row._id)} > {row.status} </TableCell>
              
                 <TableCell style={{...tableStyle, width: '10px'}}>
                   <IconButton onClick={() => editInventory(row._id)}>
@@ -255,4 +253,4 @@ const Inventories = () => {
   );
 }
 
-export default Inventories
+export default List

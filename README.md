@@ -1,8 +1,5 @@
-### [arcinvoice.com](https://arcinvoice.com/)
-# MERN Stack Invoicing Application
+# MERN Stack ERP
 Built with the MERN stack (MongoDB, Express, React and NodeJS).
-![Invoice](https://res.cloudinary.com/almpo/image/upload/v1637311386/invoice/invoice-app_tcz0dj.png)
-
   * [Introduction](#introduction)
   * [Key Features](#key-features)
   * [Technologies used](#technologies-used)

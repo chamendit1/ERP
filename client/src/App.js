@@ -20,10 +20,12 @@ import Forgot from './components/Password/Forgot'
 import Reset from './components/Password/Reset'
 import Sales from './components/Sales/Sales'
 
-import Inventory from './components/Inventory/Inventory';
-import Inventories from './components/Inventory/Inventories'
-import InventoryDetails from './components/Inventory/InventoryDetails'
+
 import Manufacturing from './components/Manufacturing/Manufacturing';
+
+import Inventory from './pages/Inventory/Inventory';
+import Details from './pages/Inventory/Details';
+import List from './pages/Inventory/List';
 
 
 function App() {
@@ -36,7 +38,7 @@ function App() {
       <SnackbarProvider>
      {user && <NavBar />} 
       <Header />
-        <Switch>
+      <Switch>
           <Route path="/" exact component={Home} />
 
           <Route path="/invoice" exact component={Invoice} />
@@ -50,9 +52,9 @@ function App() {
           <Route path="/orders" exact component={Orders} />
 
           <Route path="/inventory" exact component={Inventory} />
-          <Route path="/inventories" exact component={Inventories} />
+          <Route path="/inventories" exact component={List} />
           <Route path="/edit/inventory/:id" exact component={Inventory} />
-          <Route path="/inventory/:id" exact component={InventoryDetails} />
+          <Route path="/inventory/:id" exact component={Details} />
 
           <Route path="/manufacturing" exact component={Manufacturing} />
  
