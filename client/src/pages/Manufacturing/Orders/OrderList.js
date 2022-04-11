@@ -23,9 +23,9 @@ import DeleteOutlineRoundedIcon from '@material-ui/icons/DeleteOutlineRounded';
 import BorderColorIcon from '@material-ui/icons/BorderColor';
 //import { useLocation } from 'react-router-dom';
 
-import { deleteOrder, getOrders } from '../../actions/orderActions';
-import NoData from '../svgIcons/NoData';
-import Spinner from '../Spinner/Spinner'
+import { deleteOrder, getOrders } from '../../../actions/orderActions';
+import NoData from '../../../components/svgIcons/NoData';
+import Spinner from '../../../components/Spinner/Spinner';
 import { useSnackbar } from 'react-simple-snackbar'
 
 const useStyles1 = makeStyles((theme) => ({
@@ -112,7 +112,7 @@ const tableStyle = { width: 160, fontSize: 14, cursor: 'pointer', borderBottom: 
 const headerStyle = { borderBottom: 'none', textAlign: 'center'}
 
 
-const Orders = () => {
+const OrderList = () => {
     
   const dispatch = useDispatch()
   //const location = useLocation()
@@ -269,4 +269,4 @@ const Orders = () => {
   );
 }
 
-export default Orders
+export default OrderList

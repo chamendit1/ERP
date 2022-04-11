@@ -59,10 +59,7 @@ const InventoryType = ({ type, setType }) => {
                 <MenuItem value="">
                   <em>Select Type</em>
                 </MenuItem>
-                <MenuItem value="Invoice">Invoice</MenuItem>
-                <MenuItem value="Receipt">Receipt</MenuItem>
-                <MenuItem value="Estimate">Estimate</MenuItem>
-                <MenuItem value="Bill">Bill</MenuItem>
+                <MenuItem value="Purchase Order">Purchase Order</MenuItem>
                 <MenuItem value="Quotation">Quotation</MenuItem>
               </Select>
             </FormControl>

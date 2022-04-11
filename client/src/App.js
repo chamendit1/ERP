@@ -5,9 +5,6 @@ import Home from './components/Home/Home';
 import Invoice from './components/Invoice/Invoice';
 import Invoices from './components/Invoices/Invoices';
 import InvoiceDetails from './components/InvoiceDetails/InvoiceDetails'
-import Order from './components/Order/Order';
-import Orders from './components/Orders/Orders';
-import OrderDetails from './components/OrderDetails/OrderDetails';
 import ClientList from './components/Clients/ClientList'
 import Client from './components/Client/Client'
 import NavBar from './components/NavBar/NavBar';
@@ -27,6 +24,9 @@ import Inventory from './pages/Inventory/Inventory';
 import Details from './pages/Inventory/Details';
 import List from './pages/Inventory/List';
 
+import Order from './pages/Manufacturing/Orders/Order';
+import OrderDetails from './pages/Manufacturing/Orders/OrderDetails';
+import OrderList from './pages/Manufacturing/Orders/OrderList';
 
 function App() {
 
@@ -49,7 +49,7 @@ function App() {
           <Route path="/order" exact component={Order} />
           <Route path="/edit/order/:id" exact component={Order} />
           <Route path="/order/:id" exact component={OrderDetails} />
-          <Route path="/orders" exact component={Orders} />
+          <Route path="/orders" exact component={OrderList} />
 
           <Route path="/inventory" exact component={Inventory} />
           <Route path="/inventories" exact component={List} />

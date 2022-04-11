@@ -3,10 +3,10 @@ import React, { useState, useEffect } from 'react'
 import { useSnackbar } from 'react-simple-snackbar'
 import { useLocation, useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { initialStateOrder } from '../../initialState' 
-import { getOrder } from '../../actions/orderActions' 
-import { toCommas } from '../../utils/utils'
-import styles from './InvoiceDetails.module.css'
+import { initialStateOrder } from '../../../initialState'
+import { getOrder } from '../../../actions/orderActions' 
+import { toCommas } from '../../../utils/utils'
+import styles from './OrderDetails.module.css'
 import moment from 'moment'
 import { useHistory } from 'react-router-dom'
 import { makeStyles } from '@material-ui/core/styles';
@@ -23,12 +23,12 @@ import { Container, Grid } from '@material-ui/core';
 import Divider from '@material-ui/core/Divider';
 import BorderColorIcon from '@material-ui/icons/BorderColor';
 import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
-import Spinner from '../Spinner/Spinner'
+import Spinner from '../../../components/Spinner/Spinner'
 
 import ProgressButton from 'react-progress-button'
 import axios from 'axios';
 import { saveAs } from 'file-saver';
-import Modal from '../Payments/Modal'
+import Modal from '../../../components/Payments/Modal'
 
 const OrderDetails = () => {
 
@@ -44,6 +44,7 @@ const OrderDetails = () => {
     const history = useHistory()
     const [sendStatus, setSendStatus] = useState(null)
     const [downloadStatus, setDownloadStatus] = useState(null)
+    const [type, setType] = React.useState('')
     // eslint-disable-next-line
     const [openSnackbar, closeSnackbar] = useSnackbar()
     const user = JSON.parse(localStorage.getItem('profile'))
@@ -87,6 +88,7 @@ const OrderDetails = () => {
             setOrderData(order)
             setClient(order.client)
             setSelectedDate(order.dueDate)
+            setType(order.type)
             setCompany(order?.businessDetails?.data?.data)
            
         }
@@ -157,6 +159,8 @@ const OrderDetails = () => {
 const iconSize = {height: '18px', width: '18px', marginRight: '10px', color: 'gray'}
 const [open, setOpen ] = useState(false)
 
+console.log(type)
+
 
 if(!order) {
   return (
@@ -219,6 +223,7 @@ if(!order) {
                 </Grid>
             )}
                 <Grid item style={{marginRight: 40, textAlign: 'right'}}>
+                    <Typography style={{lineSpacing: 1, fontSize: 45, fontWeight: 700, color: 'gray'}} >{type}</Typography>
                     <Typography variant="overline" style={{color: 'gray'}} >No: </Typography>
                     <Typography variant="body2">{orderData?.orderNumber}</Typography>
                 </Grid>
