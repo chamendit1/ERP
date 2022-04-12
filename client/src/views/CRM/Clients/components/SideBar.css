@@ -1,0 +1,145 @@
+/* RESPONSIVE SIDE NAVBAR */
+:root {
+    font-size: 16px;
+    font-family: 'Roboto';
+    --text-primary: #ea2e2e;
+    --text-secondary: #4b5c4a;
+    --bg-primary: #1f1f21;
+    --bg-secondary: #345048;
+  }
+
+  
+  .sidebar {
+    position:fixed;
+    background-color: var(--bg-primary);
+    margin-left: 100px;
+  }
+
+
+  .header {
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+    text-align: center;
+    color: var(--text-secondary);
+    background: var(--bg-secondary);
+    font-size: 1.5rem;
+    letter-spacing: 0.3ch;
+    width: 100%;
+  }
+  
+  .side-item {
+    width: 100%;
+  }
+  
+  .side-item:last-child {
+    margin-top: auto;
+  }
+
+  .side-link {
+    display: flex;
+    align-items: center;
+    height: 3.8rem;
+    color: var(--text-primary);
+    text-decoration: none;
+    filter: grayscale(100%) opacity(0.7);
+    transition: var(--transition-speed);
+  }
+  
+  .side-link:hover {
+    filter: grayscale(0%) opacity(1);
+    background: var(--bg-secondary);
+    color: var(--text-secondary);
+  }
+   /* Body */
+  .link-text {
+    display: inline;
+    margin-left: 1rem;
+  }
+  
+  .side-link svg {
+    width: 1.5rem;
+    min-width: 1.5rem;
+    margin: 0 1.5rem;
+  }
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  /* USELESS */
+
+
+
+
+
+
+
+  /* Remove Scroll Bar */
+  /* width */
+  .sidebar::-webkit-scrollbar {
+    width: 1px;
+    height: 1px;
+  }
+  
+  /* Track */
+  .sidebar::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 1px grey; 
+    border-radius: 10px;
+  }
+   
+  /* Handle */
+  .sidebar::-webkit-scrollbar-thumb {
+    background: rgb(141, 187, 255); 
+    border-radius: 10px;
+  }
+
+
+
+
+
+  /* Small screens
+  @media only screen and (max-width: 600px) {
+    .sidebar {
+      bottom: 0;
+      width: 100vw;
+      height: 5rem;
+    }
+  
+  
+    .sidebar-side {
+      flex-direction: row;
+    }
+  
+    .side-link {
+      justify-content: center;
+    }
+  
+    main {
+      margin: 0;
+    }
+  }
+   */
+  /* Large screens */
+  @media only screen and (min-width: 600px) {
+    .sidebar {
+      width: 16rem;
+      height: 100%;
+      display: inline;
+    }
+  }

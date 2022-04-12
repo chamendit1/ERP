@@ -1,10 +1,15 @@
  /* eslint-disable */
- import React, { useState, useEffect} from 'react'
- import ClientDetail from './ClientDetail'
- import { getClient} from '../../actions/clientActions'
- import { useDispatch, useSelector } from 'react-redux'
- import { useParams } from 'react-router-dom'
- import { clientState } from '../../initialState'
+import React, { useState, useEffect} from 'react'
+import { getClient } from '../../../../actions/clientActions'
+import { useDispatch, useSelector } from 'react-redux'
+import { useParams } from 'react-router-dom'
+import { clientState } from '../../../../initialState'
+
+import { Box, Container, Grid} from '@material-ui/core';
+
+import ClientPage from '../components/ClientPage'
+import Invoicesbyid from '../components/Invoicesbyid'
+import SideBar from '../components/SideBar'
 
 const Client = () => {
   
@@ -28,9 +33,13 @@ const Client = () => {
 
     return (
         <div>
-            <ClientDetail
+          <SideBar/>
+            <ClientPage
                 id={id}
                 client={client}
+            />
+            <Invoicesbyid 
+              id={id}
             />
         </div>
     )

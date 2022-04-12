@@ -5,8 +5,9 @@ import Home from './components/Home/Home';
 import Invoice from './components/Invoice/Invoice';
 import Invoices from './components/Invoices/Invoices';
 import InvoiceDetails from './components/InvoiceDetails/InvoiceDetails'
-import ClientList from './components/Clients/ClientList'
-import Client from './components/Client/Client'
+
+
+
 import NavBar from './components/NavBar/NavBar';
 import Login from './components/Login/Login'
 import Dashboard from './components/Dashboard/Dashboard';
@@ -18,26 +19,30 @@ import Reset from './components/Password/Reset'
 import Sales from './components/Sales/Sales'
 
 
-import Manufacturing from './components/Manufacturing/Manufacturing';
+import Inventory from './views/Inventory/Inventory';
+import Details from './views/Inventory/Details';
+import List from './views/Inventory/List';
 
-import Inventory from './pages/Inventory/Inventory';
-import Details from './pages/Inventory/Details';
-import List from './pages/Inventory/List';
+import Order from './views/CRM/Order/OrderForm/Order';
+import OrderPage from './views/CRM/Order/OrderPage/OrderPage';
+import OrderList from './views/CRM/Order/OrderList/OrderList';
 
-import Order from './pages/Manufacturing/Orders/Order';
-import OrderDetails from './pages/Manufacturing/Orders/OrderDetails';
-import OrderList from './pages/Manufacturing/Orders/OrderList';
+
+import ClientList from './views/CRM/Clients/ClientList/ClientList';
+import Client from './views/CRM/Clients/ClientPage/Client';
 
 function App() {
 
   const user = JSON.parse(localStorage.getItem('profile'))
 
   return (
-    <div>
+    <div className='grid-container'>
       <BrowserRouter>
       <SnackbarProvider>
      {user && <NavBar />} 
       <Header />
+      <div className='item3'>
+
       <Switch>
           <Route path="/" exact component={Home} />
 
@@ -48,7 +53,7 @@ function App() {
 
           <Route path="/order" exact component={Order} />
           <Route path="/edit/order/:id" exact component={Order} />
-          <Route path="/order/:id" exact component={OrderDetails} />
+          <Route path="/order/:id" exact component={OrderPage} />
           <Route path="/orders" exact component={OrderList} />
 
           <Route path="/inventory" exact component={Inventory} />
@@ -56,7 +61,6 @@ function App() {
           <Route path="/edit/inventory/:id" exact component={Inventory} />
           <Route path="/inventory/:id" exact component={Details} />
 
-          <Route path="/manufacturing" exact component={Manufacturing} />
  
 
 
@@ -75,6 +79,9 @@ function App() {
           <Redirect exact from="/new-invoice" to="/invoice" />
 
         </Switch>
+
+      </div>
+
         <Footer />
         </SnackbarProvider>
       </BrowserRouter>

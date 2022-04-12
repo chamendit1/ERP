@@ -4,12 +4,12 @@ import Typography from '@material-ui/core/Typography';
 
 
 import Paper from '@material-ui/core/Paper';
-import Invoicesbyid from '../Invoices/Invoicesbyid';
+import SideBar from './SideBar';
 
 // import clients from '../../clients.json'
 
 
-const ClientDetail = ({ client, id }) => {
+const ClientPage = ({ client, id }) => {
 
       // eslint-disable-next-line
 const row = client
@@ -17,7 +17,7 @@ const row = client
   return (
 
     <div>
-    <Container style={{width: '85%'}} >
+    <Container>
       <Box sx={{m: 2}}>
         <Paper>
           <Grid container rowspacing={2}>
@@ -42,10 +42,9 @@ const row = client
 
         </Paper>
       </Box>
-      <Invoicesbyid id={id} />
     </Container>
   </div>
   );
 }
 
-export default ClientDetail
+export default ClientPage

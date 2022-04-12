@@ -3,9 +3,9 @@ import React, { useState, useEffect } from 'react'
 import { useSnackbar } from 'react-simple-snackbar'
 import { useLocation, useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { initialStateOrder } from '../../../initialState'
-import { getOrder } from '../../../actions/orderActions' 
-import { toCommas } from '../../../utils/utils'
+import { initialStateOrder } from '../../../../initialState'
+import { getOrder } from '../../../../actions/orderActions' 
+import { toCommas } from '../../../../utils/utils'
 import styles from './OrderDetails.module.css'
 import moment from 'moment'
 import { useHistory } from 'react-router-dom'
@@ -23,14 +23,14 @@ import { Container, Grid } from '@material-ui/core';
 import Divider from '@material-ui/core/Divider';
 import BorderColorIcon from '@material-ui/icons/BorderColor';
 import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
-import Spinner from '../../../components/Spinner/Spinner'
+import Spinner from '../../../../components/Spinner/Spinner'
 
 import ProgressButton from 'react-progress-button'
 import axios from 'axios';
 import { saveAs } from 'file-saver';
-import Modal from '../../../components/Payments/Modal'
+import Modal from '../../../../components/Payments/Modal'
 
-const OrderDetails = () => {
+const OrderPage = () => {
 
 
     const location = useLocation()
@@ -300,4 +300,4 @@ if(!order) {
     )
 }
 
-export default OrderDetails
+export default OrderPage

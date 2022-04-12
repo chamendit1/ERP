@@ -25,7 +25,7 @@ import Button from '@material-ui/core/Button';
 
 import { initialStateInventory } from '../../initialState'
 import { createInventory, getInventory, updateInventory } from '../../actions/inventoryActions';
-import AddClient from '../../components/Inventory/AddClient'
+import AddClient from '../../components/AddClient/AddClient'
 // import SelectType from './SelectType'
 
 const useStyles = makeStyles((theme) => ({

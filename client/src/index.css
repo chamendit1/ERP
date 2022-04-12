@@ -2,14 +2,44 @@
   box-sizing: border-box;
   padding: 0;
   margin: 0;
-
-
 }
 
 body {
   background-color: #cfcccc;
 }
 
+
+/* Grid Container */
+.item1 { 
+  grid-area: header; 
+}
+.item2 { 
+  grid-area: menu;
+  width: 100%;
+}
+.item3 { 
+  grid-area: main;
+  padding: 10px;
+}
+.item4 { 
+  grid-area: footer; 
+}
+
+.grid-container {
+  display: grid;
+  grid-template-areas:
+    'header header header header header header header'
+    'menu main main main main main main'
+    'menu footer footer footer footer footer footer';
+}
+
+
+/* Grid Container */
+
+
+
+
+/* Grid Container 
 
 .tb-container .Mui-focused {
   background-color: rgb(228, 19, 19);
@@ -23,21 +53,21 @@ body {
 }
 .MuiTableCell-body {
   padding: 6px !important;
-  padding-left: 10px !important;
+  padding-left: 6px !important;
 }
 
 .MuiPaper-elevation1 {
   box-shadow: none !important;
 }
 
+*/
 
-
-/* ##########################PROGRESS BUTTON */
+/* ##########################PROGRESS BUTTON 
 .pb-container {
   display: inline-block;
   text-align: center;
   width: 100%;
-  margin: 5px 7px;
+  margin: 5px 5px;
 }
 .pb-container .pb-button {
   background: transparent;
@@ -139,7 +169,7 @@ body {
     transform-origin: center center;
   }
 }
-
+*/
 /* ##########################PROGRESS BUTTON */
 
 
@@ -176,14 +206,13 @@ p {
 
 
 main {
-  margin-left: 5rem;
+  margin-left: 1rem;
   padding: 1rem;
 }
 
 .navbar {
   position: fixed;
   background-color: var(--bg-primary);
-  transition: width 600ms ease;
   overflow: scroll;
   z-index: 100;
 }
@@ -221,10 +250,6 @@ main {
   width: 100%;
 }
 
-.nav-item:last-child {
-  margin-top: auto;
-}
-
 .nav-link {
   display: flex;
   align-items: center;
@@ -242,7 +267,7 @@ main {
 }
 
 .link-text {
-  display: none;
+  display: inline;
   margin-left: 1rem;
 }
 
@@ -252,47 +277,7 @@ main {
   margin: 0 1.5rem;
 }
 
-.fa-primary {
-  color: #ff7eee;
-}
 
-.fa-secondary {
-  color: #df49a6;
-}
-
-.fa-primary,
-.fa-secondary {
-  transition: var(--transition-speed);
-}
-
-.logo {
-  font-weight: bold;
-  text-transform: uppercase;
-  margin-bottom: 1rem;
-  text-align: center;
-  color: var(--text-secondary);
-  background: var(--bg-secondary);
-  font-size: 1.5rem;
-  letter-spacing: 0.3ch;
-  width: 100%;
-}
-
-.logo svg {
-  transform: rotate(0deg);
-  transition: var(--transition-speed);
-}
-
-.logo-text
-{
-  display: inline;
-  position: absolute;
-  left: -999px;
-  transition: var(--transition-speed);
-}
-
-.navbar:hover .logo svg {
-  transform: rotate(-180deg);
-}
 
 /* Small screens */
 @media only screen and (max-width: 600px) {
@@ -322,86 +307,42 @@ main {
 /* Large screens */
 @media only screen and (min-width: 600px) {
   .navbar {
-    top: 0;
-    width: 5rem;
+    width: 16rem;
     height: 100vh;
   }
-
-  .navbar:hover {
-    width: 16rem;
-  }
-
-  .navbar:hover .link-text {
-    display: inline;
-  }
-
-  .navbar:hover .logo svg
-  {
-    margin-left: 11rem;
-  }
-
-  .navbar:hover .logo-text
-  {
-    left: 0px;
-  }
-}
-
-.dark {
-  --text-primary: #b6b6b6;
-  --text-secondary: #ececec;
-  --bg-primary: #23232e;
-  --bg-secondary: #141418;
-}
-
-.light {
-  --text-primary: #1f1f1f;
-  --text-secondary: #000000;
-  --bg-primary: #ffffff;
-  --bg-secondary: #e4e4e4;
-}
-
-.solar {
-  --text-primary: #576e75;
-  --text-secondary: #35535c;
-  --bg-primary: #fdf6e3;
-  --bg-secondary: #f5e5b8;
-}
-
-.theme-icon {
-  display: none;
-}
-
-.dark #darkIcon {
-  display: block;
-}
-
-.light #lightIcon {
-  display: block;
-}
-
-.solar #solarIcon {
-  display: block;
 }
 
 
-/* PAYMENT HISTORY ACCORDION */
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* PAYMENT HISTORY ACCORDION 
 .tab input {
   position: absolute;
   opacity: 0;
   z-index: -1;
 }
 
-
-/* Accordion styles */
+*/
+/* Accordion styles 
 .tabs {
   border-radius: 8px;
   overflow: hidden;
-  /* box-shadow: 0 4px 4px -2px rgba(0, 0, 0, 0.5); */
   width: 63%;
   margin: 10px auto;
 }
-
-/* Small screens */
+*/
+/* Small screens 
 @media only screen and (max-width: 600px) {
   .tabs {
     width: 95%;
@@ -420,7 +361,6 @@ main {
   background: #40404d;
   font-weight: bold;
   cursor: pointer;
-  /* Icon */
 }
 .tab-label:hover {
   background: #3d3d47;
@@ -468,3 +408,4 @@ input:checked ~ .tab-content {
   outline: 0 !important;
   border-bottom-color: #ffab00 !important;
 }
+*/

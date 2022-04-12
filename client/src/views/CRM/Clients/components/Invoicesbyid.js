@@ -21,11 +21,11 @@ import LastPageIcon from '@material-ui/icons/LastPage';
 import Container from '@material-ui/core/Container'
 import DeleteOutlineRoundedIcon from '@material-ui/icons/DeleteOutlineRounded';
 import BorderColorIcon from '@material-ui/icons/BorderColor';
-import { deleteInvoice, getInvoicesByClient } from '../../actions/invoiceActions';
+import { deleteInvoice, getInvoicesByClient } from '../../../../actions/invoiceActions';
 //import NoData from '../svgIcons/NoData';
-import Spinner from '../Spinner/Spinner'
+import Spinner from '../../../../components/Spinner/Spinner';
 import { useSnackbar } from 'react-simple-snackbar'
-import NoData from '../svgIcons/NoData';
+import NoData from '../../../../components/svgIcons/NoData';
 
 const useStyles1 = makeStyles((theme) => ({
   root: {

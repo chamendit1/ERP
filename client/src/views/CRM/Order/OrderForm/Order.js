@@ -27,11 +27,11 @@ import SaveIcon from '@material-ui/icons/Save';
 import Button from '@material-ui/core/Button';
 import Chip from '@material-ui/core/Chip';
 
-import { initialStateOrder } from '../../../initialState'
-import { createOrder, getOrder, updateOrder } from '../../../actions/orderActions';
-import { getClientsByUser } from '../../../actions/clientActions'
-import AddClient from '../../../components/Order/AddClient'
-import OrderType from '../../../components/Order/OrderType';
+import { initialStateOrder } from '../../../../initialState'
+import { createOrder, getOrder, updateOrder } from '../../../../actions/orderActions';
+import { getClientsByUser } from '../../../../actions/clientActions'
+import AddClient from '../../../../components/AddClient/AddClient'
+import OrderType from './OrderType';
 // import SelectType from './SelectType'
 
 const useStyles = makeStyles((theme) => ({

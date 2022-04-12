@@ -110,7 +110,7 @@ const Header = () => {
         </div>
     )
     return (
-      <div>
+      <div className='item1'>
         <div className={styles.header}>
             <div className={classes.root}>
               <div>
