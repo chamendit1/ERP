@@ -1,16 +1,18 @@
  /* eslint-disable */
  import React, { useState, useEffect} from 'react'
- import Clients from './Clients'
- import AddClient from '../../../../components/AddClient/AddClient'
+ import ClientTable from '../components/ClientTable'
+ import AddClient from '../components/AddClient'
  import { getClientsByUser } from '../../../../actions/clientActions'
  import { useDispatch, useSelector } from 'react-redux'
  import { useLocation, useHistory } from 'react-router-dom'
  import { Container } from '@material-ui/core'
  import NoData from '../../../../components/svgIcons/NoData'
  import Spinner from '../../../../components/Spinner/Spinner'
+
+ import './ClientListPage.css'
  
  
- const ClientList = () => {
+ const ClientListPage = () => {
  
      const history = useHistory()
      const location = useLocation()
@@ -58,13 +60,17 @@
  
      return (
          <div>
+                <button  
+                  className='addclient'
+                  onClick={() => setOpen(true)}
+                >New Client</button>
              <AddClient 
                  open={open} 
                  setOpen={setOpen}
                  currentId={currentId}
                  setCurrentId={setCurrentId}
              />
-             <Clients 
+             <ClientTable
                  open={open} 
                  setOpen={setOpen}
                  currentId={currentId}
@@ -75,5 +81,5 @@
      )
  }
  
- export default ClientList
+ export default ClientListPage
  

@@ -97,7 +97,6 @@
          } else {
            dispatch(createClient(clientData, openSnackbar))
          }
-         
          clear()
          handleClose()
      }
@@ -109,11 +108,12 @@
      
    const handleClose = () => {
      setOpen(false);
+     clear()
    };
  
    const inputStyle = {
      display: "block",
-     padding: "1.4rem 0.75rem",
+     padding: "0.7rem 0.325rem",
      width: "100%",
      fontSize: "0.8rem",
      lineHeight: 1.25,
@@ -121,26 +121,28 @@
      backgroundColor: "#fff",
      backgroundImage: "none",
      backgroundClip: "padding-box",
-     borderTop: "0",
-     borderRight: "0",
-     borderBottom: "1px solid #eee",
-     borderLeft: "0",
-     borderRadius: "3px",
+     borderTop: "1",
+     borderRight: "1",
+     borderBottom: "1",
+     borderLeft: "1",
+     borderRadius: "10px",
      transition: "all 0.25s cubic-bezier(0.4, 0, 1, 1)"
  }
  
  
    return (
      <div>
-         <form >
+      <form >
        <Dialog onClose={handleClose} aria-labelledby="customized-dialog-title" open={open} fullWidth>
+
              <DialogTitle id="customized-dialog-title" onClose={handleClose} style={{paddingLeft: '20px', color: 'white'}}>
              {currentId? 'Edit Customer' : 'Add new Client'}
              </DialogTitle>
+
              <DialogContent dividers>
  
- 
              <div className="customInputs">
+               <label>Name</label>
                <input 
                  placeholder="Name" 
                  style={inputStyle} 
@@ -149,7 +151,8 @@
                  onChange={(e) => setClientData({...clientData, name: e.target.value})}
                  value={clientData.name} 
                />
- 
+
+                <label>Email</label>
                <input 
                  placeholder="Email" 
                  style={inputStyle} 
@@ -159,6 +162,7 @@
                  value={clientData.email} 
                />
  
+               <label>Contact Number</label>
                <input 
                  placeholder="Phone" 
                  style={inputStyle} 
@@ -167,7 +171,7 @@
                  onChange={(e) => setClientData({...clientData, phone: e.target.value})}
                  value={clientData.phone} 
                />
- 
+               <label>Address</label>
                <input 
                  placeholder="Address" 
                  style={inputStyle} 

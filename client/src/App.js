@@ -28,8 +28,8 @@ import OrderPage from './views/CRM/Order/OrderPage/OrderPage';
 import OrderList from './views/CRM/Order/OrderList/OrderList';
 
 
-import ClientList from './views/CRM/Clients/ClientList/ClientList';
-import Client from './views/CRM/Clients/ClientPage/Client';
+import ClientListPage from './views/CRM/Clients/ClientList/ClientListPage';
+import ClientPage from './views/CRM/Clients/ClientPage/ClientPage';
 
 function App() {
 
@@ -64,8 +64,8 @@ function App() {
  
 
 
-          <Route path="/customers" exact component={ClientList} />
-          <Route path="/customers/:id" exact component={Client} />
+          <Route path="/customers" exact component={ClientListPage} />
+          <Route path="/customers/:id" exact component={ClientPage} />
 
 
 

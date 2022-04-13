@@ -7,11 +7,11 @@ import { clientState } from '../../../../initialState'
 
 import { Box, Container, Grid} from '@material-ui/core';
 
-import ClientPage from '../components/ClientPage'
+import Client from '../components/Client'
 import Invoicesbyid from '../components/Invoicesbyid'
 import SideBar from '../components/SideBar'
 
-const Client = () => {
+const ClientPage = () => {
   
     const dispatch = useDispatch()
     //const user = JSON.parse(localStorage.getItem('profile'))
@@ -34,7 +34,7 @@ const Client = () => {
     return (
         <div>
           <SideBar/>
-            <ClientPage
+            <Client
                 id={id}
                 client={client}
             />
@@ -45,4 +45,4 @@ const Client = () => {
     )
   }
   
-export default Client
+export default ClientPage

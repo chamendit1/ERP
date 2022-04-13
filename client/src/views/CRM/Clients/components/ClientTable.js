@@ -112,7 +112,7 @@ const useStyles2 = makeStyles(theme => ({
 }));
 
 
-const Clients = ({ setOpen, setCurrentId, clients }) => {
+const ClientTable = ({ setOpen, setCurrentId, clients }) => {
     
   const classes = useStyles2();
   const [page, setPage] = React.useState(0);
@@ -151,9 +151,7 @@ const Clients = ({ setOpen, setCurrentId, clients }) => {
 
   return (
     <div>
-    
-    <Container style={{width: '100%'}}>
-  <TableContainer component={Paper} elevation={0}>
+      <TableContainer component={Paper} elevation={0}>
       <Table className={classes.table} aria-label="custom pagination table">
 
         <TableHead>
@@ -174,9 +172,9 @@ const Clients = ({ setOpen, setCurrentId, clients }) => {
           ).map((row, index) => (
             <TableRow key={row._id} styel={{cursor: 'pointer'}} >
               <TableCell style={{...tableStyle, width: '10px'}} onClick={() => openClient(row._id)}>{index + 1}</TableCell>
-              <TableCell  style={tableStyle} scope="row" > <Button style={{textTransform: 'none'}}  > {row.name} </Button></TableCell>
-              <TableCell style={tableStyle}>{row.email}</TableCell>
-              <TableCell style={tableStyle}>{row.phone}</TableCell>
+              <TableCell  style={tableStyle} scope="row" onClick={() => openClient(row._id)}> <Button style={{textTransform: 'none'}}  > {row.name} </Button></TableCell>
+              <TableCell style={tableStyle} onClick={() => openClient(row._id)}>{row.email}</TableCell>
+              <TableCell style={tableStyle} onClick={() => openClient(row._id)}>{row.phone}</TableCell>
               <TableCell style={{...tableStyle, width: '10px'}}>
                   <IconButton onClick={() => handleEdit(row._id)}>
                     <BorderColorIcon style={{width: '20px', height: '20px'}} />
@@ -217,9 +215,8 @@ const Clients = ({ setOpen, setCurrentId, clients }) => {
         </TableFooter>
       </Table>
     </TableContainer>
-    </Container>
     </div>
   );
 }
 
-export default Clients
+export default ClientTable

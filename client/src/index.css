@@ -15,7 +15,6 @@ body {
 }
 .item2 { 
   grid-area: menu;
-  width: 100%;
 }
 .item3 { 
   grid-area: main;
@@ -28,7 +27,7 @@ body {
 .grid-container {
   display: grid;
   grid-template-areas:
-    'header header header header header header header'
+    'menu header header header header header header'
     'menu main main main main main main'
     'menu footer footer footer footer footer footer';
 }
@@ -211,7 +210,7 @@ main {
 }
 
 .navbar {
-  position: fixed;
+  position: sticky;
   background-color: var(--bg-primary);
   overflow: scroll;
   z-index: 100;
@@ -307,7 +306,6 @@ main {
 /* Large screens */
 @media only screen and (min-width: 600px) {
   .navbar {
-    width: 16rem;
     height: 100vh;
   }
 }

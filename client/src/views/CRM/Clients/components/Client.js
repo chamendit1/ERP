@@ -9,7 +9,7 @@ import SideBar from './SideBar';
 // import clients from '../../clients.json'
 
 
-const ClientPage = ({ client, id }) => {
+const Client = ({ client, id }) => {
 
       // eslint-disable-next-line
 const row = client
@@ -47,4 +47,4 @@ const row = client
   );
 }
 
-export default ClientPage
+export default Client
