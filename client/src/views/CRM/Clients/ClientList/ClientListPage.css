@@ -1,0 +1,14 @@
+.addclient {
+    display: flex;
+    align-items: center;
+    float: right;
+    border: 1px solid #1976d2;
+    border-radius: 50px;
+    padding: 12px 30px 12px 20px;
+    background-color: #ffffff;
+    cursor: pointer;
+    white-space: nowrap;
+    margin: 10px;
+    font-size: 16px;
+    height: 54px;
+}

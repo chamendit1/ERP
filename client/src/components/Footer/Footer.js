@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
-import styles from './Footer.module.css'
 import FabButton from '../Fab/Fab'
 
 const Footer = () => {
@@ -13,7 +12,7 @@ const Footer = () => {
 
     return (
         <footer>
-            <div className={styles.footerText}>
+            <div className='item4'>
             </div>
             {user && (
             <FabButton />
