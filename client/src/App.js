@@ -30,6 +30,7 @@ import OrderList from './views/CRM/Order/OrderList/OrderList';
 
 import ClientListPage from './views/CRM/Clients/ClientList/ClientListPage';
 import ClientPage from './views/CRM/Clients/ClientPage/ClientPage';
+import Subheader from './components/Subheader/Subheader';
 
 function App() {
 
@@ -42,8 +43,8 @@ function App() {
      {user && <NavBar />} 
       <Header />
       <div className='item3'>
-
-      <Switch>
+        <Subheader/>
+        <Switch>
           <Route path="/" exact component={Home} />
 
           <Route path="/invoice" exact component={Invoice} />
@@ -79,7 +80,6 @@ function App() {
           <Redirect exact from="/new-invoice" to="/invoice" />
 
         </Switch>
-
       </div>
 
         <Footer />

@@ -17,7 +17,6 @@ const row = client
   return (
 
     <div>
-    <Container>
       <Box sx={{m: 2}}>
         <Paper>
           <Grid container rowspacing={2}>
@@ -42,7 +41,6 @@ const row = client
 
         </Paper>
       </Box>
-    </Container>
   </div>
   );
 }

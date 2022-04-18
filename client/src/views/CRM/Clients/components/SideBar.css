@@ -1,32 +1,15 @@
 /* RESPONSIVE SIDE NAVBAR */
-:root {
-    font-size: 16px;
-    font-family: 'Roboto';
-    --text-primary: #ea2e2e;
-    --text-secondary: #4b5c4a;
-    --bg-primary: #1f1f21;
-    --bg-secondary: #345048;
-  }
+
 
   
   .sidebar {
-    position:fixed;
+    position: sticky;
     background-color: var(--bg-primary);
-    margin-left: 100px;
+    overflow: scroll;
+    z-index: 100;
+    top: 0;
   }
 
-
-  .header {
-    font-weight: bold;
-    text-transform: uppercase;
-    margin-bottom: 1rem;
-    text-align: center;
-    color: var(--text-secondary);
-    background: var(--bg-secondary);
-    font-size: 1.5rem;
-    letter-spacing: 0.3ch;
-    width: 100%;
-  }
   
   .side-item {
     width: 100%;
@@ -62,29 +45,6 @@
     min-width: 1.5rem;
     margin: 0 1.5rem;
   }
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  /* USELESS */
-
-
 
 
 
@@ -135,11 +95,3 @@
     }
   }
    */
-  /* Large screens */
-  @media only screen and (min-width: 600px) {
-    .sidebar {
-      width: 16rem;
-      height: 100%;
-      display: inline;
-    }
-  }

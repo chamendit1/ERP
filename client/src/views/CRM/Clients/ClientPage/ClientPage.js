@@ -5,11 +5,11 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import { clientState } from '../../../../initialState'
 
-import { Box, Container, Grid} from '@material-ui/core';
-
 import Client from '../components/Client'
 import Invoicesbyid from '../components/Invoicesbyid'
 import SideBar from '../components/SideBar'
+
+import './ClientPage.css'
 
 const ClientPage = () => {
   
@@ -32,8 +32,11 @@ const ClientPage = () => {
 
 
     return (
-        <div>
-          <SideBar/>
+        <div className='grid-container1'>
+          <div className='area1'>
+            <SideBar/>
+          </div>
+          <div className='area2'>
             <Client
                 id={id}
                 client={client}
@@ -41,6 +44,9 @@ const ClientPage = () => {
             <Invoicesbyid 
               id={id}
             />
+          </div>
+          
+            
         </div>
     )
   }

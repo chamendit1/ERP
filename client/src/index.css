@@ -11,25 +11,32 @@ body {
 
 /* Grid Container */
 .item1 { 
-  grid-area: header; 
+  grid-area: header;
 }
 .item2 { 
   grid-area: menu;
 }
 .item3 { 
   grid-area: main;
-  padding: 10px;
 }
 .item4 { 
   grid-area: footer; 
 }
 
+.item5 {
+  grid-area: subheader; 
+  background-color: #68a659;
+}
+
 .grid-container {
   display: grid;
+  grid-template-columns: 15% 85%;
+  grid-template-rows: auto;
   grid-template-areas:
-    'menu header header header header header header'
-    'menu main main main main main main'
-    'menu footer footer footer footer footer footer';
+    'menu header '
+    'menu subheader '
+    'menu main '
+    'menu footer';
 }
 
 

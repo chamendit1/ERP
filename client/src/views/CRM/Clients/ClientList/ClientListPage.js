@@ -10,6 +10,7 @@
  import Spinner from '../../../../components/Spinner/Spinner'
 
  import './ClientListPage.css'
+import Subheader from '../../../../components/Subheader/Subheader'
  
  
  const ClientListPage = () => {
@@ -51,19 +52,34 @@
    }
  
    if(clients.length === 0) {
-     return  <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', paddingTop: '20px', margin: '80px'}}>
-       <NoData />
-     <p style={{padding: '40px', color: 'gray', textAlign: 'center'}}>No customers yet. Click the plus icon to add customer</p>
-   
-     </div>
+     return  (
+       <div>
+          <button  
+            className='addclient'
+            onClick={() => setOpen(true)}>New Client</button>
+          <AddClient 
+              open={open} 
+              setOpen={setOpen}
+              currentId={currentId}
+              setCurrentId={setCurrentId}
+          />
+        <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', paddingTop: '20px', margin: '80px'}}>
+          <NoData />
+          <p style={{padding: '40px', color: 'gray', textAlign: 'center'}}>No customers yet. Click the plus icon to add customer</p>
+        </div>
+       </div>
+
+     )
+
+
    }
  
      return (
          <div>
-                <button  
+              <button  
                   className='addclient'
                   onClick={() => setOpen(true)}
-                >New Client</button>
+              >New Client</button>
              <AddClient 
                  open={open} 
                  setOpen={setOpen}
