@@ -12,7 +12,7 @@ const NavBar = () => {
 
 
   const body = document.querySelector('body'),
-  sidebar = body.querySelector('nav'),
+  //sidebar = body.querySelector('nav'),
   modeText = body.querySelector(".mode-text");
 
 
@@ -30,52 +30,103 @@ const NavBar = () => {
     if(!user) return null
 
     return (
-        <div className='item2'>
-          <nav className="navbar">
-              <ul className="navbar-nav">
-                <li class="nav-item">
+        <div>
+          <nav className="sidebar close" 
+           //onMouseEnter={() => sidebar.classList.toggle("close")}
+           //onMouseLeave={() => sidebar.classList.toggle("close")}
+           >
+
+          <div class="menu-bar">
+            <div class="menu">
+
+              <li class="search-box">
+                  <i class='bx bx-search icon'></i>
+                  <input type="text" placeholder="Search..."></input>
+              </li>
+
+              <ul className="menu-links">
+
+                <li className="nav-link">
                   <Link to="/dashboard" className="nav-link">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-pie-chart"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"></path><path d="M22 12A10 10 0 0 0 12 2v10z"></path></svg>
-                    <span class="link-text">Dashboard</span>
+                    <i class='bx bx-home-alt icon' >Dashboard</i>
+                    <span class="text nav-text">Dashboard</span>
                   </Link>
                 </li>
 
-                <li class="nav-item">
-                  <Link to="/customers" className="nav-link">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-pie-chart"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"></path><path d="M22 12A10 10 0 0 0 12 2v10z"></path></svg>
-                    <span class="link-text">Customers</span>
-                  </Link>
-                </li>
+                <li class="nav-link">
+                <Link to="/customers" className="nav-link">
+                          <i class='bx bx-bar-chart-alt-2 icon' >Customers</i>
+                          <span class="text nav-text">Orders</span>
+                          </Link>
+                  </li>
 
-                <li class="nav-item">
+                  <li class="nav-link">
                   <Link to="/invoices" className="nav-link">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-pie-chart"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"></path><path d="M22 12A10 10 0 0 0 12 2v10z"></path></svg>
-                    <span class="link-text">Invoices</span>
-                  </Link>
-                </li>
+                          <i class='bx bx-bell icon'>invoices</i>
+                          <span class="text nav-text">Notifications</span>
+                          </Link>
+                  </li>
 
-                <li class="nav-item">
+                  <li class="nav-link">
                   <Link to="/orders" className="nav-link">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-pie-chart"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"></path><path d="M22 12A10 10 0 0 0 12 2v10z"></path></svg>
-                    <span class="link-text">Orders</span>
-                  </Link>
-                </li>
+                          <i class='bx bx-pie-chart-alt icon' >Orders</i>
+                          <span class="text nav-text">Analytics</span>
+                          </Link>
+                  </li>
 
-
-                <li class="nav-item">
+                  <li class="nav-link">
                   <Link to="/settings" className="nav-link">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-pie-chart"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"></path><path d="M22 12A10 10 0 0 0 12 2v10z"></path></svg>
-                    <span class="link-text">Settings</span>
+                          <i class='bx bx-heart icon' >Profile</i>
+                          <span class="text nav-text">Likes</span>
+                          </Link>
+                  </li>
+
+                  <li class="nav-link">
+                      <Link to="/inventories" className="nav-link">
+                          <i class='bx bx-wallet icon' >Inventories</i>
+                          <span class="text nav-text"></span>
+                      </Link>
+                  </li>
+
+                  <li class="nav-link">
+                      <Link to="/manufacturing" className="nav-link">
+                          <i class='bx bx-wallet icon' >Manufacturing</i>
+                          <span class="text nav-text"></span>
+                      </Link>
+                  </li>
+
+                  <li class="nav-link">
+                      <Link to="/table" className="nav-link">
+                          <i class='bx bx-wallet icon' >Table</i>
+                          <span class="text nav-text"></span>
+                      </Link>
+                  </li>
+
+              </ul>
+            </div>
+
+            <div class="bottom-content">
+                <li class="">
+                  <Link to="/dashboard" className="nav-link">
+                      <i class='bx bx-log-out icon' ></i>
+                      <span class="text nav-text">Logout</span>
                   </Link>
                 </li>
 
-                <li class="nav-item">
-                  <Link to="/inventories" className="nav-link">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-pie-chart"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"></path><path d="M22 12A10 10 0 0 0 12 2v10z"></path></svg>
-                    <span class="link-text">Inventory</span>
-                  </Link>
+                <li class="mode">
+                    <div class="sun-moon">
+                        <i class='bx bx-moon icon moon'></i>
+                        <i class='bx bx-sun icon sun'></i>
+                    </div>
+                    <span class="mode-text text">Dark mode</span>
+
+                    <div class="toggle-switch">
+                        <span class="switch" onClick={modeChange}></span>
+                    </div>
                 </li>
-            </ul>
+                
+            </div>
+          </div>
           </nav>
         </div>
     )

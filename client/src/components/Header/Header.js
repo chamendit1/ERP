@@ -13,7 +13,6 @@ import MenuItem from '@material-ui/core/MenuItem';
 import MenuList from '@material-ui/core/MenuList';
 import { makeStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
-import FabButton from '../Fab/Fab.js'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -110,11 +109,10 @@ const Header = () => {
         </div>
     )
     return (
-      <div className='item1'>
+      <div>
         <div className={styles.header}>
             <div className={classes.root}>
               <div>
-
                 <Button
                   ref={anchorRef}
                   aria-controls={open ? 'menu-list-grow' : undefined}
@@ -142,6 +140,18 @@ const Header = () => {
                 </Popper>
               </div>
             </div>
+        </div>
+
+        <div className={styles.subheader}>
+                      <ul className={styles.menu}>
+                        <li className={styles.navlink}>
+                          <a href="/dashboard" className={styles.navtext}>Dashboard</a>
+                        </li>
+
+                        <li className={styles.navlink}>
+                            <a href="/dashboard" className={styles.navtext}>Dashboard</a>
+                        </li>
+                      </ul>
         </div>
       </div>
     )

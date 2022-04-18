@@ -5,7 +5,7 @@ import 'react-tiny-fab/dist/styles.css';
 import AddIcon from '@material-ui/icons/Add';
 import CreateIcon from '@material-ui/icons/Create';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
-import AddClient from '../AddClient/AddClient';
+import AddClient from '../Invoice/AddClient';
 
 
 const FabButton = () => {
