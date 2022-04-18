@@ -51,7 +51,7 @@ export const createInventory =(order, history) => async (dispatch) => {
         const { data } = await api.addInventory(order)
         console.log(data)
         dispatch({ type: ADD_NEW, payload: data })
-        history.push(`/inventory/${data._id}`)
+        history.push(`/order/${data._id}`)
         dispatch({ type: END_LOADING })
     } catch (error) {
         console.log(error)
