@@ -27,7 +27,7 @@ import { useSnackbar } from 'react-simple-snackbar'
 import { deleteClient } from '../../actions/clientActions';
 // import clients from '../../clients.json'
 
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 
 
@@ -150,7 +150,7 @@ const Clients = ({ setOpen, setCurrentId, clients }) => {
     setOpen((prevState) => !prevState)
     setCurrentId(selectedInvoice)
   }
-  const history = useHistory()
+  const history = useNavigate()
   const openClient = (id) => {
     history.push(`/customers/${id}`)
   }

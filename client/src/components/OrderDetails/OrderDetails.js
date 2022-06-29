@@ -8,7 +8,7 @@ import { getOrder } from '../../actions/orderActions'
 import { toCommas } from '../../utils/utils'
 import styles from './InvoiceDetails.module.css'
 import moment from 'moment'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -41,7 +41,7 @@ const OrderDetails = () => {
     const { id } = useParams()
     const { order } = useSelector((state) => state.orders)
     const dispatch = useDispatch()
-    const history = useHistory()
+    const history = useNavigate()
     const [sendStatus, setSendStatus] = useState(null)
     const [downloadStatus, setDownloadStatus] = useState(null)
     // eslint-disable-next-line

@@ -3,7 +3,7 @@ import styles from './Inventory.module.css'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 import IconButton from '@material-ui/core/IconButton';
 import DeleteOutlineRoundedIcon from '@material-ui/icons/DeleteOutlineRounded';
@@ -61,7 +61,7 @@ const Inventory = () => {
     //const clients = useSelector((state) => state.clients.clients)
     const { inventory } = useSelector((state) => state.inventories);
     const dispatch = useDispatch()
-    const history = useHistory()
+    const history = useNavigate()
     const user = JSON.parse(localStorage.getItem('profile'))
 
 

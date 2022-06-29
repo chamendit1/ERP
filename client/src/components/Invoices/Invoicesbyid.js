@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import { useDispatch, useSelector } from 'react-redux'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import moment from 'moment'
 import PropTypes from 'prop-types';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
@@ -114,7 +114,7 @@ const headerStyle = { borderBottom: 'none', textAlign: 'center'}
 const Invoicesbyid = (id) => {
     
   const dispatch = useDispatch()
-  const history = useHistory()
+  const history = useNavigate()
   //const user = JSON.parse(localStorage.getItem('profile'))
   //const client = JSON.parse(localStorage.getItem('client'))
   const rows = useSelector(state => state.invoices.invoices)

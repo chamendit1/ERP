@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { Button, Paper, Typography, Container, Grid } from '@material-ui/core';
 import useStyles from './styles';
 import Field from '../Login/Field';
-import { useParams, useHistory } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 
 import { reset } from '../../actions/auth';
 
@@ -11,7 +11,7 @@ const Reset = () => {
   const classes = useStyles();
   const [form, setForm] = useState("");
   const dispatch = useDispatch();
-  const history = useHistory()
+  const history = useNavigate()
   const { token } = useParams()
   const user = JSON.parse(localStorage.getItem('profile'))
 

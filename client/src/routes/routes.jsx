@@ -1,4 +1,4 @@
-import {  Route, Switch, Redirect } from 'react-router-dom'
+import {  Route, Routes as Routess, Navigate } from 'react-router-dom'
 
 import Home from '../components/Home/Home';
 import Invoice from '../components/Invoice/Invoice';
@@ -25,8 +25,13 @@ import Manufacturing from '../components/Manufacturing/Manufacturing';
 const Routes = () => {
     return (
         <div>
-            <Switch>
-                <Route path="/" exact component={Home} />
+            <Routess>
+                <Route path="/" exact element={<Home />}/>
+
+                <Route path="/login" exact element={<Login />} />
+                <Route path="/forgot" exact component={Forgot} />
+                <Route path="/reset/:token" exact component={Reset} />
+
 
                 <Route path="/invoice" exact component={Invoice} />
                 <Route path="/edit/invoice/:id" exact component={Invoice} />
@@ -52,15 +57,14 @@ const Routes = () => {
 
 
 
-                <Route path="/login" exact component={Login} />
+                
                 <Route path="/settings" exact component={Settings} />
                 <Route path="/dashboard" exact component={Dashboard} />
                 <Route path="/sales" exact component={Sales} />
 
-                <Route path="/forgot" exact component={Forgot} />
-                <Route path="/reset/:token" exact component={Reset} />
-                <Redirect exact from="/new-invoice" to="/invoice" />
-            </Switch>
+                
+                <Route path="/new-invoice" element={<Navigate to="/competition" />}/>
+            </Routess>
         </div>
 
     )
