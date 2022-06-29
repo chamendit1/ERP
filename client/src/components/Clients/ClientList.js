@@ -4,7 +4,7 @@ import Clients from './Clients'
 import AddClient from './AddClient'
 import { getClientsByUser } from '../../actions/clientActions'
 import { useDispatch, useSelector } from 'react-redux'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useLocation, useHistory } from 'react-router-dom'
 import { Container } from '@material-ui/core'
 import NoData from '../svgIcons/NoData'
 import Spinner from '../Spinner/Spinner'
@@ -12,7 +12,7 @@ import Spinner from '../Spinner/Spinner'
 
 const ClientList = () => {
 
-    const history = useNavigate()
+    const history = useHistory()
     const location = useLocation()
     const [open, setOpen] = useState(false)
     const [currentId, setCurrentId] = useState(null)

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { toCommas } from '../../utils/utils'
 import styles from './Dashboard.module.css'
-import { useNavigate } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { getInvoices } from '../../actions/invoiceActions'
 import Empty from '../svgIcons/Empty'
@@ -15,7 +15,7 @@ import Spinner from '../Spinner/Spinner'
 const Dashboard = () => {
 
     //const location = useLocation()
-    const history = useNavigate()
+    const history = useHistory()
     const dispatch = useDispatch()
     const user = JSON.parse(localStorage.getItem('profile'))
     const { invoices, isLoading } = useSelector((state) => state?.invoices)

@@ -3,7 +3,7 @@ import styles from './Invoice.module.css'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import moment from 'moment'
-import { useNavigate } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import { toCommas } from '../../utils/utils'
 
 import IconButton from '@material-ui/core/IconButton';
@@ -61,7 +61,6 @@ const useStyles = makeStyles((theme) => ({
   }));
 
 const Invoice = () => {
-    
 
     const [invoiceData, setInvoiceData] = useState(initialState)
     const [ rates, setRates] = useState(0)
@@ -78,7 +77,7 @@ const Invoice = () => {
     const clients = useSelector((state) => state.clients.clients)
     const { invoice } = useSelector((state) => state.invoices);
     const dispatch = useDispatch()
-    const history = useNavigate()
+    const history = useHistory()
     const user = JSON.parse(localStorage.getItem('profile'))
 
 

@@ -3,7 +3,7 @@ import styles from './Order.module.css'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import moment from 'moment'
-import { useNavigate } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 
 import IconButton from '@material-ui/core/IconButton';
 import DeleteOutlineRoundedIcon from '@material-ui/icons/DeleteOutlineRounded';
@@ -69,7 +69,7 @@ const Order = () => {
     const clients = useSelector((state) => state.clients.clients)
     const { order } = useSelector((state) => state.orders);
     const dispatch = useDispatch()
-    const history = useNavigate()
+    const history = useHistory()
     const user = JSON.parse(localStorage.getItem('profile'))
 
 

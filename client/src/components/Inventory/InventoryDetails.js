@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { initialStateOrder } from '../../initialState' 
 import styles from './InventoryDetails.module.css'
 import moment from 'moment'
-import { useNavigate } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -36,7 +36,7 @@ const InventoryDetails = () => {
     const { id } = useParams()
     const { inventory } = useSelector((state) => state.inventories)
     const dispatch = useDispatch()
-    const history = useNavigate()
+    const history = useHistory()
 
     // eslint-disable-next-line
     const [openSnackbar, closeSnackbar] = useSnackbar()

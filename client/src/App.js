@@ -3,7 +3,7 @@ import { BrowserRouter } from 'react-router-dom'
 import SnackbarProvider from 'react-simple-snackbar'
 import NavBar from './components/NavBar/NavBar';
 import Footer from './components/Footer/Footer';
-import Header from './components/Header/Header';
+import Header from './components/Header';
 import Routes from './routes/routes';
 
 
@@ -14,7 +14,7 @@ function App() {
   return (
       <BrowserRouter>
         <SnackbarProvider>
-          {user && <NavBar />} 
+        {user && <NavBar />} 
           <Header />
           <Routes/>
           <Footer />
@@ -24,3 +24,7 @@ function App() {
 }
 
 export default App;
+
+/*
+          
+*/

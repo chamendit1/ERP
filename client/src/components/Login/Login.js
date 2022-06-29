@@ -4,7 +4,7 @@ import useStyles from './styles'
 import styles from './Login.module.css'
 import { GoogleLogin } from 'react-google-login'
 import {useDispatch} from 'react-redux'
-import { useNavigate, Link } from 'react-router-dom'
+import { useHistory, Link } from 'react-router-dom'
 import { signup, signin } from '../../actions/auth'
 import { Avatar, Button, Paper, Grid, Typography, Container } from '@material-ui/core'
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
@@ -23,7 +23,7 @@ const Login = () => {
     const [formData, setFormData] = useState(initialState)
     const [isSignup, setIsSignup] = useState(false)
     const dispatch = useDispatch()
-    const history = useNavigate()
+    const history = useHistory()
     const [showPassword, setShowPassword] = useState(false);
      // eslint-disable-next-line 
     const [openSnackbar, closeSnackbar] = useSnackbar()
@@ -70,7 +70,7 @@ const Login = () => {
 
 
     if(user) {
-      history('/dashboard')
+      history.push('/dashboard')
     }
 
     return (
