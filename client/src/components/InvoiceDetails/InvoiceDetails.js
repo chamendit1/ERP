@@ -8,7 +8,7 @@ import { getInvoice } from '../../actions/invoiceActions'
 import { toCommas } from '../../utils/utils'
 import styles from './InvoiceDetails.module.css'
 import moment from 'moment'
-import { useNavigate } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -49,7 +49,7 @@ const InvoiceDetails = () => {
     const { id } = useParams()
     const { invoice } = useSelector((state) => state.invoices)
     const dispatch = useDispatch()
-    const history = useNavigate()
+    const history = useHistory()
     const [sendStatus, setSendStatus] = useState(null)
     const [downloadStatus, setDownloadStatus] = useState(null)
     // eslint-disable-next-line

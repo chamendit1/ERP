@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import { Button, Paper, Typography, Container, Grid } from '@material-ui/core';
 import useStyles from './styles';
 import Field from '../Login/Field';
@@ -10,7 +10,7 @@ import styles from './Password.module.css'
 
 const Forgot = () => {
   const classes = useStyles();
-  const history = useNavigate()
+  const history = useHistory()
   const [form, setForm] = useState("");
   const [step, setStep] = useState(0)
   const dispatch = useDispatch();

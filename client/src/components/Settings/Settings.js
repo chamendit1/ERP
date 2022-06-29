@@ -1,11 +1,11 @@
 import React from 'react'
 import styles from './Settings.module.css'
 import Form from './Form/Form'
-import { useNavigate } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 
 const Settings = () => {
 
-    const history = useNavigate()
+    const history = useHistory()
     const user = JSON.parse(localStorage.getItem('profile'))
 
 
