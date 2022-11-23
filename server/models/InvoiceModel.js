@@ -10,6 +10,7 @@ const InvoiceSchema = mongoose.Schema({
     subTotal: Number,
     notes: String,
     status: String,
+    orderStatus: Number,
     invoiceNumber: String,
     type: String,
     creator: [String],

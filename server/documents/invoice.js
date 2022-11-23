@@ -113,7 +113,7 @@ img {
 <body>
 <section  class="header">
         <div>
-           <img src="https://i.postimg.cc/8PyXvBpC/Salesforce-com-logo-svg.png" />
+           <img src=${company.logo} />
         </div>
 </section>
 <section class="address">

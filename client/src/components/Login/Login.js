@@ -2,18 +2,17 @@ import React, { useState } from 'react'
 import Field from './Field'
 import useStyles from './styles'
 import styles from './Login.module.css'
-import { GoogleLogin } from 'react-google-login'
 import {useDispatch} from 'react-redux'
 import { useHistory, Link } from 'react-router-dom'
 import { signup, signin } from '../../actions/auth'
 import { Avatar, Button, Paper, Grid, Typography, Container } from '@material-ui/core'
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
-import { createProfile } from '../../actions/profile'
-// import Google from './Google'
 import { useSnackbar } from 'react-simple-snackbar'
 import ProgressButton from 'react-progress-button'
 
-
+// import { GoogleLogin } from 'react-google-login'
+// import { createProfile } from '../../actions/profile'
+// import Google from './Google'
 
 const initialState ={ firstName: '', lastName: '', email: '', password: '', confirmPassword: '', profilePicture: '', bio: ''}
 
@@ -43,38 +42,18 @@ const Login = () => {
         }
     }
 
-
     const switchMode =() => {
         setIsSignup((prevState) => !prevState)
     }
-
-    const googleSuccess = async (res) => {
-        console.log(res)
-        const result = res?.profileObj
-        const token = res?.tokenId
-        dispatch(createProfile({name: result?.name, email: result?.email, userId: result?.googleId, phoneNumber: '', businessName: '', contactAddress: '', logo: result?.imageUrl, website: ''}))
-
-        try {
-            dispatch({ type: "AUTH", data: {result, token}})
-
-            window.location.href='/dashboard'
-            
-        } catch (error) {
-            console.log(error)
-        }
-    }
-    const googleError =(error) => {
-        console.log(error)
-        console.log("Google Sign In was unseccassful. Try again later")
-    }
-
 
     if(user) {
       history.push('/dashboard')
     }
 
+    console.log(user)
+
     return (
-        <Container component="main" maxWidth="xs">
+    <Container component="main" maxWidth="xs">
       <Paper className={classes.paper} elevation={2}>
         <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
@@ -93,23 +72,9 @@ const Login = () => {
             { isSignup && <Field name="confirmPassword" label="Repeat Password" handleChange={handleChange} type="password" /> }
           </Grid>
           <div className={styles.buttons}>
-               <div>
-                    {/* <button className={styles.submitBtn}> { isSignup ? 'Sign Up' : 'Sign In' }</button> */}
-                    <ProgressButton>{ isSignup ? 'Sign Up' : 'Sign In' }</ProgressButton>
-                </div>
-                <div> 
-                    <GoogleLogin
-                    clientId = {process.env.REACT_APP_GOOGLE_CLIENT_ID}
-                    render={(renderProps) => (
-                        <button className={styles.googleBtn} onClick={renderProps.onClick} disabled={renderProps.disabled} >Google</button>
-                    )}
-                    onSuccess={googleSuccess}
-                    onFailure={googleError}
-                    cookiePolicy="single_host_origin"
-                />
-                </div>
+            <ProgressButton>{ isSignup ? 'Sign Up' : 'Sign In' }</ProgressButton>
           </div>
-          <Grid container justifyContent="flex-end">
+          <Grid container justifyContent="center">
             <Grid item>
               <Button onClick={switchMode}>
                 { isSignup ? 'Already have an account? Sign in' : "Don't have an account? Sign Up" }

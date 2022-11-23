@@ -16,8 +16,7 @@ import { ADD_NEW, UPDATE, DELETE, GET_INVOICE, START_LOADING, END_LOADING, FETCH
  }
 
  export const getInvoicesByClient = (id) => async (dispatch)=> {
-     console.log(id)
-
+    console.log(id)
     try {
         dispatch({ type: START_LOADING })
         const { data } = await api.fetchInvoicesByClient(id)
@@ -72,23 +71,27 @@ export const getInvoice = (id) => async (dispatch)=> {
     }
 }
 
-export const createInvoice =(invoice, history) => async (dispatch) => {
+export const createInvoice =(invoice, history, openSnackbar) => async (dispatch) => {
     try {
         dispatch({ type: START_LOADING })
         const { data } = await api.addInvoice(invoice)
         dispatch({ type: ADD_NEW, payload: data })
         history.push(`/invoice/${data._id}`)
         dispatch({ type: END_LOADING })
+        openSnackbar("Created successfull")
+
     } catch (error) {
         console.log(error)
     }
 }
 
-export const updateInvoice =(id, invoice) => async (dispatch) => {
+export const updateInvoice =(id, invoice, openSnackbar) => async (dispatch) => {
 
     try {
         const { data } = await api.updateInvoice(id, invoice)
         dispatch({ type: UPDATE, payload: data })
+        openSnackbar("Update successfull")
+
         
     } catch (error) {
         console.log(error)

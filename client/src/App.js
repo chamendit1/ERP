@@ -1,23 +1,61 @@
 import React from 'react'
-import { BrowserRouter } from 'react-router-dom'
+import {  BrowserRouter, Route, Switch, Redirect } from 'react-router-dom'
 import SnackbarProvider from 'react-simple-snackbar'
+
+
+
 import NavBar from './components/NavBar/NavBar';
 import Footer from './components/Footer/Footer';
-import Header from './components/Header';
-import Routes from './routes/routes';
+import Header from './components/Header/Header';
+import Login from './components/Login/Login'
+import Dashboard from './components/Dashboard/Dashboard';
+import Settings from './components/Settings/Settings';
+import Forgot from './components/Password/Forgot'
+import Reset from './components/Password/Reset'
 
+import Home from './pages/Home/Home';
+import Client from './pages/Client/Client';
+import Clients from './pages/Client/Clients'  	
+import Product from './pages/Product/Product';
+import Products from './pages/Product/Products';
+import Invoice from './pages/Invoice';
+import Orders from './pages/Order/Orders';
+import Order from './pages/Order/Order';
+import Morder from './pages/Morder';
 
 function App() {
-
   const user = JSON.parse(localStorage.getItem('profile'))
 
   return (
       <BrowserRouter>
         <SnackbarProvider>
-        {user && <NavBar />} 
-          <Header />
-          <Routes/>
-          <Footer />
+            {user && <NavBar />}
+            <Header />
+              <Switch>
+                <Route path="/" exact component={Home} />
+
+                <Route path="/clients" exact component={Clients} />
+                <Route path="/client/:id" exact component={Client} />
+                <Route path="/edit/client/:id" exact component={Client} />
+                
+                <Route path="/order/:id" exact component={Order} />
+                <Route path="/orders" exact component={Orders} />
+
+                <Route path="/invoice/:id" exact component={Invoice} />
+                <Route path="/manufacturing/:id" exact component={Morder} />
+
+
+                <Route path="/product" exact component={Product} />
+                <Route path="/products" exact component={Products} />
+                
+                <Route path="/login" exact component={Login} />
+                <Route path="/settings" exact component={Settings} />
+                <Route path="/dashboard" exact component={Dashboard} />
+                <Route path="/forgot" exact component={Forgot} />
+                <Route path="/reset/:token" exact component={Reset} />
+                <Redirect exact from="/new-invoice" to="/invoice" />
+              </Switch>
+              <Footer /> 
         </SnackbarProvider>
       </BrowserRouter>
   );
@@ -26,5 +64,5 @@ function App() {
 export default App;
 
 /*
-          
+         
 */

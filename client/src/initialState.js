@@ -10,6 +10,7 @@ export const initialState = {
     currency: '',
     invoiceNumber: Math.floor(Math.random() * 100000),
     status: '',
+    orderStatus: 0,
     type: 'Invoice',
     creator: '',
     owner: '',
@@ -46,3 +47,14 @@ export const initialStateInventory = {
     type: 'Inventory',
     creator: '',
 }
+export const initialStateProduct = {
+    itemName: '',
+    price: '',
+    notes: '',
+    inventoryNumber: Math.floor(Math.random() * 100000),
+    status: '',
+    type: 'Product',
+    creator: '',
+    owner: '',
+}
+

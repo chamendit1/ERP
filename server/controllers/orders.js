@@ -37,7 +37,7 @@ export const createOrder = async (req, res) => {
     const order = req.body
 
     const newOrder = new OrderModel(order)
-    console.log("created")
+    console.log(newOrder)
 
     try {
         await newOrder.save()

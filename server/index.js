@@ -17,10 +17,16 @@ import orderRoutes from './routes/orders.js'
 import userRoutes from './routes/userRoutes.js'
 import profile from './routes/profile.js'
 import inventoryRoutes from './routes/inventories.js'
+import productRoutes from './routes/products.js'
 
-import pdfTemplate from './documents/index.js'
-// import invoiceTemplate from './documents/invoice.js'
+
+// import pdfTemplate from './documents/index.js'
+import inv from './documents/invoice.js'
+import invo from './documents/invo.js'
+import mo from './documents/mo.js'
 import emailTemplate from './documents/email.js'
+
+import pool from './db.js'
 
 const app = express()
 dotenv.config()
@@ -35,6 +41,8 @@ app.use('/orders', orderRoutes)
 app.use('/users', userRoutes)
 app.use('/profiles', profile)
 app.use('/inventories', inventoryRoutes)
+app.use('/products', productRoutes)
+
 
 // NODEMAILER TRANSPORT FOR SENDING INVOICE VIA EMAIL
 const transporter = nodemailer.createTransport({
@@ -51,33 +59,65 @@ const transporter = nodemailer.createTransport({
 
 
 var options = { format: 'A4' };
-//SEND PDF INVOICE VIA EMAIL
-app.post('/send-pdf', (req, res) => {
-    const { email, company } = req.body
 
-    // pdf.create(pdfTemplate(req.body), {}).toFile('invoice.pdf', (err) => {
-    pdf.create(pdfTemplate(req.body), options).toFile('invoice.pdf', (err) => {
+
+
+
+
+
+// Postgres
+
+app.get("/todos", async (req, res) => {
+    try {
+      const allTodos = await pool.query("SELECT * FROM todo");
+      res.json(allTodos.rows);
+    } catch (err) {
+      console.error(err.message);
+    }
+  });
+
+app.post("/todos", async (req, res) => {
+    try {
+      const { notes } = req.body;
+      const newTodo = await pool.query(
+        "INSERT INTO orders (notes) VALUES($1);",
+        [notes]
+      );
+      console.log(newTodo)
+      res.json(newTodo.rows[0]);
+    } catch (err) {
+      console.error(err.message);
+    }
+  });
+
+
+// //SEND PDF INVOICE VIA EMAIL
+// app.post('/send-pdf', (req, res) => {
+//     const { email, company } = req.body
+
+//     // pdf.create(pdfTemplate(req.body), {}).toFile('invoice.pdf', (err) => {
+//     pdf.create(pdfTemplate(req.body), options).toFile('invoice.pdf', (err) => {
        
-          // send mail with defined transport object
-        transporter.sendMail({
-            from: `${company.businessName ? company.businessName : company.name} <hello@arcinvoice.com>`, // sender address
-            to: `${email}`, // list of receivers
-            replyTo: `${company.email}`,
-            subject: `Invoice from ${company.businessName ? company.businessName : company.name}`, // Subject line
-            text: `Invoice from ${company.businessName ? company.businessName : company.name }`, // plain text body
-            html: emailTemplate(req.body), // html body
-            attachments: [{
-                filename: 'invoice.pdf',
-                path: `${__dirname}/invoice.pdf`
-            }]
-        });
+//           // send mail with defined transport object
+//         transporter.sendMail({
+//             from: `${company.businessName ? company.businessName : company.name} <hello@arcinvoice.com>`, // sender address
+//             to: `${email}`, // list of receivers
+//             replyTo: `${company.email}`,
+//             subject: `Invoice from ${company.businessName ? company.businessName : company.name}`, // Subject line
+//             text: `Invoice from ${company.businessName ? company.businessName : company.name }`, // plain text body
+//             html: emailTemplate(req.body), // html body
+//             attachments: [{
+//                 filename: 'invoice.pdf',
+//                 path: `${__dirname}/invoice.pdf`
+//             }]
+//         });
 
-        if(err) {
-            res.send(Promise.reject());
-        }
-        res.send(Promise.resolve());
-    });
-});
+//         if(err) {
+//             res.send(Promise.reject());
+//         }
+//         res.send(Promise.resolve());
+//     });
+// });
 
 
 //Problems downloading and sending invoice
@@ -86,8 +126,27 @@ app.post('/send-pdf', (req, res) => {
 // npm link phantomjs-prebuilt
 
 //CREATE AND SEND PDF INVOICE
+
+// app.post('/create-pdf', (req, res) => {
+//     pdf.create(pdfTemplate(req.body), {}).toFile('invoice.pdf', (err) => {
+//         if(err) {
+//             res.send(Promise.reject());
+//         }
+//         res.send(Promise.resolve());
+//     });
+// });
+
 app.post('/create-pdf', (req, res) => {
-    pdf.create(pdfTemplate(req.body), {}).toFile('invoice.pdf', (err) => {
+    pdf.create(invo(req.body), {}).toFile(`invoice.pdf`, (err) => {
+        if(err) {
+            res.send(Promise.reject());
+        }
+        res.send(Promise.resolve());
+    });
+});
+
+app.post('/create-mo', (req, res) => {
+    pdf.create(mo(req.body), {}).toFile(`invoice.pdf`, (err) => {
         if(err) {
             res.send(Promise.reject());
         }

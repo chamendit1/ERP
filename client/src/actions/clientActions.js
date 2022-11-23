@@ -22,7 +22,6 @@ export const getClientsByUser =(searchQuery) => async (dispatch) => {
       
       dispatch({ type: FETCH_CLIENTS_BY_USER, payload: data });
       dispatch({ type: END_LOADING })
-      console.log(data)
     } catch (error) {
       console.log(error.response)
       
@@ -64,4 +63,17 @@ export const deleteClient =(id, openSnackbar) => async (dispatch) => {
     } catch (error) {
         console.log(error)
     }
+}
+export const deleteClients =(id, openSnackbar) => async (dispatch) => {
+  try {
+    id.forEach(element => {
+      api.deleteClient(element)
+      console.log(element)
+     });
+
+      dispatch({type: DELETE_CLIENT, payload: id})
+      openSnackbar("Customer deleted successfully")
+  } catch (error) {
+      console.log(error)
+  }
 }

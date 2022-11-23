@@ -38,6 +38,13 @@ export const addInventory =( inventory ) => API.post('/inventories', inventory)
 export const updateInventory = (id, updatedInventory) => API.patch(`/inventories/${id}`, updatedInventory)
 export const deleteInventory =(id) => API.delete(`/inventories/${id}`)
 
+export const fetchProducts =() => API.get('/products')
+export const fetchProduct =(id) => API.get(`/products/${id}`)
+
+export const addProduct =( product ) => API.post('/products', product)
+export const updateProduct= (id, updatedProduct) => API.patch(`/products/${id}`, updatedProduct)
+export const deleteProduct =(id) => API.delete(`/products/${id}`)
+
 
 
 export const fetchClient = (id) => API.get(`/clients/${id}`);

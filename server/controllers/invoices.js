@@ -62,6 +62,7 @@ export const createInvoice = async (req, res) => {
     const invoice = req.body
 
     const newInvoice = new InvoiceModel(invoice)
+    console.log(newInvoice)
 
     try {
         await newInvoice.save()
