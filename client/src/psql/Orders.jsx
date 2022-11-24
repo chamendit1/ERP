@@ -23,10 +23,12 @@ import DeleteOutlineRoundedIcon from '@material-ui/icons/DeleteOutlineRounded';
 import BorderColorIcon from '@material-ui/icons/BorderColor';
 //import { useLocation } from 'react-router-dom';
 
-import { deleteInvoice, getInvoices } from '../../actions/invoiceActions';
-import NoData from '../../components/svgIcons/NoData';
-import Spinner from '../../components/Spinner/Spinner';
+import { getOrders } from '../actions/orderActions';
+import NoData from '../components/svgIcons/NoData';
+import Spinner from '../components/Spinner/Spinner';
 import { useSnackbar } from 'react-simple-snackbar'
+import { deleteInvoice, getInvoices } from '../actions/invoiceActions';
+
 
 const useStyles1 = makeStyles((theme) => ({
   root: {
@@ -116,12 +118,12 @@ const Orders = () => {
   const dispatch = useDispatch()
   const history = useHistory()
   const user = JSON.parse(localStorage.getItem('profile'))
-  const rows = useSelector(state => state.invoices.invoices)
+  const rows = useSelector(state => state.orders.orders)
   const isLoading = useSelector(state => state.invoices.isLoading)
   const [openSnackbar, closeSnackbar] = useSnackbar()
 
   useEffect(() => {
-      dispatch(getInvoices());
+      dispatch(getOrders());
   }, [dispatch]);
 
   console.log(rows)
@@ -150,7 +152,7 @@ const Orders = () => {
   }
 
   const openInvoice = (id) => {
-    history.push(`/order/${id}`)
+    history.push(`/psql/${id}`)
   }
 
   if(!user) {
@@ -205,11 +207,11 @@ const Orders = () => {
             : rows
           ).map((row) => (
             <TableRow key={row._id} style={{cursor: 'pointer'}} >
-                <TableCell onClick={() => openInvoice(row._id)}> {row.invoiceNumber} </TableCell>
-                <TableCell onClick={() => openInvoice(row._id)} > {row.client.name} </TableCell>
+                <TableCell onClick={() => openInvoice(row.order_id)}> {row.order_id} </TableCell>
+                {/* <TableCell onClick={() => openInvoice(row._id)} > {row.client.name} </TableCell>
                 <TableCell onClick={() => openInvoice(row._id)} >{row.currency} {row.total? toCommas(row.total): row.total} </TableCell>
                 <TableCell onClick={() => openInvoice(row._id)} > {moment(row.dueDate).fromNow()} </TableCell>
-                <TableCell onClick={() => openInvoice(row._id)} > <button style={checkStatus(row.status)}>{row.status}</button></TableCell>
+                <TableCell onClick={() => openInvoice(row._id)} > <button style={checkStatus(row.status)}>{row.status}</button></TableCell> */}
              
                 <TableCell style={{...tableStyle, width: '10px'}}>
                   <IconButton onClick={() => editInvoice(row._id)}>
@@ -217,9 +219,9 @@ const Orders = () => {
                   </IconButton>
               </TableCell>
               <TableCell style={{...tableStyle, width: '10px'}}>
-                  <IconButton onClick={() => dispatch(deleteInvoice(row._id, openSnackbar))}>
+                  {/* <IconButton onClick={() => dispatch(deleteInvoice(row._id, openSnackbar))}>
                     <DeleteOutlineRoundedIcon  style={{width: '20px', height: '20px'}} />
-                  </IconButton>
+                  </IconButton> // */}
               </TableCell>
             </TableRow>
           ))}

@@ -10,7 +10,7 @@ const orders = (state = { isLoading: true, orders: [] }, action) => {
       case FETCH_ALL:
         return {
           ...state,
-          orders: action.payload.data,
+          orders: action.payload,
           currentPage: action.payload.currentPage,
           numberOfPages: action.payload.numberOfPages,
         };

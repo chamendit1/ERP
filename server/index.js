@@ -19,14 +19,15 @@ import profile from './routes/profile.js'
 import inventoryRoutes from './routes/inventories.js'
 import productRoutes from './routes/products.js'
 
-
+import orderSQLRoutes from './routes/psql/orders.js'
+import customerSQLRoutes from './routes/psql/customer.js'
 // import pdfTemplate from './documents/index.js'
 import inv from './documents/invoice.js'
 import invo from './documents/invo.js'
 import mo from './documents/mo.js'
 import emailTemplate from './documents/email.js'
 
-import pool from './db.js'
+
 
 const app = express()
 dotenv.config()
@@ -42,6 +43,10 @@ app.use('/users', userRoutes)
 app.use('/profiles', profile)
 app.use('/inventories', inventoryRoutes)
 app.use('/products', productRoutes)
+
+app.use('/order', orderSQLRoutes)
+app.use('/customer', customerSQLRoutes)
+
 
 
 // NODEMAILER TRANSPORT FOR SENDING INVOICE VIA EMAIL
@@ -59,38 +64,6 @@ const transporter = nodemailer.createTransport({
 
 
 var options = { format: 'A4' };
-
-
-
-
-
-
-// Postgres
-
-app.get("/todos", async (req, res) => {
-    try {
-      const allTodos = await pool.query("SELECT * FROM todo");
-      res.json(allTodos.rows);
-    } catch (err) {
-      console.error(err.message);
-    }
-  });
-
-app.post("/todos", async (req, res) => {
-    try {
-      const { notes } = req.body;
-      const newTodo = await pool.query(
-        "INSERT INTO orders (notes) VALUES($1);",
-        [notes]
-      );
-      console.log(newTodo)
-      res.json(newTodo.rows[0]);
-    } catch (err) {
-      console.error(err.message);
-    }
-  });
-
-
 // //SEND PDF INVOICE VIA EMAIL
 // app.post('/send-pdf', (req, res) => {
 //     const { email, company } = req.body

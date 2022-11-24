@@ -22,6 +22,8 @@ import Invoice from './pages/Invoice';
 import Orders from './pages/Order/Orders';
 import Order from './pages/Order/Order';
 import Morder from './pages/Morder';
+import psqlOrders from './psql/Orders'
+import psqlOrder from './psql/Order'
 
 function App() {
   const user = JSON.parse(localStorage.getItem('profile'))
@@ -33,6 +35,8 @@ function App() {
             <Header />
               <Switch>
                 <Route path="/" exact component={Home} />
+                <Route path="/psql" exact component={psqlOrders} />
+                <Route path="/psql/:id" exact component={psqlOrder} />
 
                 <Route path="/clients" exact component={Clients} />
                 <Route path="/client/:id" exact component={Client} />

@@ -7,9 +7,9 @@ import { ADD_NEW, UPDATE, DELETE, GET_INVOICE, START_LOADING, END_LOADING, FETCH
      try {
          dispatch({ type: START_LOADING })
          const { data } = await api.fetchInvoices()
+         console.log(data)
          dispatch({ type: FETCH_ALL, payload: data });
          dispatch({ type: END_LOADING })
-         console.log(data)
      } catch (error) {
          console.log(error)
      }
