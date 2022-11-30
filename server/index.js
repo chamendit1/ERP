@@ -6,10 +6,10 @@ import nodemailer from 'nodemailer'
 
 import pdf from 'html-pdf'
 import { fileURLToPath } from 'url';
-import { dirname } from 'path';
+import * as path from 'path';
 
 const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+const __dirname = path.dirname(__filename);
 
 import invoiceRoutes from './routes/invoices.js'
 import clientRoutes from './routes/clients.js'
@@ -36,11 +36,11 @@ app.use((express.json({ limit: "30mb", extended: true})))
 app.use((express.urlencoded({ limit: "30mb", extended: true})))
 app.use((cors()))
 
-app.use('/invoices', invoiceRoutes)
-app.use('/clients', clientRoutes)
-app.use('/orders', orderRoutes)
-app.use('/users', userRoutes)
-app.use('/profiles', profile)
+app.use('/getInvoices', invoiceRoutes)
+app.use('/getClients', clientRoutes)
+app.use('/getOrders', orderRoutes)
+app.use('/getUsers', userRoutes)
+app.use('/getProfiles', profile)
 app.use('/inventories', inventoryRoutes)
 app.use('/products', productRoutes)
 
@@ -133,9 +133,19 @@ app.get('/fetch-pdf', (req, res) => {
 })
 
 
-app.get('/', (req, res) => {
-    res.send('SERVER IS RUNNING')
-  })
+
+
+  if(process.env.NODE_ENV === "production") {
+    app.use(express.static(path.join(__dirname, '../client/build')));
+    app.get('/app/*', (req,res) => {
+        res.send(path)
+        res.sendFile(path.join(__dirname,'client', 'build', 'index.html'));
+    })
+  } else {
+    app.get('/', (req, res) => {
+        res.send('SERVER IS RUNNING')
+      })
+  }
 
 const DB_URL = process.env.DB_URL
 const PORT = process.env.PORT || 5000
