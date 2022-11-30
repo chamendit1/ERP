@@ -7,6 +7,7 @@
     "@mui/icons-material": "^5.8.4",
     "concurrently": "^7.5.0",
     "material-table": "^1.36.0",
+    "nodemon": "^2.0.7",
     "mui": "^0.0.1"
   },
   "scripts": {
