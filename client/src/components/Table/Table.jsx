@@ -287,7 +287,7 @@ export default function EnhancedTable({ setOpen, setCurrentId, rows, head }) {
 
   return (
     <Container style={{width: '85%'}}>
-    <Box sx={{m: 2}}>
+     <Box sx={{m: 2}}>
       <Paper >
         <EnhancedTableToolbar 
         numSelected={selected.length} 
@@ -312,8 +312,6 @@ export default function EnhancedTable({ setOpen, setCurrentId, rows, head }) {
 
             />
             <TableBody>
-              {/* if you don't need to support IE11, you can replace the `stableSort` call with:
-                 rows.slice().sort(getComparator(order, orderBy)) */}
               {stableSort(rows, getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {

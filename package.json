@@ -1,17 +1,15 @@
 {
   "dependencies": {
-    "@emotion/react": "^11.10.0",
     "@emotion/styled": "^11.10.0",
     "@mui/icons-material": "^5.8.4",
-    "@mui/material": "^5.10.0",
     "concurrently": "^7.5.0",
     "material-table": "^1.36.0",
     "mui": "^0.0.1"
   },
   "scripts": {
-    "start": "cd client && npm start", 
+    "start": "cd client && npm start",
     "react": "cd server && npm start",
     "dev": "concurrently \"npm run start\" \"npm run react\""
-    },
+  },
   "proxy": "http://localhost:5000"
 }
