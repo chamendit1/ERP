@@ -132,20 +132,20 @@ app.get('/fetch-pdf', (req, res) => {
      res.sendFile(`${__dirname}/invoice.pdf`)
 })
 
+app.get('/', (req, res) => {
+    res.send('SERVER IS RUNNING')
+  })
 
 
+//   if(process.env.NODE_ENV === "production") {
+//     app.use(express.static(path.join(__dirname, '../client/build')));
+//     app.get('/app/*', (req,res) => {
+//         res.send(path)
+//         res.sendFile(path.join(__dirname,'client', 'build', 'index.html'));
+//     })
+//   } else {
 
-  if(process.env.NODE_ENV === "production") {
-    app.use(express.static(path.join(__dirname, '../client/build')));
-    app.get('/app/*', (req,res) => {
-        res.send(path)
-        res.sendFile(path.join(__dirname,'client', 'build', 'index.html'));
-    })
-  } else {
-    app.get('/', (req, res) => {
-        res.send('SERVER IS RUNNING')
-      })
-  }
+//   }
 
 const DB_URL = process.env.DB_URL
 const PORT = process.env.PORT || 5000
