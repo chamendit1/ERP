@@ -247,11 +247,11 @@ export default function EnhancedTable({ id }) {
   },[dispatch])
   console.log(rows)
   const editInvoice = (id) => {
-    history.push(`/edit/invoice/${id}`)
+    history.push(`/edit/order/${id}`)
   }
   
   const openInvoice = (id) => {
-    history.push(`/invoice/${id}`)
+    history.push(`/order/${id}`)
   }
 
   const toCommas = (value) => {
