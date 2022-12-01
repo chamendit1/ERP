@@ -1,6 +1,7 @@
 {
   "engines" : {
-    "npm": "7.24.2"
+    "npm": "7.24.2",
+    "node": "16.17.1"
   },
   "dependencies": {
     "@emotion/styled": "^11.10.0",
@@ -12,9 +13,8 @@
   },
   "scripts": {
     "start": "nodemon --watch server --exec node server/index.js",
-    "build": "cd client && npm run build",
-    "client": "cd client && npm start",
-    "server": "cd server && npm start",
+    "client": "npm start --prefix client",
+    "server": "nodemon server/index.js",
     "worker" : "nodemon --watch server --exec node server/index.js",
     "test" : "nodemon --watch server --exec node server/index.js",
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --force --prefix client && npm run build --prefix client"
