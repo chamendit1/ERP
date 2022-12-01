@@ -8,7 +8,7 @@ import NavBar from './components/NavBar/NavBar';
 import Footer from './components/Footer/Footer';
 import Header from './components/Header/Header';
 import Login from './components/Login/Login'
-import Dashboard from './components/Dashboard/Dashboard';
+import Dashboard from './pages/Dashboard';
 import Settings from './components/Settings/Settings';
 import Forgot from './components/Password/Forgot'
 import Reset from './components/Password/Reset'
@@ -24,6 +24,7 @@ import Order from './pages/Order/Order';
 import Morder from './pages/Morder';
 import psqlOrders from './psql/Orders'
 import psqlOrder from './psql/Order'
+import Layout from './components/Layout';
 
 function App() {
   const user = JSON.parse(localStorage.getItem('profile'))
@@ -33,6 +34,7 @@ function App() {
         <SnackbarProvider>
             {user && <NavBar />}
             <Header />
+            <Layout>
               <Switch>
                 <Route path="/" exact component={Home} />
                 <Route path="/psql" exact component={psqlOrders} />
@@ -58,7 +60,9 @@ function App() {
                 <Route path="/forgot" exact component={Forgot} />
                 <Route path="/reset/:token" exact component={Reset} />
                 <Redirect exact from="/new-invoice" to="/invoice" />
+                
               </Switch>
+              </Layout>
               <Footer /> 
         </SnackbarProvider>
       </BrowserRouter>

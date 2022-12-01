@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useLocation, useHistory } from 'react-router-dom'
 import NoData from '../../components/svgIcons/NoData'
 import Spinner from '../../components/Spinner/Spinner'
-import { Box, Container, Grid, Paper} from '@material-ui/core';
+
 import Table from '../../components/Table/Table'
 //import clients from  '../clients.json'
 
@@ -70,23 +70,14 @@ import Table from '../../components/Table/Table'
    }
  
      return (
-              <div>
-                <Container style={{width: '85%'}}>
-                  <Box sx={{m: 2}}>
-                    <Paper>
-                    </Paper>
-                  </Box>
-                </Container>
-
-                <Table
-                    open={open} 
-                    setOpen={setOpen}
-                    currentId={currentId}
-                    setCurrentId={setCurrentId}
-                    rows={clients}
-                    head={headCells}
-                />
-              </div>
+        <Table
+            open={open} 
+            setOpen={setOpen}
+            currentId={currentId}
+            setCurrentId={setCurrentId}
+            rows={clients}
+            head={headCells}
+        />
      )
  }
  
