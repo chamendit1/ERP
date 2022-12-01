@@ -1,7 +1,6 @@
 {
   "engines" : {
-    "npm": "7.24.2",
-    "node": "16.17.1"
+    "npm": "7.24.2"
   },
   "dependencies": {
     "@emotion/styled": "^11.10.0",
