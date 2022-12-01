@@ -15,6 +15,8 @@
     "build": "cd client && npm run build",
     "client": "cd client && npm start",
     "server": "cd server && npm start",
+    "worker" : "nodemon --watch server --exec node server/index.js",
+    "test" : "nodemon --watch server --exec node server/index.js",
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --force --prefix client && npm run build --prefix client"
   },
   "proxy": "http://localhost:5000"
