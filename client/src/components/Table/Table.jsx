@@ -5,33 +5,29 @@ import Box from '@mui/material/Box';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import TableSortLabel from '@mui/material/TableSortLabel';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import Paper from '@mui/material/Paper';
 import Checkbox from '@mui/material/Checkbox';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Switch from '@mui/material/Switch';
 import DeleteIcon from '@mui/icons-material/Delete';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import { visuallyHidden } from '@mui/utils';
-import { Container } from '@material-ui/core';
+import { Card, Container } from '@material-ui/core';
 
 import { useDispatch } from 'react-redux'
-import BorderColorIcon from '@material-ui/icons/BorderColor';
 import { deleteClient, deleteClients } from '../../actions/clientActions';
-import DeleteOutlineRoundedIcon from '@material-ui/icons/DeleteOutlineRounded';
 import { useSnackbar } from 'react-simple-snackbar'
 import { useHistory } from 'react-router-dom'
 import AddClient from '../../pages/Client/AddClient';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { useState } from 'react';
+import DeleteOutlineRoundedIcon from '@material-ui/icons/DeleteOutlineRounded';
+import BorderColorIcon from '@material-ui/icons/BorderColor';
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -77,13 +73,10 @@ function EnhancedTableHead(props) {
       <TableRow>
         <TableCell padding="checkbox">
           <Checkbox
-            color="primary"
+            // color="primary"
             indeterminate={numSelected > 0 && numSelected < rowCount}
             checked={rowCount > 0 && numSelected === rowCount}
             onChange={onSelectAllClick}
-            inputProps={{
-              'aria-label': 'select all desserts',
-            }}
           />
         </TableCell>
         {headCells.map((headCell) => (
@@ -190,7 +183,6 @@ EnhancedTableToolbar.propTypes = {
 
 const X = []
 
-console.log(X)
 
 export default function EnhancedTable({ setOpen, setCurrentId, rows, head }) {
 
@@ -254,14 +246,6 @@ export default function EnhancedTable({ setOpen, setCurrentId, rows, head }) {
     setPage(0);
   };
 
-  const handleChangeDense = (event) => {
-    setDense(event.target.checked);
-  };
-
-  const handleEdit = (selectedInvoice) => {
-    setOpen((prevState) => !prevState)
-    setCurrentId(selectedInvoice)
-  }
   const handleDelete = (selected)=> {
     dispatch(deleteClients(selected, openSnackbar))
     console.log(selected)
@@ -271,46 +255,37 @@ export default function EnhancedTable({ setOpen, setCurrentId, rows, head }) {
     history.push(`/client/${id}`)
   }
 
-  function checkStatus(status) {
-    return status === "Partial" ? {border: 'solid 0px #1976d2', backgroundColor: '#baddff', padding: '8px 18px', borderRadius: '20px' }
-        : status === "Paid" ? {border: 'solid 0px green', backgroundColor: '#a5ffcd', padding: '8px 18px', borderRadius: '20px' }
-        : status === "Unpaid" ? {border: 'solid 0px red', backgroundColor: '#ffaa91', padding: '8px 18px', borderRadius: '20px' }
-        : "red";
-          
-}
+  const editClient = (id) => {
+    history.push(`/edit/client/${id}`)
+  }
+
+
 
   const isSelected = (name) => selected.indexOf(name) !== -1;
 
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
+    console.log(rows)
 
   return (
-    <Container style={{width: '85%'}}>
-     <Box sx={{m: 2}}>
-      <Paper >
-        <EnhancedTableToolbar 
+    <Card style={{borderRadius: 10, boxShadow: 3}}>
+      <EnhancedTableToolbar 
         numSelected={selected.length} 
         selected={selected}
         onDelete={handleDelete}
         openSnackbar={openSnackbar}
-        />
-        <TableContainer>
-          <Table
-            sx={{ minWidth: 750 }}
-            aria-labelledby="tableTitle"
-            size={dense ? 'small' : 'medium'}
-          >
-            <EnhancedTableHead
-              numSelected={selected.length}
-              order={order}
-              orderBy={orderBy}
-              onSelectAllClick={handleSelectAllClick}
-              onRequestSort={handleRequestSort}
-              rowCount={rows.length}
-              headCells={head}
-
-            />
+      />
+        <Table>
+          <EnhancedTableHead
+            numSelected={selected.length}
+            order={order}
+            orderBy={orderBy}
+            onSelectAllClick={handleSelectAllClick}
+            onRequestSort={handleRequestSort}
+            rowCount={rows.length}
+            headCells={head}
+          />
             <TableBody>
               {stableSort(rows, getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
@@ -321,7 +296,6 @@ export default function EnhancedTable({ setOpen, setCurrentId, rows, head }) {
                   return (
                     <TableRow
                       hover
-                      //
                       role="checkbox"
                       aria-checked={isItemSelected}
                       tabIndex={-1}
@@ -339,9 +313,18 @@ export default function EnhancedTable({ setOpen, setCurrentId, rows, head }) {
                         />
                       </TableCell>
                       <TableCell align="left" onClick={() => openClient(row._id)}>{row.name}</TableCell>
-                      <TableCell align="left" onClick={() => openClient(row._id)}>{row.email}</TableCell>
-                      <TableCell align="left" onClick={() => openClient(row._id)}>{row.email}</TableCell>
-                      <TableCell align="left" onClick={() => openClient(row._id)}>{row.email}</TableCell>
+                      <TableCell style={{width: '25%'}} align="left" onClick={() => openClient(row._id)}>{row.email}</TableCell>
+                      <TableCell style={{width: '25%'}} align="left" onClick={() => openClient(row._id)}>{row.phone}</TableCell>
+                      <TableCell style={{ width: '10px'}}>
+                        <IconButton onClick={() => editClient(row._id)}>
+                          <BorderColorIcon  style={{width: '20px', height: '20px'}} />
+                        </IconButton>
+                      </TableCell>
+                      <TableCell style={{ width: '10px'}}>
+                        <IconButton onClick={() => dispatch(deleteClient(row._id, openSnackbar))}>
+                          <DeleteOutlineRoundedIcon  style={{width: '20px', height: '20px'}} />
+                        </IconButton>
+                      </TableCell>
                     </TableRow>
                   );
                 })}
@@ -356,23 +339,15 @@ export default function EnhancedTable({ setOpen, setCurrentId, rows, head }) {
               )}
             </TableBody>
           </Table>
-        </TableContainer>
-        <TablePagination
-          rowsPerPageOptions={[5, 10, 25]}
-          component="div"
-          count={rows.length}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onPageChange={handleChangePage}
-          onRowsPerPageChange={handleChangeRowsPerPage}
-        />
-      </Paper>
-      <FormControlLabel
-        control={<Switch checked={dense} onChange={handleChangeDense} />}
-        label="Dense padding"
-      />
-    </Box>
-    </Container>
-    
+          <TablePagination
+            rowsPerPageOptions={[5, 10, 25]}
+            component="div"
+            count={rows.length}
+            rowsPerPage={rowsPerPage}
+            page={page}
+            onPageChange={handleChangePage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+          />
+    </Card>
   );
 }

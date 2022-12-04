@@ -26,18 +26,18 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
 import Tooltip from '@mui/material/Tooltip';
 import AdbIcon from '@mui/icons-material/Adb';
-
+import { Card, Icon } from '@material-ui/core'
+import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    display: 'flex',
-  },
-  paper: {
-    marginRight: theme.spacing(2),
-  },
-}));
-
+// const useStyles = makeStyles((theme) => ({
+//   root: {
+//     display: 'flex',
+//   },
+//   paper: {
+//     marginRight: theme.spacing(2),
+//   },
+// }));
 
 
 const Header = () => {
@@ -143,14 +143,17 @@ const Header = () => {
         </div>
     )
     return (
-      <Box style={{padding: '1rem',marginLeft: '15%'}}>
+      <Card style={{padding: '0 1rem', borderRadius: 10, boxShadow: 3}}>
+      <Box>
         <Toolbar disableGutters>
-          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none'}}}>
             <Breadcrumb/>
           </Box>
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex'} }}>
             <Breadcrumb/>
+
           </Box>
+          
 
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
@@ -182,6 +185,7 @@ const Header = () => {
           </Box>
         </Toolbar>
       </Box>
+      </Card>
     )
 }
 

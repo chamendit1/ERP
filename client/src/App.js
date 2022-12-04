@@ -4,7 +4,6 @@ import SnackbarProvider from 'react-simple-snackbar'
 
 
 
-import NavBar from './components/NavBar/NavBar';
 import Footer from './components/Footer/Footer';
 import Header from './components/Header/Header';
 import Login from './components/Login/Login'
@@ -27,23 +26,20 @@ import psqlOrder from './psql/Order'
 import Layout from './components/Layout';
 
 function App() {
-  const user = JSON.parse(localStorage.getItem('profile'))
+
 
   return (
       <BrowserRouter>
         <SnackbarProvider>
-            {user && <NavBar />}
-            <Header />
-            <Layout>
               <Switch>
+              <Layout>
                 <Route path="/" exact component={Home} />
                 <Route path="/psql" exact component={psqlOrders} />
                 <Route path="/psql/:id" exact component={psqlOrder} />
-
                 <Route path="/clients" exact component={Clients} />
                 <Route path="/client/:id" exact component={Client} />
                 <Route path="/edit/client/:id" exact component={Client} />
-                
+              
                 <Route path="/order/:id" exact component={Order} />
                 <Route path="/orders" exact component={Orders} />
 
@@ -54,15 +50,15 @@ function App() {
                 <Route path="/product" exact component={Product} />
                 <Route path="/products" exact component={Products} />
                 
-                <Route path="/login" exact component={Login} />
+
                 <Route path="/settings" exact component={Settings} />
                 <Route path="/dashboard" exact component={Dashboard} />
+                {/* <Redirect exact from="/new-invoice" to="/invoice" /> */}
+                <Route path="/login" exact component={Login} />
                 <Route path="/forgot" exact component={Forgot} />
                 <Route path="/reset/:token" exact component={Reset} />
-                <Redirect exact from="/new-invoice" to="/invoice" />
-                
+                </Layout>
               </Switch>
-              </Layout>
               <Footer /> 
         </SnackbarProvider>
       </BrowserRouter>

@@ -1,36 +1,42 @@
-import { Box, Divider, List, Paper, Typography } from '@material-ui/core'
+import { Box, Divider, IconButton, List, Paper, Typography } from '@material-ui/core'
 import React, { useState, useEffect } from 'react'
 import { useLocation, Link } from 'react-router-dom'
 
 
 import DashboardIcon from '@mui/icons-material/Dashboard';
+import NavigateBefore from '@mui/icons-material/NavigateBefore';
+
 const NavBar = () => {
 
   const location = useLocation()
   const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')))
+  const [width, setWidth]= useState("15%")
+
+  console.log(width)
 
   useEffect(() => {
     setUser(JSON.parse(localStorage.getItem('profile')))
   }, [location])
 
+  function hanldeWidthChange() {
+    // you can set width to any value you want
+    setWidth("100px")
+ }
+
     if(!user) return null
 
+
     return (
-      <Box style={{
-        width: '15%',
-        height: '100vh',
-        position: 'fixed',
-        zIndex: '100'
-        }}>
-          <Box style={{
+      <Box className='navbar'>
+        <Box style={{
           listStyle: 'none',
           padding: '0',
           margin: '0',
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          height: '100%',
-          // border: '1px solid black'
+          height: '100vh',
+          border: '1px solid black'
           }}>
           <Box component={Link} to="/" display="flex" alignItems="center" style={{height: '5rem'}}>
             <Typography sx={{ textDecoration: 'underline' }}>
@@ -44,7 +50,7 @@ const NavBar = () => {
             padding: '1rem 1rem',
             marginTop: '1rem'
             }}>
-              <DashboardIcon/>              
+              <DashboardIcon/>    
           </Box>
           <Box component={Link} to="/clients" boxShadow={3} display="flex" alignItems="center" sx={{
             height: '3rem',

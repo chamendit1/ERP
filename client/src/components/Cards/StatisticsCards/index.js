@@ -1,31 +1,16 @@
-/**
-=========================================================
-* Soft UI Dashboard React - v4.0.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/soft-ui-dashboard-react
-* Copyright 2022 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-
-// prop-types is a library for typechecking of props
-import PropTypes from "prop-types";
-
 import { Box, Typography, Icon, Grid, Card } from "@material-ui/core";
 
 
 function MiniStatisticsCard({ bgColor, title, count, percentage, icon, direction }) {
   return (
-    <Card>
-      <Box bgColor={bgColor} variant="gradient">
+    <Card style={{borderRadius: 10, boxShadow: 3}}>
+      <Box 
+      bgColor={bgColor} 
+      variant="gradient" 
+      >
         <Box p={2}>
           <Grid container alignItems="center">
-            {direction === "left" ? (
+            {/* {direction === "left" ? (
               <Grid item>
                 <Box
                   variant="gradient"
@@ -33,7 +18,7 @@ function MiniStatisticsCard({ bgColor, title, count, percentage, icon, direction
                   color={bgColor === "white" ? "white" : "dark"}
                   width="3rem"
                   height="3rem"
-                  borderRadius="md"
+                  borderRadius="50%"
                   display="flex"
                   justifyContent="center"
                   alignItems="center"
@@ -44,7 +29,7 @@ function MiniStatisticsCard({ bgColor, title, count, percentage, icon, direction
                   </Icon>
                 </Box>
               </Grid>
-            ) : null}
+            ) : null} */}
             <Grid item xs={8}>
               <Box ml={direction === "left" ? 2 : 0} lineHeight={1}>
                 <Typography
@@ -68,7 +53,7 @@ function MiniStatisticsCard({ bgColor, title, count, percentage, icon, direction
                 </Typography>
               </Box>
             </Grid>
-            {direction === "right" ? (
+            {/* {direction === "right" ? (
               <Grid item xs={4}>
                 <Box
                   variant="gradient"
@@ -88,63 +73,12 @@ function MiniStatisticsCard({ bgColor, title, count, percentage, icon, direction
                   </Icon>
                 </Box>
               </Grid>
-            ) : null}
+            ) : null} */}
           </Grid>
         </Box>
       </Box>
     </Card>
   );
 }
-
-// Setting default values for the props of MiniStatisticsCard
-MiniStatisticsCard.defaultProps = {
-  bgColor: "white",
-  title: {
-    fontWeight: "medium",
-    text: "",
-  },
-  percentage: {
-    color: "success",
-    text: "",
-  },
-  direction: "right",
-};
-
-// Typechecking props for the MiniStatisticsCard
-MiniStatisticsCard.propTypes = {
-  bgColor: PropTypes.oneOf([
-    "white",
-    "primary",
-    "secondary",
-    "info",
-    "success",
-    "warning",
-    "error",
-    "dark",
-  ]),
-  title: PropTypes.PropTypes.shape({
-    fontWeight: PropTypes.oneOf(["light", "regular", "medium", "bold"]),
-    text: PropTypes.string,
-  }),
-  count: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
-  percentage: PropTypes.shape({
-    color: PropTypes.oneOf([
-      "primary",
-      "secondary",
-      "info",
-      "success",
-      "warning",
-      "error",
-      "dark",
-      "white",
-    ]),
-    text: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  }),
-  icon: PropTypes.shape({
-    color: PropTypes.oneOf(["primary", "secondary", "info", "success", "warning", "error", "dark"]),
-    component: PropTypes.node.isRequired,
-  }).isRequired,
-  direction: PropTypes.oneOf(["right", "left"]),
-};
 
 export default MiniStatisticsCard;
