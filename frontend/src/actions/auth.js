@@ -2,26 +2,25 @@ import * as api from '../api/index'
 import { AUTH, CREATE_PROFILE } from './constants'
 
 
-export const signin =(formData, openSnackbar) => async(dispatch) => {
+export const signin =(formData) => async(dispatch) => {
     console.log(formData)
     try {
         //login the user
         const { data } = await api.signIn(formData)
 
-
         dispatch({ type: AUTH, data})
         console.log(data)
-        openSnackbar("Signin successfull")
+        // openSnackbar("Signin successfull")
         // history.push('/dashboard')
         window.location.href="/dashboard"
 
     } catch (error) {
-        // console.log(error?.response?.data?.message)
-        openSnackbar(error?.response?.data?.message)
+        console.log(error?.response?.data?.message)
+        // openSnackbar(error?.response?.data?.message)
     }
 }
 
-export const signup =(formData, openSnackbar) => async(dispatch) => {
+export const signup =(formData) => async(dispatch) => {
 
     try {
         //Sign up the user
@@ -31,11 +30,11 @@ export const signup =(formData, openSnackbar) => async(dispatch) => {
         dispatch({ type: CREATE_PROFILE, payload: info });
         window.location.href="/dashboard"
         // history.push('/dashboard')
-        openSnackbar("Sign up successfull")
+        // openSnackbar("Sign up successfull")
 
     } catch (error) {
         console.log(error)
-        openSnackbar(error?.response?.data?.message)
+        // openSnackbar(error?.response?.data?.message)
     }
 }
 
