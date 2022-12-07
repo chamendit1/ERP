@@ -6,6 +6,7 @@ import Orders from './pages/Orders/Orders'
 import Layout from './components/Layout/Layout';
 import Login from './components/Auth/Login/Login';
 import Dashboard from './pages/Dashboard/Dashboard';
+import Client from './pages/Clients/Client';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="/Client-list" element={<Clients/>}/>
         <Route path="/Order-list" element={<Orders/>}/>
 
+        <Route path="/client/:id" element={<Client/>} />
 
         <Route path="/login" element={<Login/>} />
         <Route path="/forgot" element={<Orders/>} />
