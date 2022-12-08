@@ -20,6 +20,7 @@ import { ADD_NEW, UPDATE, DELETE, GET_INVOICE, START_LOADING, END_LOADING, FETCH
     try {
         dispatch({ type: START_LOADING })
         const { data } = await api.fetchInvoicesByClient(id)
+        console.log(data)
         dispatch({ type: FETCH_ALL, payload: data}); //Need Check
         dispatch({ type: END_LOADING })
         console.log(data)

@@ -33,6 +33,7 @@ import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { useState } from 'react';
 import DeleteOutlineRoundedIcon from '@mui/icons-material/DeleteOutlineRounded';
 import BorderColorIcon from '@mui/icons-material/BorderColor';
+import AddOrder from './AddOrder';
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -178,7 +179,7 @@ const EnhancedTableToolbar = (props) => {
           {/* Customer */}
         </Typography>
       )}
-      {/* <AddClient setOpen={setOpen} open={open} /> */}
+      <AddOrder setOpen={setOpen} open={open} />
       {
           <IconButton onClick={() => setOpen((prev) => !prev) }>
             <AddCircleOutlineIcon />
@@ -274,7 +275,7 @@ export default function EnhancedTable({ rows, head }) {
   }
  
   const openInvoice = (id) => {
-    navigate(`/client/${id}`)
+    navigate(`/order/${id}`)
   }
 
   const editInvoice = (id) => {

@@ -1,7 +1,7 @@
-import React, { useState, useEffect} from 'react'
+import React, { useEffect} from 'react'
 import { getClientsByUser } from '../../actions/clientActions'
 import { useDispatch, useSelector } from 'react-redux'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 import Table from './components/Table'
 
 const headCells = [
@@ -34,11 +34,7 @@ const Clients = () => {
   const user = JSON.parse(localStorage.getItem('profile'))
   const dispatch = useDispatch()
   const location = useLocation()
-  // const navigate = useNavigate()
   const {clients} = useSelector((state) => state.clients)
-  const [open, setOpen] = useState(false)
-  const [currentId, setCurrentId] = useState(null)
-
 
   useEffect(() => {
     dispatch(getClientsByUser({ search: user?.result?._id }));
@@ -58,7 +54,6 @@ const Clients = () => {
   return (
     <>
       <Table
-        open={open} 
         rows={clients}
         head={headCells}
       />

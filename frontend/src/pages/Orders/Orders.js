@@ -57,6 +57,8 @@ const Orders = () => {
     navigate('/login')
   }
 
+  console.log(rows)
+
   return (
     <>
       <OrderTable 
