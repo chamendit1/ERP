@@ -19,9 +19,12 @@ code {
 .sidebar { 
   transition: width 600ms ease;
   z-index: 100;
+  border: 1px solid black;
+  margin-left: 20px;
 }
 
 .sidebar-logo {
+  transition: padding 600ms ease;
   background-color: white;
   border-radius: 20px;
   padding: 1rem 1rem;
@@ -47,6 +50,10 @@ code {
 
 /* Small screens */
 @media only screen and (max-width: 600px) {
+
+  :root {
+    font-size: 12px;
+  }
   .sidebar {
     position: fixed;
     display: none;
@@ -64,15 +71,18 @@ code {
   }
   .sidebar:hover .sidebar-data {
     width: 10rem;
+    margin-left: 2rem;
   }
   
   .sidebar:hover .sidebar-text {
     display: inline;
+
     animation: fadeIn 2s;
   }
 
-  .sidebar:hover .logo-text
-  {
-    left: 0px;
+  .sidebar:hover .sidebar-logo {
+    padding: 0.3rem 0.3rem;
+    border-radius: 10px;
   }
+
 }

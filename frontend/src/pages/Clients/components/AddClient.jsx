@@ -19,28 +19,28 @@
 
  import { useParams } from 'react-router-dom'
  
- const styles = (theme) => ({
-   root: {
-     margin: 0,
-     padding: theme.spacing(2),
-     backgroundColor: '#1976D2',
-     marginLeft: 0,
-   },
-   closeButton: {
-     position: 'absolute',
-     right: theme.spacing(1),
-     top: theme.spacing(1),
-     color: 'white',
-   },
- });
+//  const styles = (theme) => ({
+//    root: {
+//      margin: 0,
+//      padding: theme.spacing(2),
+//      backgroundColor: '#1976D2',
+//      marginLeft: 0,
+//    },
+//    closeButton: {
+//      position: 'absolute',
+//      right: theme.spacing(1),
+//      top: theme.spacing(1),
+//      color: 'white',
+//    },
+//  });
  
- const DTitle = () => {
+ const DTitle = (props) => {
    const { children, classes, onClose, ...other } = props;
    return (
-     <DialogTitle disableTypography className={classes.root} {...other}>
+     <DialogTitle disableTypography {...other} style={{padding: '1rem 2rem'}}>
        <Typography variant="h6">{children}</Typography>
        {onClose ? (
-         <IconButton aria-label="close" className={classes.closeButton} onClick={onClose}>
+         <IconButton aria-label="close" onClick={onClose} style={{position:'absolute', right: '1rem', top: '13px' }}>
            <CloseIcon />
          </IconButton>
        ) : null}
@@ -129,48 +129,45 @@
    return (
      <div>
          <form >
-       <Dialog onClose={handleClose} aria-labelledby="customized-dialog-title" open={open} fullWidth>
-             <DTitle id="customized-dialog-title" onClose={handleClose} style={{paddingLeft: '20px', color: 'white'}}>
-             {currentId? 'Edit Customer' : 'Add new Client'}
+       <Dialog onClose={handleClose} open={open} fullWidth  PaperProps={{ borderRadius: 100 }}>
+             <DTitle id="customized-dialog-title" onClose={handleClose} >
+             {currentId? 'Edit Customer' : 'New Customer'}
              </DTitle>
              <DialogContent dividers>
- 
- 
-             <div className="customInputs">
-                <TextField fullWidth
-                    id="fullWidth" 
-                    margin="dense"
-                    label="Full Name" 
-                    variant="outlined"
-                    onChange={(e) => setClientData({...clientData, name: e.target.value})}
-                    value={clientData.name}
-                />
-                <TextField 
-                    id="outlined-basic" 
-                    margin="dense"
-                    label="Email" 
-                    variant="outlined"
-                    onChange={(e) => setClientData({...clientData, email: e.target.value})}
-                    value={clientData.email} 
-                />
-                <TextField 
-                    id="outlined-basic" 
-                    margin="dense"
-                    label="Phone Number" 
-                    variant="outlined"
-                    onChange={(e) => setClientData({...clientData, phone: e.target.value})}
-                    value={clientData.phone} 
-                />
-                <TextField 
-                    id="outlined-basic" 
-                    margin="dense"
-                    label="Address" 
-                    variant="outlined"
-                    onChange={(e) => setClientData({...clientData, address: e.target.value})}
-                    value={clientData.address} 
-                />
-           </div>
- 
+              <div className="customInputs">
+                <Typography variant='body2' sx={{fontWeight: 'bold'}}>Company Name</Typography>
+                  <TextField fullWidth
+                      id="fullWidth" 
+                      margin="dense"
+                      variant="outlined"
+                      onChange={(e) => setClientData({...clientData, name: e.target.value})}
+                      value={clientData.name}
+                  />
+                  <Typography variant='body2' sx={{fontWeight: 'bold'}}>Email</Typography>
+                  <TextField 
+                      id="outlined-basic" 
+                      margin="dense"
+                      variant="outlined"
+                      onChange={(e) => setClientData({...clientData, email: e.target.value})}
+                      value={clientData.email} 
+                  />
+                  <Typography variant='body2' sx={{fontWeight: 'bold'}}>Phone Number</Typography>
+                  <TextField 
+                      id="outlined-basic" 
+                      margin="dense" 
+                      variant="outlined"
+                      onChange={(e) => setClientData({...clientData, phone: e.target.value})}
+                      value={clientData.phone} 
+                  />
+                  <Typography variant='body2' sx={{fontWeight: 'bold'}}>Address</Typography>
+                  <TextField 
+                      id="outlined-basic" 
+                      margin="dense"
+                      variant="outlined"
+                      onChange={(e) => setClientData({...clientData, address: e.target.value})}
+                      value={clientData.address} 
+                  />
+              </div>
              </DialogContent>
              <DialogActions>
              <Button  onClick={handleSubmitClient}  variant="contained" style={{marginRight: '25px'}} >

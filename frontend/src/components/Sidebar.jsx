@@ -28,9 +28,6 @@ const Sidebar = () => {
     return (
       <Box className='sidebar'>
         <Box style={{
-          listStyle: 'none',
-          padding: '0',
-          margin: '0',
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',

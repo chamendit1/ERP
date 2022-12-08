@@ -9,27 +9,22 @@ const headCells = [
   {
     id: 'name',
     numeric: false,
-    disablePadding: false,
-    label: 'Full Name',
+    label: 'Name',
   },
   {
     id: 'email',
     numeric: false,
-    disablePadding: false,
     label: 'Email',
   },
   {
     id: 'phonenumber',
     numeric: true,
-    disablePadding: false,
-    label: 'Phone Number',
+    label: 'Phone',
   },
   {
-    disablePadding: false,
     label: 'Edit',
   },
   {
-    disablePadding: false,
     label: 'Delete',
   },
 ];
@@ -64,9 +59,6 @@ const Clients = () => {
     <>
       <Table
         open={open} 
-        setOpen={setOpen}
-        currentId={currentId}
-        setCurrentId={setCurrentId}
         rows={clients}
         head={headCells}
       />

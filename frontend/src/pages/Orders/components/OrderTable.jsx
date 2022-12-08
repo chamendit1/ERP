@@ -22,12 +22,12 @@ import { visuallyHidden } from '@mui/utils';
 import { Card } from '@mui/material';
 
 import { useNavigate } from 'react-router-dom';
-
+import moment from 'moment'
 
 import { useDispatch } from 'react-redux'
-import { deleteClient, deleteClients } from '../../../actions/clientActions';
+import { deleteInvoice, deleteInvoices } from '../../../actions/invoiceActions';
 // import { useSnackbar } from 'react-simple-snackbar'
-import AddClient from './AddClient'
+// import AddClient from './AddClient'
 
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { useState } from 'react';
@@ -142,7 +142,7 @@ EnhancedTableHead.propTypes = {
 
 const EnhancedTableToolbar = (props) => {
   const { numSelected, selected, onDelete } = props;
-  const deleteClient = (selected) => {
+  const deleteInvoice = (selected) => {
     onDelete(selected);
   };
   const [open, setOpen] = useState(false)
@@ -178,7 +178,7 @@ const EnhancedTableToolbar = (props) => {
           {/* Customer */}
         </Typography>
       )}
-      <AddClient setOpen={setOpen} open={open} />
+      {/* <AddClient setOpen={setOpen} open={open} /> */}
       {
           <IconButton onClick={() => setOpen((prev) => !prev) }>
             <AddCircleOutlineIcon />
@@ -187,7 +187,7 @@ const EnhancedTableToolbar = (props) => {
 
       {numSelected > 0 ? (
         <Tooltip title="Delete">
-          <IconButton onClick={() => deleteClient(selected) }>
+          <IconButton onClick={() => deleteInvoice(selected) }>
             <DeleteIcon />
           </IconButton>
         </Tooltip>
@@ -269,18 +269,29 @@ export default function EnhancedTable({ rows, head }) {
   };
 
   const handleDelete = (selected)=> {
-    dispatch(deleteClients(selected))
+    dispatch(deleteInvoice(selected))
     console.log(selected)
   }
  
-  const openClient = (id) => {
+  const openInvoice = (id) => {
     navigate(`/client/${id}`)
   }
 
-  const editClient = (id) => {
-    navigate(`/edit/client/${id}`)
+  const editInvoice = (id) => {
+    navigate(`/edit/order/${id}`)
   }
 
+
+  const toCommas = (value) => {
+    return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+  }
+
+  function checkStatus(status) {
+    return status === "Partial" ? {border: 'solid 0px #1976d2', backgroundColor: '#baddff', padding: '8px 18px', borderRadius: '20px' }
+        : status === "Paid" ? {border: 'solid 0px green', backgroundColor: '#a5ffcd', padding: '8px 18px', borderRadius: '20px' }
+        : status === "Unpaid" ? {border: 'solid 0px red', backgroundColor: '#ffaa91', padding: '8px 18px', borderRadius: '20px' }
+        : "red";
+  }
 
 
   const isSelected = (name) => selected.indexOf(name) !== -1;
@@ -313,6 +324,8 @@ export default function EnhancedTable({ rows, head }) {
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
                   const isItemSelected = isSelected(row._id);
+                  const labelId = `enhanced-table-checkbox-${index}`;
+
                   return (
                     <TableRow
                       hover
@@ -326,26 +339,32 @@ export default function EnhancedTable({ rows, head }) {
                         <Checkbox
                           color="primary"
                           onClick={(event) => handleClick(event, row._id)}
-                          checked={isItemSelected}/>
+                          checked={isItemSelected}
+
+                        />
                         {index}
                       </TableCell>
-                      <TableCell align="left" onClick={() => openClient(row._id)}>{row.name}</TableCell>
-                      <TableCell style={{width: '20%'}} align="left" onClick={() => openClient(row._id)}>{row.email}</TableCell>
-                      <TableCell style={{width: '20%'}} align="left" onClick={() => openClient(row._id)}>{row.phone}</TableCell>
+                      
+                      <TableCell onClick={() => openInvoice(row._id)}> {row.invoiceNumber} </TableCell>
+                      <TableCell onClick={() => openInvoice(row._id)} > {row.client.name} </TableCell>
+                      <TableCell onClick={() => openInvoice(row._id)} >{row.currency} {row.total? toCommas(row.total): row.total} </TableCell>
+                      <TableCell onClick={() => openInvoice(row._id)} > {moment(row.dueDate).fromNow()} </TableCell>
+                      <TableCell onClick={() => openInvoice(row._id)} > <button style={checkStatus(row.status)}>{row.status}</button></TableCell>
+                      
                       <TableCell style={{ width: '3%'}}>
-                        <IconButton onClick={() => editClient(row._id)}>
+                        <IconButton onClick={() => editInvoice(row._id)}>
                           <BorderColorIcon  style={{width: '20px', height: '20px'}} />
                         </IconButton>
                       </TableCell>
                       <TableCell style={{ width: '3%'}}>
-                        <IconButton onClick={() => dispatch(deleteClient(row._id))}>
+                        <IconButton onClick={() => dispatch(deleteInvoice(row._id))}>
                           <DeleteOutlineRoundedIcon  style={{width: '20px', height: '20px'}} />
                         </IconButton>
                       </TableCell>
                     </TableRow>
                   );
                 })}
-              {/* {emptyRows > 0 && (
+              {emptyRows > 0 && (
                 <TableRow
                   style={{
                     height: (dense ? 33 : 53) * emptyRows,
@@ -353,7 +372,7 @@ export default function EnhancedTable({ rows, head }) {
                 >
                   <TableCell colSpan={6} />
                 </TableRow>
-              )} */}
+              )}
             </TableBody>
           </Table>
           <TablePagination
