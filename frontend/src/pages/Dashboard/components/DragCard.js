@@ -1,8 +1,11 @@
 import React from 'react'
+// import { Card, Grid, Box, Avatar, Typography } from '@mui/material'
 
-const DragCard = () => {
+const DragCard = ({data}) => {
   return (
-    <div>DragCard</div>
+    <>
+      {data}
+    </>
   )
 }
 

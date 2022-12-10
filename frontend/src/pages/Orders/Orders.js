@@ -8,26 +8,15 @@ import { getInvoices } from '../../actions/invoiceActions';
 import OrderTable from './components/OrderTable';
 
 const headCells = [
-
+  // {
+  //   id: 'ID',
+  //   numeric: false,
+  //   label: 'ID',
+  // },
   {
-    id: 'name',
-    numeric: false,
-    label: 'Name',
-  },
-  {
-    id: 'email',
-    numeric: false,
-    label: 'Email',
-  },
-  {
-    id: 'amount',
+    id: 'Date',
     numeric: true,
-    label: 'Amount',
-  },
-  {
-    id: 'due',
-    numeric: true,
-    label: 'Due Date',
+    label: 'Date',
   },
   {
     id: 'status',
@@ -35,11 +24,26 @@ const headCells = [
     label: 'Status',
   },
   {
-    label: 'Edit',
+    id: 'name',
+    numeric: false,
+    label: 'Customer',
   },
   {
-    label: 'Delete',
+    id: 'due',
+    numeric: true,
+    label: 'Due Date',
   },
+  {
+    id: 'amount',
+    numeric: true,
+    label: 'Amount',
+  },
+  // {
+  //   label: 'Edit',
+  // },
+  // {
+  //   label: 'Delete',
+  // },
 ];
 
 const Orders = () => {

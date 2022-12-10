@@ -65,7 +65,6 @@ function stableSort(array, comparator) {
 }
 
 
-
 function EnhancedTableHead(props) {
   const { onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort, headCells } =
     props;
@@ -80,6 +79,7 @@ function EnhancedTableHead(props) {
         <Box style={{
           alignItems: 'center', 
           display: 'flex',
+          justifyContent: 'space-between',
           width: '4rem'
         }}>
           <Checkbox
@@ -284,7 +284,7 @@ export default function EnhancedTable({ rows, head }) {
 
 
   const isSelected = (name) => selected.indexOf(name) !== -1;
-
+  console.log(rows)
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
@@ -323,11 +323,13 @@ export default function EnhancedTable({ rows, head }) {
                       selected={isItemSelected}
                     >
                       <TableCell padding="checkbox">
+                      <Box display='flex' justifyContent='space-between' alignItems='center'>
                         <Checkbox
                           color="primary"
                           onClick={(event) => handleClick(event, row._id)}
                           checked={isItemSelected}/>
                         {index}
+                        </Box>
                       </TableCell>
                       <TableCell align="left" onClick={() => openClient(row._id)}>{row.name}</TableCell>
                       <TableCell style={{width: '20%'}} align="left" onClick={() => openClient(row._id)}>{row.email}</TableCell>

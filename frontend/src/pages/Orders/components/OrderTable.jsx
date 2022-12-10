@@ -84,7 +84,6 @@ function EnhancedTableHead(props) {
           width: '4rem'
         }}>
           <Checkbox
-            // color="primary"
             indeterminate={numSelected > 0 && numSelected < rowCount}
             checked={rowCount > 0 && numSelected === rowCount}
             onChange={onSelectAllClick}
@@ -99,7 +98,6 @@ function EnhancedTableHead(props) {
               key={headCell.id}
               align={'left'}
               sortDirection={orderBy === headCell.id ? order : false}
-              
             >
                 {headCell.label}
             </TableCell>
@@ -294,6 +292,7 @@ export default function EnhancedTable({ rows, head }) {
         : "red";
   }
 
+  console.log(rows)
 
   const isSelected = (name) => selected.indexOf(name) !== -1;
 
@@ -337,22 +336,23 @@ export default function EnhancedTable({ rows, head }) {
                       selected={isItemSelected}
                     >
                       <TableCell padding="checkbox">
+                      <Box display='flex' justifyContent='space-between' alignItems='center'>
                         <Checkbox
-                          color="primary"
-                          onClick={(event) => handleClick(event, row._id)}
-                          checked={isItemSelected}
-
-                        />
-                        {index}
+                            color="primary"
+                            onClick={(event) => handleClick(event, row._id)}
+                            checked={isItemSelected}
+                          />
+                          #{row.invoiceNumber} 
+                        </Box>
                       </TableCell>
                       
-                      <TableCell onClick={() => openInvoice(row._id)}> {row.invoiceNumber} </TableCell>
-                      <TableCell onClick={() => openInvoice(row._id)} > {row.client.name} </TableCell>
-                      <TableCell onClick={() => openInvoice(row._id)} >{row.currency} {row.total? toCommas(row.total): row.total} </TableCell>
-                      <TableCell onClick={() => openInvoice(row._id)} > {moment(row.dueDate).fromNow()} </TableCell>
+                      <TableCell onClick={() => openInvoice(row._id)}>{moment(row.createdAt).format('Do MMM YY')}</TableCell>
                       <TableCell onClick={() => openInvoice(row._id)} > <button style={checkStatus(row.status)}>{row.status}</button></TableCell>
-                      
-                      <TableCell style={{ width: '3%'}}>
+                      <TableCell onClick={() => openInvoice(row._id)} > {row.client.name} </TableCell>
+                      <TableCell onClick={() => openInvoice(row._id)} > {moment(row.dueDate).fromNow()} </TableCell>
+                      <TableCell onClick={() => openInvoice(row._id)} >{row.currency} {row.total? toCommas(row.total): row.total} </TableCell>
+
+                      {/* <TableCell style={{ width: '3%'}}>
                         <IconButton onClick={() => editInvoice(row._id)}>
                           <BorderColorIcon  style={{width: '20px', height: '20px'}} />
                         </IconButton>
@@ -361,7 +361,7 @@ export default function EnhancedTable({ rows, head }) {
                         <IconButton onClick={() => dispatch(deleteInvoice(row._id))}>
                           <DeleteOutlineRoundedIcon  style={{width: '20px', height: '20px'}} />
                         </IconButton>
-                      </TableCell>
+                      </TableCell> */}
                     </TableRow>
                   );
                 })}

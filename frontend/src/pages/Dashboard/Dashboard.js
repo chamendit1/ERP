@@ -2,6 +2,7 @@ import React, {useState} from 'react'
 import DragGrids from './components/DragGrids';
 import { Card, Grid, Box, Avatar, Typography } from '@mui/material'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
+import TestData from './components/TestData';
 
 const reorderColumnList = (sourceCol, startIndex, endIndex) => {
   const newTaskIds = Array.from(sourceCol.taskIds);
@@ -16,10 +17,18 @@ const reorderColumnList = (sourceCol, startIndex, endIndex) => {
   return newColumn;
 };
 
+const sizes ={
+  xsm: 3,
+  sm: 4,
+  med: 6,
+  lar: 8,
+  xlr: 12
+}
+
 
 const initialData = {
   tasks: {
-    1: { id: 1, content: "Configure Next.js application" },
+    1: { id: 1, content: <TestData/> },
     2: { id: 2, content: "Configure Next.js and tailwind " },
     3: { id: 3, content: "Create sidebar navigation menu" },
     4: { id: 4, content: "Create page footer" },
@@ -29,18 +38,27 @@ const initialData = {
   columns: {
     "column-1": {
       id: "column-1",
-      title: "TO-DO",
-      taskIds: [1, 2, 3, 4, 5, 6],
+      title: "",
+      xs: 12,
+      sm: sizes.med,
+      xl: 3,
+      taskIds: [1],
     },
     "column-2": {
       id: "column-2",
-      title: "IN-PROGRESS",
-      taskIds: [],
+      title: "",
+      xs: 12,
+      sm: sizes.med,
+      xl: 3,
+      taskIds: [2],
     },
     "column-3": {
       id: "column-3",
-      title: "COMPLETED",
-      taskIds: [],
+      title: "",
+      xs: 12,
+      sm: 3,
+      xl: 3,
+      taskIds: [3],
     },
   },
   // Facilitate reordering of the columns
