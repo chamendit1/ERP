@@ -62,7 +62,7 @@ const Client = () => {
     dispatch(getInvoicesByClient(id));
   },[id])
 
-  console.log(rows)
+  console.log(ClientData)
 
   useEffect(() => {
       if(client) {
@@ -72,33 +72,51 @@ const Client = () => {
 
   return (
     <>
-    <Grid container spacing={0}>
-      <Grid item xs={12} sm={12} xl={12} sx={{m: 3}}>
-        <Card style={{borderRadius: 10, boxShadow: 3}}>
-          <Box sx={{m: 2}}>
-            <Avatar variant="rounded" sx={{ height: '70px', width: '70px' }}></Avatar>
+    <Grid container spacing={2}>
+      <Grid item xs={12} sm={12} xl={12}>
+        <Card style={{borderRadius: 10, boxShadow: 3}} sx={{p: 2}}>
+        <Grid container>
+          <Grid item style={{border: '1px solid black'}}>
+            <Avatar variant="rounded" sx={{ height: '100%', width: '80px' }}></Avatar>
+          </Grid>
+          <Grid item xs style={{border: '1px solid black'}} sx={{p: 1}}>
             <Typography variant="h6">{ClientData?.name}</Typography>
-          </Box>
+            <Typography variant="subtitle2">{ClientData?.email}</Typography>
+            <Typography variant="subtitle2">{ClientData?.phone}</Typography>
+          </Grid>
+        </Grid>
+
+
         </Card>
       </Grid>
 
-      <Grid item xs={12} sm={4} xl={4} sx={{m: 3}}>
-        <Card style={{borderRadius: 10, boxShadow: 3}}>
-          <Box sx={{m: 2}}>
-            <Typography variant="subtitle2" sx={{fontWeight: 'bold'}}>Profile</Typography>
-          </Box>
+      <Grid item xs={12} sm={4} xl={4}>
+        <Card style={{borderRadius: 10, boxShadow: 3}} sx={{p: 2}}>
+          <Typography variant="subtitle2" sx={{fontWeight: 'bold'}}>Profile</Typography>
         </Card>
       </Grid>
 
-      <Grid item xs sm xl sx={{m: 3}}>
+      <Grid item xs={12} sm={4} xl={4}>
+        <Card style={{borderRadius: 10, boxShadow: 3}} sx={{p: 2}}>
+          <Typography variant="subtitle2" sx={{fontWeight: 'bold'}}>Transactions</Typography>
+        </Card>
+      </Grid>
+
+      <Grid item xs={12} sm={4} xl={4}>
+        <Card style={{borderRadius: 10, boxShadow: 3}} sx={{p: 2}}>
+            <Typography variant="subtitle2" sx={{fontWeight: 'bold'}}>Invoices</Typography>
+        </Card>
+      </Grid>
+
+      <Grid item xs sm xl>
         <Card style={{borderRadius: 10, boxShadow: 3}}>
           <Box sx={{m: 2}}>
             <Typography variant="subtitle2" sx={{fontWeight: 'bold'}}>Orders</Typography>
-            <OrderTable
-              rows={rows}
-              head={headCells}
-            />
           </Box>
+          <OrderTable
+            rows={rows}
+            head={headCells}
+          />
         </Card>
       </Grid>
     </Grid>
