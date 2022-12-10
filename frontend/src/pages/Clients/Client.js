@@ -73,7 +73,6 @@ const Client = () => {
   return (
     <>
     <Grid container spacing={0}>
-      
       <Grid item xs={12} sm={12} xl={12} sx={{m: 3}}>
         <Card style={{borderRadius: 10, boxShadow: 3}}>
           <Box sx={{m: 2}}>
@@ -102,8 +101,6 @@ const Client = () => {
           </Box>
         </Card>
       </Grid>
-
-
     </Grid>
     </>
   )
