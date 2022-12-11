@@ -4,7 +4,7 @@ import React, { useState, useEffect} from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 
-import { Avatar, Box, Container, Grid} from '@material-ui/core';
+import { Avatar, Box, Card, Container, Grid} from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 
@@ -41,7 +41,7 @@ const Client = () => {
     }, [client])
 
     const ClientDetails = () => {
-        <Grid container rowspacing={2}>
+        <Grid container rowspacing={2} >
         <Grid item xs={6}>
           <Box sx={{m: 2}}>
             <Typography variant="body2">Name</Typography>
@@ -61,49 +61,77 @@ const Client = () => {
       </Grid>
     }
   return (
+    <Box py={3}>
+      <Box mb={3}>
+        <Grid container spacing={0} style={{border: '2px solid green'}}>
+          
+          <Grid item xs={12} sm={6} xl={3}>
+            <Box sx={{m: 3}}>
+              <Card style={{borderRadius: 10, boxShadow: 3}}>
+                <Box sx={{m: 2}}>
+                  <Avatar variant="rounded" sx={{ height: '70px', width: '70px' }}></Avatar>
+                  <Typography variant="h6">{ClientData?.name}</Typography>
+                </Box>
+                <Box sx={{m: 2}}>
+                  <Typography variant="subtitle2" style={{color: 'gray'}}>Email</Typography>
+                  <Typography variant="body2" >{ClientData?.email}</Typography>
+                  <Typography variant="subtitle2" style={{color: 'gray'}}>Phone</Typography>
+                  <Typography variant="body2" >{ClientData?.phone}</Typography>
+                  <Typography variant="subtitle2" style={{color: 'gray'}}>Address</Typography>
+                  <Typography variant="body2">{ClientData?.address}</Typography>
+                </Box>
+              </Card>
+            </Box>
+            <Box sx={{m: 3}}>
+              <Card style={{borderRadius: 10, boxShadow: 3}}>
+                <Box sx={{m: 2}}>
+                  <Typography
+                      sx={{ flex: '1 1 100%' }}
+                      variant="h6"
+                      id="tableTitle"
+                      component="div"
+                    >Notes</Typography>
+                </Box>
+              </Card>
+            </Box>
+            
+              
+                
+              
+              
+            
+          </Grid>
 
-    <div>
-    <Container style={{width: '90%'}} >
-      <Grid container spacing={2}>
-        <Grid item xs={4}>
-        <Box sx={{m: 3}}>
-          <Paper>
-              <Grid container>
-                <Grid>
-                  <Box sx={{m: 2}}>
-                    <Avatar sx={{ width: 56, height: 56 }}></Avatar>
-                    <Typography variant="h6">{ClientData?.name}</Typography>
-                  </Box>
-                </Grid>         
-              </Grid>
-            <Dropdown title="Client Details" data={ClientDetails}/>
-            <Dropdown title="Notes"/>
-          </Paper>
-        </Box>
-        </Grid>
-        <Grid item xs={8}>
-          <Box sx={{m: 3}}>
-            <Paper>
-              <Dropdown title="Stats" />
-            </Paper>
-          </Box>
-          <Box sx={{m: 3}}>
-            <Paper>
-              <Dropdown title="Orders" data={<CustomerInvoices id={id} />}>
-              </Dropdown>
-            </Paper>
-          </Box>
 
-          <Box sx={{m: 3}}>
-            <Paper>
-              <Dropdown title="Transactions" data={<Transactions id={id} />}>
-              </Dropdown>
-            </Paper>
-          </Box>
+          {/* Right Side */}
+          <Grid item xs={12} sm={6}>
+            <Box sx={{m: 3}}>
+              <Card style={{borderRadius: 10, boxShadow: 3}}>
+                <Box sx={{m: 2}}>
+                  <Typography
+                    sx={{ flex: '1 1 100%' }}
+                    variant="h6"
+                    id="tableTitle"
+                    component="div"
+                  >Orders</Typography>
+                </Box>
+                <Box sx={{m: 2}}>
+                  <CustomerInvoices id={id} />
+                </Box>
+              </Card>
+            </Box>
+            {/* <Box sx={{m: 3}}>
+              <Card style={{borderRadius: 10, boxShadow: 3}}>
+                <Box sx={{m: 2}}>
+                  <Transactions id={id} />
+                </Box>
+              </Card>
+            </Box> */}
+            
+          </Grid>
         </Grid>
-      </Grid>
-    </Container>
-  </div>
+      </Box>
+    </Box>
   );
 }
 

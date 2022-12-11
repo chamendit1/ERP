@@ -26,7 +26,7 @@ import inv from './documents/invoice.js'
 import invo from './documents/invo.js'
 import mo from './documents/mo.js'
 import emailTemplate from './documents/email.js'
-
+import ptp from "pdf-to-printer";
 
 
 const app = express()
@@ -110,10 +110,12 @@ var options = { format: 'A4' };
 // });
 
 app.post('/create-pdf', (req, res) => {
+    
     pdf.create(invo(req.body), {}).toFile(`invoice.pdf`, (err) => {
         if(err) {
             res.send(Promise.reject());
         }
+        
         res.send(Promise.resolve());
     });
 });

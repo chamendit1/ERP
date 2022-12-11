@@ -3,13 +3,14 @@ import { AUTH, CREATE_PROFILE } from './constants'
 
 
 export const signin =(formData, openSnackbar) => async(dispatch) => {
-
+    console.log(formData)
     try {
         //login the user
         const { data } = await api.signIn(formData)
 
-        dispatch({ type: AUTH, data})
 
+        dispatch({ type: AUTH, data})
+        console.log(data)
         openSnackbar("Signin successfull")
         // history.push('/dashboard')
         window.location.href="/dashboard"

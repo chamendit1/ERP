@@ -31,6 +31,7 @@ export const getInvoicesByUser = async (req, res) => {
 
 export const getInvoicesByClient = async (req, res) => { 
     const { id } = req.params;
+    console.log(id)
 
     try {
         const invoice = await InvoiceModel.find({ owner: id });

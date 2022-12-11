@@ -16,17 +16,28 @@ import Avatar from '@material-ui/core/Avatar';
 import Breadcrumb from '../Breadcrumb/Breadcrumb'
 // import axios from 'axios'
 
+import AppBar from '@mui/material/AppBar';
+import Box from '@mui/material/Box';
+import Toolbar from '@mui/material/Toolbar';
+import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
+import Menu from '@mui/material/Menu';
+import MenuIcon from '@mui/icons-material/Menu';
+import Container from '@mui/material/Container';
+import Tooltip from '@mui/material/Tooltip';
+import AdbIcon from '@mui/icons-material/Adb';
+import { Card, Icon } from '@material-ui/core'
+import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
+const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    display: 'flex',
-  },
-  paper: {
-    marginRight: theme.spacing(2),
-  },
-}));
-
+// const useStyles = makeStyles((theme) => ({
+//   root: {
+//     display: 'flex',
+//   },
+//   paper: {
+//     marginRight: theme.spacing(2),
+//   },
+// }));
 
 
 const Header = () => {
@@ -70,11 +81,23 @@ const Header = () => {
         // eslint-disable-next-line
     }, [location, user]) //when location changes, set the user
 
-
-
-
-
-  const classes = useStyles();
+    const [anchorElNav, setAnchorElNav] = React.useState(null);
+    const [anchorElUser, setAnchorElUser] = React.useState(null);
+  
+    const handleOpenNavMenu = (event) => {
+      setAnchorElNav(event.currentTarget);
+    };
+    const handleOpenUserMenu = (event) => {
+      setAnchorElUser(event.currentTarget);
+    };
+  
+    const handleCloseNavMenu = () => {
+      setAnchorElNav(null);
+    };
+  
+    const handleCloseUserMenu = () => {
+      setAnchorElUser(null);
+    };
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef(null);
 
@@ -120,38 +143,49 @@ const Header = () => {
         </div>
     )
     return (
-        <div className={styles.header}>
-            <div className={classes.root}>
-              <Breadcrumb />
-              <div>
-                <Button
-                  ref={anchorRef}
-                  aria-controls={open ? 'menu-list-grow' : undefined}
-                  aria-haspopup="true"
-                  onClick={handleToggle}
-                >
-                  <Avatar style={{backgroundColor: '#1976D2'}}>{user?.result?.name?.charAt(0)}</Avatar>
-                </Button>
-                <Popper open={open} anchorEl={anchorRef.current} role={undefined} transition disablePortal>
-                  {({ TransitionProps, placement }) => (
-                    <Grow
-                      {...TransitionProps}
-                      style={{ transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom' }}
-                    >
-                      <Paper elevation={3}>
-                        <ClickAwayListener onClickAway={handleClose}>
-                          <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown} >
-                            <MenuItem onClick={() => openLink('settings') }>{(user?.result?.name).split(" ")[0]}</MenuItem>
-                            <MenuItem onClick={()=> logout()} >Logout</MenuItem>
-                          </MenuList>
-                        </ClickAwayListener>
-                      </Paper>
-                    </Grow>
-                  )}
-                </Popper>
-              </div>
-            </div>
-        </div>
+      <Card style={{padding: '0 1rem', borderRadius: 10, boxShadow: 3}}>
+      <Box>
+        <Toolbar disableGutters>
+          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none'}}}>
+            <Breadcrumb/>
+          </Box>
+          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex'} }}>
+            <Breadcrumb/>
+
+          </Box>
+          
+
+          <Box sx={{ flexGrow: 0 }}>
+            <Tooltip title="Open settings">
+              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+              </IconButton>
+            </Tooltip>
+            <Menu
+              sx={{ mt: '45px' }}
+              id="menu-appbar"
+              anchorEl={anchorElUser}
+              anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              open={Boolean(anchorElUser)}
+              onClose={handleCloseUserMenu}
+            >
+              <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown} >
+                <MenuItem onClick={() => openLink('settings') }>{(user?.result?.name).split(" ")[0]}</MenuItem>
+                <MenuItem onClick={()=> logout()} >Logout</MenuItem>
+              </MenuList>
+            </Menu>
+          </Box>
+        </Toolbar>
+      </Box>
+      </Card>
     )
 }
 

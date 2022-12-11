@@ -23,7 +23,8 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import { visuallyHidden } from '@mui/utils';
 import { Container } from '@material-ui/core';
-
+import NoData from '../../components/svgIcons/NoData';
+import Spinner from '../../components/Spinner/Spinner';
 import BorderColorIcon from '@material-ui/icons/BorderColor';
 import DeleteOutlineRoundedIcon from '@material-ui/icons/DeleteOutlineRounded';
 import { useSnackbar } from 'react-simple-snackbar'
@@ -235,6 +236,7 @@ export default function EnhancedTable({ id }) {
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const isLoading = useSelector(state => state.invoices.isLoading)
 
   const dispatch = useDispatch()
   const [openSnackbar, closeSnackbar] = useSnackbar()
@@ -247,11 +249,11 @@ export default function EnhancedTable({ id }) {
   },[dispatch])
   console.log(rows)
   const editInvoice = (id) => {
-    history.push(`/edit/invoice/${id}`)
+    history.push(`/edit/order/${id}`)
   }
   
   const openInvoice = (id) => {
-    history.push(`/invoice/${id}`)
+    history.push(`/order/${id}`)
   }
 
   const toCommas = (value) => {
@@ -325,15 +327,26 @@ export default function EnhancedTable({ id }) {
  
 
   const isSelected = (name) => selected.indexOf(name) !== -1;
+  if(isLoading) {
+    return  <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', paddingTop: '20px'}}>
+        <Spinner />
+    </div>
+  }
+
+  if(rows.length === 0) {
+    return  <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', paddingTop: '20px', margin: '80px'}}>
+      <NoData />
+    <p style={{padding: '40px', color: 'gray', textAlign: 'center'}}>No invoice yet. Click the plus icon to create invoice</p>
+  
+    </div>
+  }
 
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
 
   return (
-    <Container>
     <Box >
-      <Paper >
         <EnhancedTableToolbar 
         numSelected={selected.length} 
         selected={selected}
@@ -422,13 +435,11 @@ export default function EnhancedTable({ id }) {
           onPageChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
-      </Paper>
       <FormControlLabel
         control={<Switch checked={dense} onChange={handleChangeDense} />}
         label="Dense padding"
       />
     </Box>
-    </Container>
     
   );
 }

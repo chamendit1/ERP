@@ -5,6 +5,7 @@ import {
   Typography
 } from "@material-ui/core";
 import { withRouter } from "react-router-dom";
+import Home from "@mui/icons-material/Home";
 
 const Breadcrumb = props => {
   const {
@@ -15,9 +16,9 @@ const Breadcrumb = props => {
   return (
     <MUIBreadcrumbs aria-label="breadcrumb">
       {pathnames.length > 0 ? (
-        <Link onClick={() => history.push("/")}>Home</Link>
+        <Link onClick={() => history.push("/")}><Home fontSize="small"/></Link>
       ) : (
-        <Typography> Home </Typography>
+        <Typography><Home fontSize="small"/></Typography>
       )}
       {pathnames.map((name, index) => {
         const routeTo = `/${pathnames.slice(0, index + 1).join("/")}`;

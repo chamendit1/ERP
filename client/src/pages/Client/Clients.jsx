@@ -5,8 +5,9 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useLocation, useHistory } from 'react-router-dom'
 import NoData from '../../components/svgIcons/NoData'
 import Spinner from '../../components/Spinner/Spinner'
-import { Box, Container, Grid, Paper} from '@material-ui/core';
+
 import Table from '../../components/Table/Table'
+import { Box, Grid } from '@material-ui/core'
 //import clients from  '../clients.json'
 
   const headCells = [
@@ -30,10 +31,12 @@ import Table from '../../components/Table/Table'
       label: 'Phone Number',
     },
     {
-      id: 'status',
-      numeric: false,
       disablePadding: false,
-      label: 'Status',
+      label: 'Edit',
+    },
+    {
+      disablePadding: false,
+      label: 'Delete',
     },
   ];
 
@@ -70,23 +73,18 @@ import Table from '../../components/Table/Table'
    }
  
      return (
-              <div>
-                <Container style={{width: '85%'}}>
-                  <Box sx={{m: 2}}>
-                    <Paper>
-                    </Paper>
-                  </Box>
-                </Container>
-
-                <Table
-                    open={open} 
-                    setOpen={setOpen}
-                    currentId={currentId}
-                    setCurrentId={setCurrentId}
-                    rows={clients}
-                    head={headCells}
-                />
-              </div>
+      <Box py={3}>
+        <Box mb={3}>
+            <Table
+              open={open} 
+              setOpen={setOpen}
+              currentId={currentId}
+              setCurrentId={setCurrentId}
+              rows={clients}
+              head={headCells}
+            />
+        </Box>
+      </Box>
      )
  }
  

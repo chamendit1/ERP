@@ -6,7 +6,7 @@ import { useParams, useHistory } from 'react-router-dom'
 import { toCommas } from '../../utils/utils'
 
 
-import { Avatar, Box, Container, Grid} from '@material-ui/core';
+import { Avatar, Box, Card, Container, Grid} from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 
@@ -138,14 +138,18 @@ const Order = () => {
 
     const Generate = () => {
       return(
-        <ButtonGroup orientation="vertical" variant="contained" aria-label="outlined primary button group">
+        <ButtonGroup orientation="horizontal" variant="contained" size="small" fullWidth={true}>
           <Button onClick={() => goMorder(invoiceData._id)}>Manufacturing Order</Button>
           <Button onClick={() => goInvoice(invoiceData._id)}>Invoice</Button>
           <Button onClick={() => goDorder(invoiceData._id)}>Surat Jalan</Button>
           <Button>Kwitansi</Button>
+          <Button onClick={createAndDownloadPdf}>Generate Invoice</Button>
+          <Button onClick={() => setOpen((prev) => !prev)}>Record Payment</Button>
+          <Button onClick={() => editInvoice(invoiceData._id)}>Edit Order</Button>
         </ButtonGroup>
       )
     }
+
 
     const steps = [
       'New',
@@ -212,89 +216,35 @@ const Order = () => {
             : "Error";
     }
 
-
-
   return (
-    <div>
+    <Box py={3}>
     <AddOrder setOpen={setOrderOpen} open={orderOpen} />
     <Morder setOpen={setMOrderOpen} open={morderOpen} />
     <Dorder setOpen={setDOrderOpen} open={dorderOpen} />
     <Invoice setOpen={setInvoiceOpen} open={invoiceOpen} />
-    <Container style={{width: '90%'}} >
-      <Grid container spacing={2}>
+    <Box mb={3} style={{border: '1px solid black'}}>
+      <Grid container spacing={0} direction="row" style={{border: '2px solid green'}}>
+        <Grid item xs={12}>
+          <Box sx={{m: 3}}>
+            <Card style={{borderRadius: 10, boxShadow: 3}}>
+              <Generate />
+            </Card>
+          </Box>
+        </Grid>
+        {/* left side */}
         <Grid item xs={4}>
           <Box sx={{m: 3}}>
-            <Paper>
-                <Grid container>
-                    <Box sx={{m: 2}}>
-                      <Typography variant="h6">Order ID: {invoiceData.invoiceNumber}</Typography>
-                      <Typography variant="subtitle2" >Order Date: {moment(invoiceData.createdAt).format("Do MMM YYYY")}</Typography>
-                      <Typography variant="subtitle2" style={{color: 'gray'}}>Payment Status</Typography>
-                      <Typography variant="subtitle2" style={{color: checkStatus()}}>{totalAmountReceived >= total ? 'Paid':status}</Typography>
-                      <Typography variant="subtitle2" style={{color: 'gray'}}>Due Date</Typography>
-                      <Typography variant="subtitle2" >{selectedDate? moment(selectedDate).format("MMM Do YYYY") : '27th Sep 2021'}</Typography>
-                    </Box>        
-                </Grid>
-            </Paper>
+            <Card style={{borderRadius: 10, boxShadow: 3}}>
+              <Box sx={{m: 2}}>
+                <Typography variant="h6">Order ID: {invoiceData.invoiceNumber}</Typography>
+                <Typography variant="subtitle2" >Order Date: {moment(invoiceData.createdAt).format("Do MMM YYYY")}</Typography>
+                <Typography variant="subtitle2" style={{color: 'gray'}}>Payment Status</Typography>
+                <Typography variant="subtitle2" style={{color: checkStatus()}}>{totalAmountReceived >= total ? 'Paid':status}</Typography>
+                <Typography variant="subtitle2" style={{color: 'gray'}}>Due Date</Typography>
+                <Typography variant="subtitle2" >{selectedDate? moment(selectedDate).format("MMM Do YYYY") : '27th Sep 2021'}</Typography>
+              </Box>        
+            </Card>
           </Box>
-
-          <Box sx={{m: 3}}>
-              <Generate />
-          </Box>
-
-          <Box sx={{m: 3}}>
-            <ButtonGroup orientation="vertical" variant="contained" aria-label="outlined primary button group">
-              <Button onClick={createAndDownloadPdf}>Generate Invoice</Button>
-              <Button onClick={() => setOpen((prev) => !prev)}>Record Payment</Button>
-              <Button onClick={() => editInvoice(invoiceData._id)}>Edit Order</Button>
-              <Button onClick={() => goInvoice(invoiceData._id)}>Invoice</Button>
-            </ButtonGroup>
-          </Box>
-          
-
-        </Grid>
-        
-        <Grid item xs={8}>
-
-        <ButtonGroup variant="contained" aria-label="outlined primary button group">
-          <Button onClick={() => processOrder()}>{checkOrderStatus()}</Button>
-          <Button onClick={() => redoOrder()}>Redo (Admin)</Button>
-        </ButtonGroup>
-
-
-          <Box sx={{m: 3}}>
-            <Paper>
-            <Table aria-label="simple table">
-                <TableHead>
-                    <TableRow>
-                        <TableCell>Item</TableCell>
-                        <TableCell >Qty</TableCell>
-                        <TableCell>Price</TableCell>
-                        {/* <TableCell >Disc(%)</TableCell> */}
-                        <TableCell >Amount</TableCell>
-                    </TableRow>
-                </TableHead>
-                <TableBody>
-                    {invoiceData?.items?.map((itemField, index) => (
-                    <TableRow key={index}>
-                        <TableCell  scope="row" style={{width: '40%' }}> {itemField.itemName}</TableCell>
-                        <TableCell align="right"> <InputBase sx={{ ml: 1, flex: 1 }} type="number" name="quantity" value={itemField?.quantity} placeholder="0" readOnly /> </TableCell>
-                        <TableCell align="right"> <InputBase sx={{ ml: 1, flex: 1 }} type="number" name="unitPrice" value={itemField?.unitPrice} placeholder="0" readOnly /> </TableCell>
-                        {/* <TableCell align="right"> <InputBase sx={{ ml: 1, flex: 1 }} type="number" name="discount"  value={itemField?.discount} readOnly /> </TableCell> */}
-                        <TableCell align="right"> <InputBase sx={{ ml: 1, flex: 1 }} type="number" name="amount"  value={((itemField?.quantity * itemField.unitPrice) - (itemField.quantity * itemField.unitPrice) * itemField.discount / 100)} readOnly /> </TableCell>
-                    </TableRow>
-                    ))}
-                </TableBody>
-            </Table>
-            </Paper>
-          </Box>
-
-          {/* <Box sx={{m: 3}}>
-            <Paper>
-              <Typography>Manfacturing Order</Typography>
-            </Paper>
-          </Box>
-
           <Box sx={{m: 3}}>
             <Paper>
               <Grid container>
@@ -308,7 +258,65 @@ const Order = () => {
                 </Box>
               </Grid>
             </Paper>
-          </Box> */}
+          </Box>
+
+        </Grid>
+        
+        {/* Right Side */}
+        <Grid item xs={8}>
+          <Box sx={{m: 3}}>
+            <Card style={{borderRadius: 10, boxShadow: 3}}>
+              <ButtonGroup variant="contained" aria-label="outlined primary button group">
+                <Button onClick={() => processOrder()}>{checkOrderStatus()}</Button>
+                <Button onClick={() => redoOrder()}>Redo (Admin)</Button>
+              </ButtonGroup>
+            </Card>
+          </Box>
+
+          <Box sx={{m: 3}}>
+              <Card style={{borderRadius: 10, boxShadow: 3}}>
+                <Box sx={{m: 2}}>
+                  <Typography variant="h6">Manufacturing Order</Typography>
+                  <Typography variant="subtitle2" style={{color: 'gray'}}>order Date</Typography>
+                  <Typography variant="subtitle2" >{moment(invoiceData.createdAt).format("Do MMM YYYY")}</Typography>
+                  <Typography variant="subtitle2" style={{color: 'gray'}}>Due Date</Typography>
+                  <Typography variant="subtitle2" >{selectedDate? moment(selectedDate).format("MMM Do YYYY") : '27th Sep 2021'}</Typography>
+                  <Typography variant="subtitle2" style={{color: 'gray'}}>Order Status</Typography>
+                  <Steps/>
+                </Box>        
+              </Card>
+            </Box>
+        
+
+
+          <Box sx={{m: 3}}>
+          <Card style={{borderRadius: 10, boxShadow: 3}}>
+            <Table aria-label="simple table">
+              <TableHead>
+                  <TableRow>
+                      <TableCell>Item</TableCell>
+                      <TableCell >Qty</TableCell>
+                      <TableCell>Price</TableCell>
+                      {/* <TableCell >Disc(%)</TableCell> */}
+                      <TableCell >Amount</TableCell>
+                  </TableRow>
+              </TableHead>
+              <TableBody>
+                {invoiceData?.items?.map((itemField, index) => (
+                  <TableRow key={index}>
+                      <TableCell  scope="row" style={{width: '40%' }}> {itemField.itemName}</TableCell>
+                      <TableCell align="right"> <InputBase sx={{ ml: 1, flex: 1 }} type="number" name="quantity" value={itemField?.quantity} placeholder="0" readOnly /> </TableCell>
+                      <TableCell align="right"> <InputBase sx={{ ml: 1, flex: 1 }} type="number" name="unitPrice" value={itemField?.unitPrice} placeholder="0" readOnly /> </TableCell>
+                      {/* <TableCell align="right"> <InputBase sx={{ ml: 1, flex: 1 }} type="number" name="discount"  value={itemField?.discount} readOnly /> </TableCell> */}
+                      <TableCell align="right"> <InputBase sx={{ ml: 1, flex: 1 }} type="number" name="amount"  value={((itemField?.quantity * itemField.unitPrice) - (itemField.quantity * itemField.unitPrice) * itemField.discount / 100)} readOnly /> </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </Card>
+          </Box>
+
+
 
           <Box sx={{m: 3}}>
             <Paper>
@@ -317,27 +325,11 @@ const Order = () => {
               )}
             </Paper>
           </Box>
-
-          <Box sx={{m: 3}}>
-            <Paper>
-                <Grid container>
-                    <Box sx={{m: 2}}>
-                      <Typography variant="h6">Manufacturing Order</Typography>
-                      <Typography variant="subtitle2" >Order Date: {moment(invoiceData.createdAt).format("Do MMM YYYY")}</Typography>
-                      <Typography variant="subtitle2" style={{color: 'gray'}}>Order Status</Typography>
-                      <Steps/>
-                      <Typography variant="subtitle2" style={{color: 'gray'}}>Due Date</Typography>
-                      <Typography variant="subtitle2" >{selectedDate? moment(selectedDate).format("MMM Do YYYY") : '27th Sep 2021'}</Typography>
-                    </Box>        
-                </Grid>
-            </Paper>
-          </Box>
-          
         </Grid>
       </Grid>
       <Modal open={open} setOpen={setOpen} invoice={invoiceData}/>
-    </Container>
-  </div>
+    </Box>
+    </Box>
   );
 }
 
