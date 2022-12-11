@@ -26,7 +26,7 @@ const Sidebar = () => {
 
 
     return (
-      <Box className='sidebar'>
+      <Box className='sidebar' boxShadow={3} >
         <Box style={{
           display: 'flex',
           flexDirection: 'column',
@@ -39,37 +39,37 @@ const Sidebar = () => {
             </Typography>
           </Box>
 
-          <Box className='sidebar-data' component={Link} to="/dashboard" style={{ textDecoration: 'none' }}>
-            <Grid container justifyContent="flex-left" alignItems='center'>
-              <Box className='sidebar-logo' boxShadow={3}>
-                  <DashboardIcon />
+          <Box className='sidebar-data' component={Link} to="/dashboard">
+            <Grid container justifyContent="center" alignItems='center'>
+              <Box className='sidebar-logo'>
+                  <DashboardIcon fontSize="large"/>
               </Box>
-              <Typography className='sidebar-text' sx={{ml:2}}>Dashboard</Typography>
+              <Typography className='sidebar-text'>Dashboard</Typography>
             </Grid>
           </Box>
 
-          <Box className='sidebar-data' component={Link} to="/client-list" style={{ textDecoration: 'none' }}>
-            <Grid container justifyContent="flex-left" alignItems='center'>
-              <Box className='sidebar-logo' boxShadow={3}>
-                  <PeopleAltIcon/>
+          <Box className='sidebar-data' component={Link} to="/client-list">
+            <Grid container justifyContent="center" alignItems='center'>
+              <Box className='sidebar-logo' >
+                  <PeopleAltIcon fontSize="large"/>
               </Box>
-              <Typography className='sidebar-text' sx={{ml:2}}>Clients</Typography>
+              <Typography className='sidebar-text'>Clients</Typography>
             </Grid>
           </Box>
 
-          <Box className='sidebar-data' component={Link} to="/order-list" style={{ textDecoration: 'none' }}>
-            <Grid container justifyContent="flex-left" alignItems='center'>
-              <Box className='sidebar-logo' boxShadow={3}>
-                <ArticleIcon/>
+          <Box className='sidebar-data' component={Link} to="/order-list">
+            <Grid container justifyContent="center" alignItems='center'>
+              <Box className='sidebar-logo'>
+                <ArticleIcon fontSize="large"/>
               </Box>
-              <Typography className='sidebar-text' sx={{ml:2}}>Orders</Typography>
+              <Typography className='sidebar-text'>Orders</Typography>
             </Grid>
           </Box>
 
           
           
 
-          {/* <Box component={Link} to="/orders" boxShadow={3} display="flex" alignItems="center" sx={{
+          {/* <Box component={Link} to="/orders"  display="flex" alignItems="center" sx={{
             backgroundColor: 'white',
             borderRadius: 5,
             padding: '1rem 1rem',
@@ -77,7 +77,7 @@ const Sidebar = () => {
             }}>              
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-layers"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
           </Box>
-          <Box component={Link} to="/orders" boxShadow={3} display="flex" alignItems="center" sx={{
+          <Box component={Link} to="/orders"  display="flex" alignItems="center" sx={{
             backgroundColor: 'white',
             borderRadius: 5,
             padding: '1rem 1rem',

@@ -7,7 +7,7 @@
     "mui": "^0.0.1"
   },
   "scripts": {
-    "start": "cd client && npm start",
+    "start": "cd frontend && npm start",
     "react": "cd server && npm start",
     "dev": "concurrently \"npm run start\" \"npm run react\""
   },
