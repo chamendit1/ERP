@@ -76,10 +76,10 @@ const Client = () => {
       <Grid item xs={12} sm={12} xl={12}>
         <Card style={{borderRadius: 10, boxShadow: 3}} sx={{p: 2}}>
         <Grid container>
-          <Grid item style={{border: '1px solid black'}}>
+          <Grid item >
             <Avatar variant="rounded" sx={{ height: '100%', width: '80px' }}></Avatar>
           </Grid>
-          <Grid item xs style={{border: '1px solid black'}} sx={{p: 1}}>
+          <Grid item xs sx={{p: 1}}>
             <Typography variant="h6">{ClientData?.name}</Typography>
             <Typography variant="subtitle2">{ClientData?.email}</Typography>
             <Typography variant="subtitle2">{ClientData?.phone}</Typography>

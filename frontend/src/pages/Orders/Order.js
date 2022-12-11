@@ -225,6 +225,8 @@ const Order = () => {
             : "Error";
     }
 
+    console.log(invoiceData)
+
   return (
     <Box>
     {/* <AddOrder setOpen={setOrderOpen} open={orderOpen} />
@@ -334,13 +336,13 @@ const Order = () => {
 
         <Grid item xs={3}>
           <Grid container spacing={2}>
-            <Grid item>
+            {/* <Grid item>
             <Card style={{borderRadius: 10, boxShadow: 3}}>
               <Box sx={{m: 1}}>
                 Customer
               </Box>
               </Card>
-            </Grid>
+            </Grid> */}
             <Grid item>
             <Card style={{borderRadius: 10, boxShadow: 3}}>
             <Box sx={{p: 2}}>

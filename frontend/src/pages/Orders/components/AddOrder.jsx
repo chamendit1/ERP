@@ -83,6 +83,7 @@ import { DialogTitle, DialogContent , DialogActions } from '@mui/material';
      const dispatch = useDispatch()
      const navigate = useNavigate()
      const [orderStatus, setOrderStatus ] = useState('')
+     const [newClientOpen, setNewClientOpen] = useState(false)
      
      useEffect(() => {
         dispatch(getClientsByUser({search: user?.result._id || user?.result?.googleId}));
@@ -263,6 +264,7 @@ const handleRates =(e) => {
 
   return (
     <div>
+    <AddClient setOpen={setNewClientOpen} open={newClientOpen} />
       <form onSubmit={handleSubmit} className="mu-form">
       <Dialog onClose={handleClose} aria-labelledby="customized-dialog-title" open={open} maxWidth='md' fullWidth>
         <DTitle id="customized-dialog-title" onClose={handleClose} style={{paddingLeft: '20px', color: 'white'}}>
@@ -313,7 +315,7 @@ const handleRates =(e) => {
                           <Chip
                               avatar={<Avatar>+</Avatar>}
                               label="New Customer"
-                              onClick={() => setOpen(true)}
+                              onClick={() => setNewClientOpen(true)}
                               variant="outlined"
                           />
                       </Grid>

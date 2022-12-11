@@ -27,7 +27,7 @@ import moment from 'moment'
 import { useDispatch } from 'react-redux'
 import { deleteInvoice, deleteInvoices } from '../../../actions/invoiceActions';
 // import { useSnackbar } from 'react-simple-snackbar'
-// import AddClient from './AddClient'
+// import AddClient from '../../Clients/components/AddClient';
 
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { useState } from 'react';
