@@ -6,6 +6,11 @@ import { useLocation, Link } from 'react-router-dom'
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import ArticleIcon from '@mui/icons-material/Article';
+import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
+import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
+
+import ReceiptIcon from '@mui/icons-material/Receipt';
+import Receipt from '@mui/icons-material/Receipt';
 
 const Sidebar = () => {
 
@@ -66,7 +71,32 @@ const Sidebar = () => {
             </Grid>
           </Box>
 
+          <Box className='sidebar-data' component={Link} to="/Accounting">
+            <Grid container justifyContent="center" alignItems='center'>
+              <Box className='sidebar-logo'>
+                <AccountBalanceWalletIcon fontSize="large"/>
+              </Box>
+              <Typography className='sidebar-text'>Accounting</Typography>
+            </Grid>
+          </Box>
+
+          <Box className='sidebar-data' component={Link} to="/Purchasing">
+            <Grid container justifyContent="center" alignItems='center'>
+              <Box className='sidebar-logo'>
+                <ShoppingBagIcon fontSize="large" />
+              </Box>
+              <Typography className='sidebar-text'>Purchasing</Typography>
+            </Grid>
+          </Box>
           
+          <Box className='sidebar-data' component={Link} to="/Sales">
+            <Grid container justifyContent="center" alignItems='center'>
+              <Box className='sidebar-logo'>
+                <ReceiptIcon fontSize="large"/>
+              </Box>
+              <Typography className='sidebar-text'>Sales</Typography>
+            </Grid>
+          </Box>
           
 
           {/* <Box component={Link} to="/orders"  display="flex" alignItems="center" sx={{

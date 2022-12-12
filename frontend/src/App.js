@@ -8,6 +8,8 @@ import Dashboard from './pages/Dashboard/Dashboard';
 import Client from './pages/Clients/Client';
 import Order from "./pages/Orders/Order";
 
+import Accounting from './pages/Accounting/index'
+
 function App() {
   return (
     <BrowserRouter>
@@ -17,6 +19,7 @@ function App() {
         <Route path="/Dashboard" element={<Dashboard/>}/>
         <Route path="/Client-list" element={<Clients/>}/>
         <Route path="/Order-list" element={<Orders/>}/>
+        <Route path="/Accounting" element={<Accounting/>}/>
 
         <Route path="/client/:id" element={<Client/>} />
         <Route path="/order/:id" element={<Order/>} />

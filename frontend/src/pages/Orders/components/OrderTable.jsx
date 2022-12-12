@@ -168,13 +168,13 @@ const EnhancedTableToolbar = (props) => {
         </Typography>
       ) : (
         <Typography
-          sx={{ flex: '1 1 100%' }}
-          // variant="subtitle1"
+          sx={{ flex: '1 1 100%', fontWeight: 'bold' }}
+          variant="subtitle1"
           
           id="tableTitle"
           component="div"
         >
-          {/* Customer */}
+          Orders
         </Typography>
       )}
       <AddOrder setOpen={setOpen} open={open} />
