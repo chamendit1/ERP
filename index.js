@@ -136,7 +136,7 @@ app.get('/', (req, res) => {
     res.send('SERVER IS RUNNING')
   })
 
-const DB_URL = process.env.DB_URL
+const DB_URL = 'mongodb+srv://admin:admin@cluster0.zlo1v.mongodb.net/?retryWrites=true&w=majority'
 const PORT = process.env.PORT || 5000
 
 mongoose.connect(DB_URL, { useNewUrlParser: true, useUnifiedTopology: true})

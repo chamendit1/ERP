@@ -5,7 +5,7 @@ import bcrypt from 'bcryptjs'
 import dotenv from 'dotenv'
 
 dotenv.config()
-const SECRET = process.env.SECRET;
+const SECRET = 'secret';
 const HOST =  process.env.SMTP_HOST
 const PORT =  process.env.SMTP_PORT
 const USER =  process.env.SMTP_USER
