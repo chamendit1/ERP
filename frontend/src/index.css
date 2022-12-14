@@ -30,6 +30,16 @@
   align-items: center;
 }
 
+/* kanban */
+.droppable {
+  border-radius: 10px;
+  background-color: #8f8f91;
+  padding: 1rem;
+}
+
+.kanbancolumn {
+
+}
 
 
 /* Animation */

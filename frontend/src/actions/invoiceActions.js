@@ -66,6 +66,7 @@ export const getInvoice = (id) => async (dispatch)=> {
         const { data } = await api.fetchInvoice(id)
         const businessDetails = await api.fetchProfilesByUser({search: user?.result?._id || user?.result?.googleId})
         const invoiceData = {...data, businessDetails}
+        console.log(invoiceData)
         dispatch({ type: GET_INVOICE, payload: invoiceData  })
     } catch (error) {
         console.log(error)
@@ -87,11 +88,11 @@ export const createInvoice =(invoice, history, openSnackbar) => async (dispatch)
 }
 
 export const updateInvoice =(id, invoice, openSnackbar) => async (dispatch) => {
-
+    console.log(id)
     try {
         const { data } = await api.updateInvoice(id, invoice)
         dispatch({ type: UPDATE, payload: data })
-        openSnackbar("Update successfull")
+        console.log("Update successfull")
 
         
     } catch (error) {

@@ -54,22 +54,22 @@
      const [clientData, setClientData] = useState({ name: '', email: '', phone: '', address: '', userId: ''})
      const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')))
      const dispatch = useDispatch()
-     const client = useSelector((state)=> currentId ? state.clients.clients.find((c) => c._id === currentId) : null)
+    //  const client = useSelector((state)=> currentId ? state.clients.clients.find((c) => c._id === currentId) : null)
      // eslint-disable-next-line 
     //  const [openSnackbar, closeSnackbar] = useSnackbar()
      const { id } = useParams()
 
      
-     useEffect(() => {
-      dispatch(getClient(id));
-      // eslint-disable-next-line
-    }, [id]);
+    //  useEffect(() => {
+    //   dispatch(getClient(id));
+    //   // eslint-disable-next-line
+    // }, [id]);
  
-     useEffect(() => {
-       if(client) {
-         setClientData(client)
-       }
-     }, [client])
+    //  useEffect(() => {
+    //    if(client) {
+    //      setClientData(client)
+    //    }
+    //  }, [client])
  
      useEffect(() => {
        setUser(JSON.parse(localStorage.getItem('profile')))

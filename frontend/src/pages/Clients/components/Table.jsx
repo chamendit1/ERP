@@ -75,7 +75,7 @@ function EnhancedTableHead(props) {
   return (
     <TableHead>
       <TableRow>
-        <TableCell padding="checkbox">
+        <TableCell padding="checkbox" key='id'>
         <Box style={{
           alignItems: 'center', 
           display: 'flex',
@@ -88,11 +88,12 @@ function EnhancedTableHead(props) {
             checked={rowCount > 0 && numSelected === rowCount}
             onChange={onSelectAllClick}
           />
-          <Typography>ID</Typography>
+          <Typography >ID</Typography>
           </Box>
         </TableCell>
         {headCells.map((headCell) => {
-          if(!headCell.id) {
+
+          if(!headCell.type) {
             return (
               <TableCell
               key={headCell.id}
@@ -117,7 +118,7 @@ function EnhancedTableHead(props) {
               >
                 {headCell.label}
                 {orderBy === headCell.id ? (
-                  <Box component="span" sx={visuallyHidden}>
+                  <Box component="span" sx={visuallyHidden} >
                     {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
                   </Box>
                 ) : null}
@@ -230,7 +231,6 @@ export default function EnhancedTable({ rows, head }) {
     if (event.target.checked) {
       const newSelected = rows.map((n) => n._id);
       setSelected(newSelected);
-      console.log(newSelected)
       return;
     }
     setSelected([]);
@@ -268,9 +268,12 @@ export default function EnhancedTable({ rows, head }) {
     setPage(0);
   };
 
-  const handleDelete = (selected)=> {
+  const handleDeletes = (selected)=> {
     dispatch(deleteClients(selected))
-    console.log(selected)
+  }
+
+  const handleDelete = (selected)=> {
+    dispatch(deleteClient(selected))
   }
  
   const openClient = (id) => {
@@ -284,21 +287,20 @@ export default function EnhancedTable({ rows, head }) {
 
 
   const isSelected = (name) => selected.indexOf(name) !== -1;
-  console.log(rows)
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
-    console.log(rows)
 
   return (
-    <Card style={{borderRadius: 10, boxShadow: 3}}>
+    <Card style={{borderRadius: 10, boxShadow: 3}} key='card'>
       <EnhancedTableToolbar 
         numSelected={selected.length} 
         selected={selected}
-        onDelete={handleDelete}
+        onDelete={handleDeletes}
+        key='toolbar'
         // openSnackbar={openSnackbar}
       />
-        <Table>
+        <Table key='table'>
           <EnhancedTableHead
             numSelected={selected.length}
             order={order}
@@ -307,6 +309,7 @@ export default function EnhancedTable({ rows, head }) {
             onRequestSort={handleRequestSort}
             rowCount={rows.length}
             headCells={head}
+            key='head'
           />
             <TableBody>
               {stableSort(rows, getComparator(order, orderBy))
@@ -315,50 +318,53 @@ export default function EnhancedTable({ rows, head }) {
                   const isItemSelected = isSelected(row._id);
                   return (
                     <TableRow
+                      key={row._id}
                       hover
                       role="checkbox"
                       aria-checked={isItemSelected}
                       tabIndex={-1}
-                      key={row.id}
                       selected={isItemSelected}
                     >
-                      <TableCell padding="checkbox">
-                      <Box display='flex' justifyContent='space-between' alignItems='center'>
+                      <TableCell padding="checkbox" >
+                      <Box  display='flex' justifyContent='space-between' alignItems='center'>
                         <Checkbox
+                          
                           color="primary"
                           onClick={(event) => handleClick(event, row._id)}
                           checked={isItemSelected}/>
                         {index}
                         </Box>
                       </TableCell>
-                      <TableCell align="left" onClick={() => openClient(row._id)}>{row.name}</TableCell>
-                      <TableCell style={{width: '20%'}} align="left" onClick={() => openClient(row._id)}>{row.email}</TableCell>
-                      <TableCell style={{width: '20%'}} align="left" onClick={() => openClient(row._id)}>{row.phone}</TableCell>
-                      <TableCell style={{ width: '3%'}}>
-                        <IconButton onClick={() => editClient(row._id)}>
+                      <TableCell  align="left" onClick={() => openClient(row._id)}>{row.name}</TableCell>
+                      <TableCell  style={{width: '20%'}} align="left" onClick={() => openClient(row._id)}>{row.email}</TableCell>
+                      <TableCell  style={{width: '20%'}} align="left" onClick={() => openClient(row._id)}>{row.phone}</TableCell>
+                      <TableCell  style={{ width: '3%'}}>
+                        <IconButton  onClick={() => editClient(row._id)}>
                           <BorderColorIcon  style={{width: '20px', height: '20px'}} />
                         </IconButton>
                       </TableCell>
-                      <TableCell style={{ width: '3%'}}>
-                        <IconButton onClick={() => dispatch(deleteClient(row._id))}>
+                      <TableCell style={{ width: '3%'}} >
+                        <IconButton onClick={() => handleDelete(row._id)}>
                           <DeleteOutlineRoundedIcon  style={{width: '20px', height: '20px'}} />
                         </IconButton>
                       </TableCell>
                     </TableRow>
                   );
                 })}
-              {/* {emptyRows > 0 && (
+              {emptyRows > 0 && (
                 <TableRow
+                key='empty'
                   style={{
                     height: (dense ? 33 : 53) * emptyRows,
                   }}
                 >
                   <TableCell colSpan={6} />
                 </TableRow>
-              )} */}
+              )}
             </TableBody>
           </Table>
           <TablePagination
+            key='tablePage'
             rowsPerPageOptions={[5, 10, 25]}
             component="div"
             count={rows.length}

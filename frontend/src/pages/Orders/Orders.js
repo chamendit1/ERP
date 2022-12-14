@@ -6,6 +6,7 @@ import { Box } from '@mui/material';
 
 import { getInvoices } from '../../actions/invoiceActions';
 import OrderTable from './components/OrderTable';
+import CircularProgress from '@mui/material/CircularProgress';
 
 const headCells = [
   // {
@@ -52,6 +53,10 @@ const Orders = () => {
   const navigate = useNavigate()
   const user = JSON.parse(localStorage.getItem('profile'))
   const rows = useSelector(state => state.invoices.invoices)
+  const isLoading = useSelector(state => state.invoices.isLoading)
+
+  console.log(useSelector(state => state.invoices.isLoading))
+  console.log(isLoading)
 
   useEffect(() => {
       dispatch(getInvoices());
@@ -60,8 +65,13 @@ const Orders = () => {
   if(!user) {
     navigate('/login')
   }
-
   console.log(rows)
+
+  if(isLoading) {
+    return  <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', paddingTop: '20px'}}>
+        <CircularProgress />
+      </div>
+  }
 
   return (
     <>

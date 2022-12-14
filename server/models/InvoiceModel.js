@@ -1,6 +1,7 @@
 import mongoose from 'mongoose'
 
 const InvoiceSchema = mongoose.Schema({
+    invoiceid: Number,
     dueDate: Date,
     currency: String,
     items: [ { itemName: String, unitPrice: String, quantity: String, discount: String } ],
