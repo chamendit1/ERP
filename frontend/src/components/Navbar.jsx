@@ -40,7 +40,7 @@ import {
 // const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 
-const Navbar = () => {
+const Navbar = ({children}) => {
     const dispatch = useDispatch()
     const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')))
     const navigate = useNavigate()
@@ -117,14 +117,14 @@ const Navbar = () => {
         </Card>
     )
     return ( 
-      <Card style={{padding: '0 1rem', borderRadius: 10, boxShadow: 3}}>
+      <Card style={{padding: '0 1rem', borderRadius: 10, boxShadow: 3, margin: '1rem 0'}}>
       <Box>
         <Toolbar disableGutters>
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none'}}}>
-            {/* <Breadcrumb/> */}
+            {children}
           </Box>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex'} }}>
-            {/* <Breadcrumb/> */}
+            {children}
           </Box>
           
 

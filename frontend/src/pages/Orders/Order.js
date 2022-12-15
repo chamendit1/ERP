@@ -155,11 +155,11 @@ console.log(useSelector((state) => state.invoices))
 
 
     const steps = [
-      'Processing Order',
+      'Quotation',
+      'Purchase Order',
       'Manufacturing Order',
       'Delivery',
-      'Order Delivered',
-      'Tagih',
+      'Bill',
       'Selesai',
     ];
 
@@ -217,11 +217,12 @@ console.log(useSelector((state) => state.invoices))
     }
     console.log(orderStatus)
     function checkOrderStatus() {
-      return orderStatus === 0 ? "Proses Order"
-            : orderStatus === 1 ? "Kirim"
-            : orderStatus === 2 ? "Arrived"
-            : orderStatus === 3 ? "Tagih"
-            : orderStatus === 4 ? "Selesai"
+      return orderStatus === 0 ? "Quotation"
+            : orderStatus === 1 ? "PO"
+            : orderStatus === 2 ? "MO"
+            : orderStatus === 3 ? "Delivery"
+            : orderStatus === 4 ? "Bill"
+            : orderStatus === 5 ? "Selesai"
             : "Error";
     }
 

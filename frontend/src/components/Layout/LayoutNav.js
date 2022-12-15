@@ -6,7 +6,7 @@ import Navbar from '../Navbar'
 import Sidebar from '../Sidebar'
 // import Header from '../Header/Header';
 
-const Layout = ({children}) => {
+const LayoutNav = ({children}) => {
   const user = JSON.parse(localStorage.getItem('profile'))
     return (
       <Box>
@@ -30,4 +30,4 @@ const Layout = ({children}) => {
     )
 }
 
-export default Layout
+export default LayoutNav

@@ -7,6 +7,12 @@
   
 }
 
+/* Navbar */
+.navbar-link {
+  text-decoration: none;
+  color: #566a7f
+}
+
 .sidebar { 
   transition: width 600ms ease;
   z-index: 100;

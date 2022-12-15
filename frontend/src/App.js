@@ -9,26 +9,31 @@ import Client from './pages/Clients/Client';
 import Order from "./pages/Orders/Order";
 
 import Accounting from './pages/Accounting/index'
+import CRM from "./pages/CRM";
+import LayoutNav from "./components/Layout/LayoutNav";
+import Sales from './pages/Sales'
 
 function App() {
   return (
     <BrowserRouter>
-    <Layout>
-      <Routes>
-        <Route path="/" element={<Home/>}/>
-        <Route path="/Dashboard" element={<Dashboard/>}/>
-        <Route path="/Client-list" element={<Clients/>}/>
-        <Route path="/Order-list" element={<Orders/>}/>
-        <Route path="/Accounting" element={<Accounting/>}/>
+      <LayoutNav>
+        <Routes>
+          <Route path="/" element={<Home/>}/>
+          <Route path="/dashboard" element={<Dashboard/>}/>
+          <Route path="/login" element={<Login/>} />
+          <Route path="/forgot" element={<Orders/>} />
+          <Route path="/reset/:token" element={<Orders/>} />
+        
 
+        <Route path="/crm/*" element={<CRM/>}/>
+  {/*   <Route path="/client-list" element={<Clients/>}/>
+        <Route path="/order-list" element={<Orders/>}/> */}
+        <Route path="sales" element={<Sales/>} />
         <Route path="/client/:id" element={<Client/>} />
         <Route path="/order/:id" element={<Order/>} />
-
-        <Route path="/login" element={<Login/>} />
-        <Route path="/forgot" element={<Orders/>} />
-        <Route path="/reset/:token" element={<Orders/>} />
-      </Routes>
-    </Layout>
+        <Route path="/Accounting" element={<Accounting/>}/>
+        </Routes>
+      </LayoutNav>
     </BrowserRouter>
   );
 }

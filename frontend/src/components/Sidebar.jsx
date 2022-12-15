@@ -5,12 +5,12 @@ import { useLocation, Link } from 'react-router-dom'
 
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
-import ArticleIcon from '@mui/icons-material/Article';
+// import ArticleIcon from '@mui/icons-material/Article';
 import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
 import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
 
 import ReceiptIcon from '@mui/icons-material/Receipt';
-import Receipt from '@mui/icons-material/Receipt';
+// import Receipt from '@mui/icons-material/Receipt';
 
 const Sidebar = () => {
 
@@ -53,7 +53,16 @@ const Sidebar = () => {
             </Grid>
           </Box>
 
-          <Box className='sidebar-data' component={Link} to="/client-list">
+          <Box className='sidebar-data' component={Link} to="/crm">
+            <Grid container justifyContent="center" alignItems='center'>
+              <Box className='sidebar-logo' >
+                  <PeopleAltIcon fontSize="large"/>
+              </Box>
+              <Typography className='sidebar-text'>CRM</Typography>
+            </Grid>
+          </Box>
+
+          {/* <Box className='sidebar-data' component={Link} to="/client-list">
             <Grid container justifyContent="center" alignItems='center'>
               <Box className='sidebar-logo' >
                   <PeopleAltIcon fontSize="large"/>
@@ -69,7 +78,7 @@ const Sidebar = () => {
               </Box>
               <Typography className='sidebar-text'>Orders</Typography>
             </Grid>
-          </Box>
+          </Box> */}
 
           <Box className='sidebar-data' component={Link} to="/Accounting">
             <Grid container justifyContent="center" alignItems='center'>

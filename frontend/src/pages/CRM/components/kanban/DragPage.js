@@ -1,9 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import { useDispatch, useSelector } from 'react-redux'
-import DragGrids from './components/DragGrids';
+import DragGrids from './DragGrids';
 import { Card, Grid, Box, Avatar, Typography } from '@mui/material'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
-import { updateInvoice, getInvoice } from '../../actions/invoiceActions';
+import { updateInvoice } from '../../../../actions/invoiceActions';
+import { getInvoices } from '../../../../actions/invoiceActions';
+
 
 const reorderColumnList = (sourceCol, startIndex, endIndex) => {
   const newTaskIds = Array.from(sourceCol.taskIds);
@@ -18,29 +20,8 @@ const reorderColumnList = (sourceCol, startIndex, endIndex) => {
   return newColumn;
 };
 
-const sizes ={
-  xsm: 3,
-  sm: 4,
-  med: 6,
-  lar: 8,
-  xlr: 12
-}
-
-
 const initialData = {
-  tasks: {
-    1: { id: 1, content: "dwq" },
-    2: { id: 2, content: "Configure Next.js and tailwind " },
-    3: { id: 3, content: "Create sidebar navigation menu" },
-    4: { id: 4, content: "Create page footer" },
-    5: { id: 5, content: "Create page navigation menu" },
-    6: { id: 6, content: "Create page layout" },
-    data: [ 
-      {id: 0, orderStatus: 1, content: "Create page layout"}, 
-      {id: 1, orderStatus: 2, content: "Create page layout"}, 
-      {id: 2, orderStatus: 3, content: "Create page layout"},
-    ]
-  },
+  tasks: [0,1,2],
   columns: {
     "0": {
       id: "0",
@@ -49,74 +30,59 @@ const initialData = {
     },
     "1": {
       id: "1",
-      title: "Making",
+      title: "Manufacturing Order",
       taskIds: [],
     },
     "2": {
       id: "2",
-      title: "Deliv",
+      title: "Delivery",
+      taskIds: [],
+    },
+    "3": {
+      id: "3",
+      title: "Order Delivered",
+      taskIds: [],
+    },
+    "4": {
+      id: "4",
+      title: "Tagih",
       taskIds: [],
     },
   },
-  // Facilitate reordering of the columns
-  columnOrder: ["0", "1", "2"],
+  columnOrder: ["0", "1", "2", "3", "4"],
 };
 
 
-const Dashboard = ( dat ) => {
+const DragPage = (  ) => {
   const [state, setState] = useState(initialData);
-  // const { order } = useSelector((state) => state.invoices)
-  // const [orderStatus, setOrderStatus ] = useState('')
-  // const [orderId, setOrderId ] = useState('')
-  // const [invoiceData, setInvoiceData] = useState('')
+  const dat = useSelector(state => state.invoices.invoices)
   const dispatch = useDispatch()
 
-  // console.log(orderId)
-  // console.log(orderStatus)
-
-  // const dispatch = useDispatch()
   
-  // useEffect(() => { 
-    
-  // }, [orderId]);
-//   console.log(useSelector((state) => state.invoices))
-//   useEffect(() => {
-//     if(order) {
-//       setInvoiceData(order)
-//       setOrderStatus(order.orderStatus)
-//     }
-// }, [order])
-// console.log(order)
-// console.log(invoiceData)
+  useEffect(() => {
+    dispatch(getInvoices());
+  }, [dispatch]);
+
+  useEffect(() => { 
+      state.tasks = []
+      state.tasks = dat
+    // })
+  }, [dat]);
+  console.log(state)
 
   useEffect(() => { 
     state.columnOrder.map((columnId) => {
-      dat.data.map((dt)=> {
+      state.columns[columnId].taskIds = []
+      dat.map((dt)=> {
         let id = parseInt(columnId) 
         if(dt.orderStatus === id) {
           state.columns[id].taskIds.push(dt._id)
-          loadData(dat)
         }
       })
     })
-    // setOrderStatus(order.orderStatus)
-  }, [dispatch, dat]);
+  }, [dat]);
 
-
-
-  const loadData = (dat) => {
-    const data = dat.data
-    const newState = {
-      ...state,
-      tasks: {
-        ...state.tasks,
-        data
-      },
-    };
-    setState(newState)
-  }
-
-
+  
 
   const onDragEnd = (result) => {
     const { destination, source } = result;
@@ -193,17 +159,17 @@ const Dashboard = ( dat ) => {
       <Grid container spacing={0} >
         {state.columnOrder.map((columnId) => {
           const column = state.columns[columnId]
-          const length = state.tasks.data.length
+          const length = state.tasks.length
           const tasks = column.taskIds.map((taskId) => 
-
           {
             for (let i = 0; i < length; i++) { 
-            if(state.tasks.data[i]._id === taskId) {
-              return state.tasks.data[i]
+            if(state.tasks[i]._id === taskId) {
+              return state.tasks[i]
             }
            }
           }
           );
+          console.log(tasks)
 
           return <DragGrids key={column.id} column={column} tasks={tasks} />;
         })}
@@ -212,4 +178,4 @@ const Dashboard = ( dat ) => {
   )
 }
 
-export default Dashboard
+export default DragPage

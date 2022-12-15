@@ -5,7 +5,7 @@ import DragCard from './DragCard'
 
 const DragGrids = ({column, tasks}) => {
   return (
-      <Grid className="kanbancolumn" item xs={3} sx={{height: '80vh'}}>
+      <Grid className="kanbancolumn" item xs sx={{height: '80vh'}}>
       <Typography>{column.title}</Typography>
 
       <Droppable droppableId={column.id}>
