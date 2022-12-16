@@ -72,7 +72,7 @@ const Order = () => {
     const [invoiceOpen, setInvoiceOpen] = useState(false)
     // const [openSnackbar, closeSnackbar] = useSnackbar()
 
-console.log(useSelector((state) => state.invoices))
+console.log(useSelector((state) => state))
     
     useEffect(() => {
         dispatch(getInvoice(id));
