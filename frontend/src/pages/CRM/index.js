@@ -1,6 +1,6 @@
 import React from 'react'
 import Navbar from '../../components/Navbar'
-import { Button, Box, MenuItem, Menu } from '@mui/material'
+import { Button, Box, MenuItem, Menu, MenuList } from '@mui/material'
 import { useLocation, Link, Routes, Route, useNavigate } from 'react-router-dom'
 import Clients from '../Clients/Clients'
 import Orders from '../Orders/Orders'
@@ -27,25 +27,50 @@ const navItems = [
 ]
 
 const CRM = () => {
+  const navigate = useNavigate()
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
-  const navigate = useNavigate();
-
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
-  const handleClose = (nav) => {
-    // navigate(`${nav}`)
-    // navigate('/crm/sales')
+  const handleClose = () => {
+    setAnchorEl(null);
   };
+
+  const handleNavClientList = () => {
+    navigate('/crm/client-list')
+  };
+  const handleNavOrderList = () => {
+    navigate('/crm/order-list')
+  };
+  const handleNavPipeline = () => {
+    navigate('/crm')
+  };
+
 
   return (
     
     <div>
       <Navbar>
-      {navItems.map((item) => (
-        <Box className='navbar-link' component={Link} to={item.link} >
-          <Button onClick={handleClick} sx={{ color: 'black' }}>{item.logo}{item.name}</Button>
+        <Box  >
+          <Button onClick={handleClick}>Sales</Button>
+          <Menu
+            id="basic-menu"
+            anchorEl={anchorEl}
+            open={open}
+            onClose={handleClose}
+            MenuListProps={{
+              'aria-labelledby': 'basic-button',
+            }}
+          >
+            <MenuItem onClick={handleNavPipeline}>Pipeline</MenuItem>
+            <MenuItem onClick={handleNavClientList}>Customers</MenuItem>
+            {/* <MenuItem onClick={handleNavClientList}>Quotations</MenuItem> */}
+            <MenuItem onClick={handleNavOrderList}>Orders</MenuItem>
+          </Menu>
+        </Box>
+        <Box  >
+          <Button onClick={handleClick}>Reporting</Button>
           {/* <Menu
             id="basic-menu"
             anchorEl={anchorEl}
@@ -55,17 +80,18 @@ const CRM = () => {
               'aria-labelledby': 'basic-button',
             }}
           >
-            <MenuItem onClick={handleClose(item.link)}>Profile</MenuItem>
-            <MenuItem onClick={handleClose(item.link)}>My account</MenuItem>
-            <MenuItem onClick={handleClose(item.link)}>Logout</MenuItem>
+            <MenuItem onClick={handleClose}>Pipeline</MenuItem>
+            <MenuItem onClick={handleClose}>Customers</MenuItem>
+            <MenuItem onClick={handleNav}>Quotations</MenuItem>
+            <MenuItem onClick={handleClose}>Orders</MenuItem>
           </Menu> */}
         </Box>
-      ))}
       </Navbar>
+
       <Routes>
-        <Route path="/" element={<Kanban />}/>
         <Route path="/client-list" element={<Clients/>}/>
         <Route path="/order-list" element={<Orders/>}/>
+        <Route path="/" element={<Kanban/>}/>
       </Routes>
     </div>
   )

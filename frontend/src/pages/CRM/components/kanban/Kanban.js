@@ -23,9 +23,9 @@ const Kanban = () => {
   // console.log(useSelector(state => state))
 
   return (
-    <div>
+    <>
       <DragPage />
-    </div>
+    </>
   )
 }
 

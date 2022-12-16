@@ -24,7 +24,7 @@ const Dashboard = () => {
 
   return (
     <div>
-      {/* <Kanban data={rows}/> */}
+      dashboard
     </div>
   )
 }
