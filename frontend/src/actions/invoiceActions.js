@@ -7,7 +7,7 @@ import { ADD_NEW, UPDATE, DELETE, GET_INVOICE, START_LOADING, END_LOADING, FETCH
      try {
          dispatch({ type: START_LOADING })
          const { data } = await api.fetchInvoices()
-         console.log(data)
+        //  console.log(data)
          dispatch({ type: FETCH_ALL, payload: data });
          dispatch({ type: END_LOADING })
      } catch (error) {
@@ -16,14 +16,14 @@ import { ADD_NEW, UPDATE, DELETE, GET_INVOICE, START_LOADING, END_LOADING, FETCH
  }
 
  export const getInvoicesByClient = (id) => async (dispatch)=> {
-    console.log(id)
+    // console.log(id)
     try {
         dispatch({ type: START_LOADING })
         const { data } = await api.fetchInvoicesByClient(id)
-        console.log(data)
+        // console.log(data)
         dispatch({ type: FETCH_ALL, payload: data}); //Need Check
         dispatch({ type: END_LOADING })
-        console.log(data)
+        // console.log(data)
     } catch (error) {
         console.log(error)
     }

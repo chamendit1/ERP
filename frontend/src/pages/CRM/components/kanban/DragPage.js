@@ -53,36 +53,30 @@ const initialData = {
 };
 
 
+console.log(initialData)
+
 const DragPage = (  ) => {
   const [state, setState] = useState(initialData);
   const dat = useSelector(state => state.invoices.invoices)
   const dispatch = useDispatch()
 
-  
   useEffect(() => {
     dispatch(getInvoices());
   }, [dispatch]);
 
   useEffect(() => { 
-      state.tasks = []
-      state.tasks = dat
-    // })
-  }, [dat]);
-  console.log(state)
-
-  useEffect(() => { 
     state.columnOrder.map((columnId) => {
       state.columns[columnId].taskIds = []
       dat.map((dt)=> {
+        console.log(dt)
         let id = parseInt(columnId) 
         if(dt.orderStatus === id) {
-          state.columns[id].taskIds.push(dt._id)
+          state.columns[id].taskIds.push(dt)
         }
       })
     })
   }, [dat]);
-
-  
+ 
 
   const onDragEnd = (result) => {
     const { destination, source } = result;
@@ -143,13 +137,9 @@ const DragPage = (  ) => {
         [newEndCol.id]: newEndCol,
       },
     };
-    let id = removed
+    let id = removed._id
     let oldorderStatus = sourceCol.id
     let news = destinationCol.id
-    // console.log(result)
-
-      // setOrderStatus(destinationCol.id)
-      // setOrderId(id)
       setState(newState);
       dispatch(updateInvoice(id, { orderStatus: news } ));
     };
@@ -159,17 +149,7 @@ const DragPage = (  ) => {
       <Grid container spacing={0} >
         {state.columnOrder.map((columnId) => {
           const column = state.columns[columnId]
-          const length = state.tasks.length
-          const tasks = column.taskIds.map((taskId) => 
-          {
-            for (let i = 0; i < length; i++) { 
-            if(state.tasks[i]._id === taskId) {
-              return state.tasks[i]
-            }
-           }
-          }
-          );
-          console.log(tasks)
+          const tasks = column.taskIds
 
           return <DragGrids key={column.id} column={column} tasks={tasks} />;
         })}
