@@ -54,9 +54,7 @@ const Orders = () => {
   const user = JSON.parse(localStorage.getItem('profile'))
   const rows = useSelector(state => state.invoices.invoices)
   const isLoading = useSelector(state => state.invoices.isLoading)
-
-  console.log(useSelector(state => state.invoices.isLoading))
-  console.log(isLoading)
+  console.log(rows)
 
   useEffect(() => {
       dispatch(getInvoices());
