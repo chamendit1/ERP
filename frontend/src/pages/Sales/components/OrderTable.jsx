@@ -22,17 +22,18 @@ import { visuallyHidden } from '@mui/utils';
 import { Card } from '@mui/material';
 
 import { useNavigate } from 'react-router-dom';
-
+import moment from 'moment'
 
 import { useDispatch } from 'react-redux'
-import { deleteClient, deleteClients } from '../../../actions/clientActions';
+import { deleteInvoice, deleteInvoices } from '../../../actions/invoiceActions';
 // import { useSnackbar } from 'react-simple-snackbar'
-import AddClient from './AddClient'
+// import AddClient from '../../Clients/components/AddClient';
 
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { useState } from 'react';
 import DeleteOutlineRoundedIcon from '@mui/icons-material/DeleteOutlineRounded';
 import BorderColorIcon from '@mui/icons-material/BorderColor';
+import AddOrder from '../../Orders/components/AddOrder';
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -65,6 +66,7 @@ function stableSort(array, comparator) {
 }
 
 
+
 function EnhancedTableHead(props) {
   const { onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort, headCells } =
     props;
@@ -75,31 +77,27 @@ function EnhancedTableHead(props) {
   return (
     <TableHead>
       <TableRow>
-        <TableCell padding="checkbox" key='id'>
+        <TableCell padding="checkbox">
         <Box style={{
           alignItems: 'center', 
           display: 'flex',
-          justifyContent: 'space-between',
           width: '4rem'
         }}>
           <Checkbox
-            // color="primary"
             indeterminate={numSelected > 0 && numSelected < rowCount}
             checked={rowCount > 0 && numSelected === rowCount}
             onChange={onSelectAllClick}
           />
-          <Typography >ID</Typography>
+          <Typography>ID</Typography>
           </Box>
         </TableCell>
         {headCells.map((headCell) => {
-
-          if(!headCell.type) {
+          if(!headCell.id) {
             return (
               <TableCell
               key={headCell.id}
               align={'left'}
               sortDirection={orderBy === headCell.id ? order : false}
-              
             >
                 {headCell.label}
             </TableCell>
@@ -118,7 +116,7 @@ function EnhancedTableHead(props) {
               >
                 {headCell.label}
                 {orderBy === headCell.id ? (
-                  <Box component="span" sx={visuallyHidden} >
+                  <Box component="span" sx={visuallyHidden}>
                     {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
                   </Box>
                 ) : null}
@@ -143,7 +141,7 @@ EnhancedTableHead.propTypes = {
 
 const EnhancedTableToolbar = (props) => {
   const { numSelected, selected, onDelete } = props;
-  const deleteClient = (selected) => {
+  const deleteInvoice = (selected) => {
     onDelete(selected);
   };
   const [open, setOpen] = useState(false)
@@ -170,16 +168,16 @@ const EnhancedTableToolbar = (props) => {
         </Typography>
       ) : (
         <Typography
-          sx={{ flex: '1 1 100%' }}
-          // variant="subtitle1"
+          sx={{ flex: '1 1 100%', fontWeight: 'bold' }}
+          variant="subtitle1"
           
           id="tableTitle"
           component="div"
         >
-          {/* Customer */}
+          Orders
         </Typography>
       )}
-      <AddClient setOpen={setOpen} open={open} />
+      <AddOrder setOpen={setOpen} open={open} />
       {
           <IconButton onClick={() => setOpen((prev) => !prev) }>
             <AddCircleOutlineIcon />
@@ -188,7 +186,7 @@ const EnhancedTableToolbar = (props) => {
 
       {numSelected > 0 ? (
         <Tooltip title="Delete">
-          <IconButton onClick={() => deleteClient(selected) }>
+          <IconButton onClick={() => deleteInvoice(selected) }>
             <DeleteIcon />
           </IconButton>
         </Tooltip>
@@ -268,39 +266,47 @@ export default function EnhancedTable({ rows, head }) {
     setPage(0);
   };
 
-  const handleDeletes = (selected)=> {
-    dispatch(deleteClients(selected))
-  }
-
   const handleDelete = (selected)=> {
-    dispatch(deleteClient(selected))
+    dispatch(deleteInvoice(selected))
   }
  
-  const openClient = (id) => {
-    navigate(`/client/${id}`)
+  const openInvoice = (id) => {
+    navigate(`/order/${id}`)
   }
 
-  const editClient = (id) => {
-    navigate(`/edit/client/${id}`)
+  const editInvoice = (id) => {
+    navigate(`/edit/order/${id}`)
   }
 
+
+  const toCommas = (value) => {
+    return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+  }
+
+  function checkStatus(status) {
+    return status === "Partial" ? {border: 'solid 0px #1976d2', backgroundColor: '#baddff', padding: '8px 18px', borderRadius: '20px' }
+        : status === "Paid" ? {border: 'solid 0px green', backgroundColor: '#a5ffcd', padding: '8px 18px', borderRadius: '20px' }
+        : status === "Unpaid" ? {border: 'solid 0px red', backgroundColor: '#ffaa91', padding: '8px 18px', borderRadius: '20px' }
+        :  status === "" ? {}
+        : "red";
+  }
 
 
   const isSelected = (name) => selected.indexOf(name) !== -1;
+
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
 
   return (
-    <Card style={{borderRadius: 10, boxShadow: 3}} key='card'>
+    <Card style={{borderRadius: 10, boxShadow: 3}}>
       <EnhancedTableToolbar 
         numSelected={selected.length} 
         selected={selected}
-        onDelete={handleDeletes}
-        key='toolbar'
+        onDelete={handleDelete}
         // openSnackbar={openSnackbar}
       />
-        <Table key='table'>
+        <Table>
           <EnhancedTableHead
             numSelected={selected.length}
             order={order}
@@ -309,54 +315,43 @@ export default function EnhancedTable({ rows, head }) {
             onRequestSort={handleRequestSort}
             rowCount={rows.length}
             headCells={head}
-            key='head'
           />
             <TableBody>
               {stableSort(rows, getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
                   const isItemSelected = isSelected(row._id);
+                  const labelId = `enhanced-table-checkbox-${index}`;
                   return (
                     <TableRow
-                      key={row._id}
                       hover
                       role="checkbox"
                       aria-checked={isItemSelected}
                       tabIndex={-1}
+                      key={row.id}
                       selected={isItemSelected}
                     >
-                      <TableCell padding="checkbox" >
-                      <Box  display='flex' justifyContent='space-between' alignItems='center'>
+                      <TableCell padding="checkbox">
+                      <Box display='flex' justifyContent='space-between' alignItems='center'>
                         <Checkbox
-                          
-                          color="primary"
-                          onClick={(event) => handleClick(event, row._id)}
-                          checked={isItemSelected}/>
-                        {index}
+                            color="primary"
+                            onClick={(event) => handleClick(event, row._id)}
+                            checked={isItemSelected}
+                          />
+                          #{row.invoiceNumber} 
                         </Box>
                       </TableCell>
-                      <TableCell  align="left" onClick={() => openClient(row._id)}>{row.name}</TableCell>
-                      <TableCell  style={{width: '20%'}} align="left" onClick={() => openClient(row._id)}>{row.email}</TableCell>
-                      <TableCell  style={{width: '20%'}} align="left" onClick={() => openClient(row._id)}>{row.phone}</TableCell>
-                      <TableCell  style={{ width: '3%'}}>
-                        <IconButton  onClick={() => editClient(row._id)}>
-                          <BorderColorIcon  style={{width: '20px', height: '20px'}} />
-                        </IconButton>
-                      </TableCell>
-                      <TableCell style={{ width: '3%'}} >
-                        <IconButton onClick={() => handleDelete(row._id)}>
-                          <DeleteOutlineRoundedIcon  style={{width: '20px', height: '20px'}} />
-                        </IconButton>
-                      </TableCell>
+              
+                      <TableCell onClick={() => openInvoice(row._id)}>{moment(row.createdAt).format('Do MMM YY')}</TableCell>
+                      <TableCell onClick={() => openInvoice(row._id)} > <button style={checkStatus(row.status)}>{row.status}</button></TableCell>
+                      <TableCell onClick={() => openInvoice(row._id)} > {row.client.name} </TableCell>
+                      <TableCell onClick={() => openInvoice(row._id)} > {moment(row.dueDate).fromNow()} </TableCell>
+                      <TableCell onClick={() => openInvoice(row._id)} >{row.currency} {row.total? toCommas(row.total): row.total} </TableCell>
                     </TableRow>
                   );
                 })}
               {emptyRows > 0 && (
                 <TableRow
-                key='empty'
-                  style={{
-                    height: (dense ? 33 : 53) * emptyRows,
-                  }}
                 >
                   <TableCell colSpan={6} />
                 </TableRow>
@@ -364,7 +359,6 @@ export default function EnhancedTable({ rows, head }) {
             </TableBody>
           </Table>
           <TablePagination
-            key='tablePage'
             rowsPerPageOptions={[5, 10, 25]}
             component="div"
             count={rows.length}

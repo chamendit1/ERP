@@ -5,12 +5,14 @@ import { ADD_NEW_CLIENT, UPDATE_CLIENT, DELETE_CLIENT, FETCH_CLIENTS_BY_USER, FE
 
 export const getClient = (id) => async (dispatch) => {
   try {
+    // console.log('Starting a')
     dispatch({ type: START_LOADING });
     const { data } = await api.fetchClient(id);
     dispatch({ type: FETCH_CLIENT, payload: { client: data } });
+    dispatch({ type: END_LOADING });
 
   } catch (error) {
-    //console.log(error);
+    console.log(error);
   }
 };
 
@@ -18,10 +20,12 @@ export const getClient = (id) => async (dispatch) => {
 export const getClientsByUser =(searchQuery) => async (dispatch) => {
     try {
       dispatch({ type: START_LOADING })
-    const  { data: { data } } = await api.fetchClientsByUser(searchQuery)
-      
+      const  { data: { data } } = await api.fetchClientsByUser(searchQuery)
+      console.log('Sending Data')
       dispatch({ type: FETCH_CLIENTS_BY_USER, payload: data });
+      console.log('Done Sending')
       dispatch({ type: END_LOADING })
+      console.log('End Loading')
     } catch (error) {
       console.log(error.response)
       

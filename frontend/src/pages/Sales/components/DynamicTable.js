@@ -27,7 +27,7 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux'
 import { deleteClient, deleteClients } from '../../../actions/clientActions';
 // import { useSnackbar } from 'react-simple-snackbar'
-import AddClient from './AddClient'
+import AddClient from '../../Clients/components/AddClient'
 
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { useState } from 'react';
@@ -96,10 +96,10 @@ function EnhancedTableHead(props) {
           if(!headCell.type) {
             return (
               <TableCell
+              sx={{display: headCell.display}}
               key={headCell.id}
               align={'left'}
               sortDirection={orderBy === headCell.id ? order : false}
-              
             >
                 {headCell.label}
             </TableCell>
@@ -107,6 +107,7 @@ function EnhancedTableHead(props) {
           } else {
             return (
               <TableCell
+              sx={{display: headCell.display}}
               key={headCell.id}
               align={'left'}
               sortDirection={orderBy === headCell.id ? order : false}
@@ -132,14 +133,14 @@ function EnhancedTableHead(props) {
   );
 }
 
-EnhancedTableHead.propTypes = {
-  numSelected: PropTypes.number.isRequired,
-  onRequestSort: PropTypes.func.isRequired,
-  onSelectAllClick: PropTypes.func.isRequired,
-  order: PropTypes.oneOf(['asc', 'desc']).isRequired,
-  orderBy: PropTypes.string.isRequired,
-  rowCount: PropTypes.number.isRequired,
-};
+// EnhancedTableHead.propTypes = {
+//   numSelected: PropTypes.number.isRequired,
+//   onRequestSort: PropTypes.func.isRequired,
+//   onSelectAllClick: PropTypes.func.isRequired,
+//   order: PropTypes.oneOf(['asc', 'desc']).isRequired,
+//   orderBy: PropTypes.string.isRequired,
+//   rowCount: PropTypes.number.isRequired,
+// };
 
 const EnhancedTableToolbar = (props) => {
   const { numSelected, selected, onDelete } = props;
@@ -179,7 +180,7 @@ const EnhancedTableToolbar = (props) => {
           {/* Customer */}
         </Typography>
       )}
-      <AddClient setOpen={setOpen} open={open} />
+      {/* <AddClient setOpen={setOpen} open={open} /> */}
       {
           <IconButton onClick={() => setOpen((prev) => !prev) }>
             <AddCircleOutlineIcon />
@@ -204,9 +205,9 @@ const EnhancedTableToolbar = (props) => {
   );
 };
 
-EnhancedTableToolbar.propTypes = {
-  numSelected: PropTypes.number.isRequired,
-};
+// EnhancedTableToolbar.propTypes = {
+//   numSelected: PropTypes.number.isRequired,
+// };
 
 
 
@@ -290,6 +291,9 @@ export default function EnhancedTable({ rows, head }) {
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
+
+    console.log(head)
+    console.log(rows)
 
   return (
     <Card style={{borderRadius: 10, boxShadow: 3}} key='card'>

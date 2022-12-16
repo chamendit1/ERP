@@ -7,6 +7,12 @@
   
 }
 
+/* Navbar */
+.navbar-link {
+  text-decoration: none;
+  color: #566a7f
+}
+
 .sidebar { 
   transition: width 600ms ease;
   z-index: 100;
@@ -30,6 +36,16 @@
   align-items: center;
 }
 
+/* kanban */
+.droppable {
+  border-radius: 10px;
+  background-color: #8f8f91;
+  padding: 1rem;
+}
+
+.kanbancolumn {
+
+}
 
 
 /* Animation */

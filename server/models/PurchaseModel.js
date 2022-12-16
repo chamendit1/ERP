@@ -1,7 +1,6 @@
 import mongoose from 'mongoose'
 
-const InvoiceSchema = mongoose.Schema({
-    invoiceid: Number,
+const PurchaseSchema = mongoose.Schema({
     dueDate: Date,
     currency: String,
     items: [ { itemName: String, unitPrice: String, quantity: String, discount: String } ],
@@ -12,7 +11,7 @@ const InvoiceSchema = mongoose.Schema({
     notes: String,
     status: String,
     orderStatus: Number,
-    invoiceNumber: String,
+    purchaseNumber: String,
     type: String,
     creator: [String],
     owner: [String],
@@ -25,5 +24,5 @@ const InvoiceSchema = mongoose.Schema({
     }
 })
 
-const InvoiceModel = mongoose.model('InvoiceModel', InvoiceSchema)
-export default InvoiceModel
+const PurchaseModel = mongoose.model('PurchaseModel', PurchaseSchema)
+export default PurchaseModel

@@ -27,7 +27,7 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux'
 import { deleteClient, deleteClients } from '../../../actions/clientActions';
 // import { useSnackbar } from 'react-simple-snackbar'
-import AddClient from './AddClient'
+import AddClient from '../../Clients/components/AddClient'
 
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { useState } from 'react';
@@ -179,7 +179,7 @@ const EnhancedTableToolbar = (props) => {
           {/* Customer */}
         </Typography>
       )}
-      <AddClient setOpen={setOpen} open={open} />
+      {/* <AddClient setOpen={setOpen} open={open} /> */}
       {
           <IconButton onClick={() => setOpen((prev) => !prev) }>
             <AddCircleOutlineIcon />

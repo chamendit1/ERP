@@ -18,9 +18,8 @@ import userRoutes from './routes/userRoutes.js'
 import profile from './routes/profile.js'
 import inventoryRoutes from './routes/inventories.js'
 import productRoutes from './routes/products.js'
+import purchaseRoutes from './routes/purchase.js'
 
-import orderSQLRoutes from './routes/psql/orders.js'
-import customerSQLRoutes from './routes/psql/customer.js'
 // import pdfTemplate from './documents/index.js'
 import inv from './documents/invoice.js'
 import invo from './documents/invo.js'
@@ -43,9 +42,7 @@ app.use('/users', userRoutes)
 app.use('/profiles', profile)
 app.use('/inventories', inventoryRoutes)
 app.use('/products', productRoutes)
-
-app.use('/order', orderSQLRoutes)
-app.use('/customer', customerSQLRoutes)
+app.use('/purchase', purchaseRoutes)
 
 
 

@@ -11,26 +11,15 @@ import { getInvoicesByClient } from '../../actions/invoiceActions'
 import OrderTable from '../Orders/components/OrderTable'
 
 const headCells = [
-
+  // {
+  //   id: 'ID',
+  //   numeric: false,
+  //   label: 'ID',
+  // },
   {
-    id: 'name',
-    numeric: false,
-    label: 'Name',
-  },
-  {
-    id: 'email',
-    numeric: false,
-    label: 'Email',
-  },
-  {
-    id: 'amount',
+    id: 'Date',
     numeric: true,
-    label: 'Amount',
-  },
-  {
-    id: 'due',
-    numeric: true,
-    label: 'Due Date',
+    label: 'Date',
   },
   {
     id: 'status',
@@ -38,11 +27,26 @@ const headCells = [
     label: 'Status',
   },
   {
-    label: 'Edit',
+    id: 'name',
+    numeric: false,
+    label: 'Customer',
   },
   {
-    label: 'Delete',
+    id: 'due',
+    numeric: true,
+    label: 'Due Date',
   },
+  {
+    id: 'amount',
+    numeric: true,
+    label: 'Amount',
+  },
+  // {
+  //   label: 'Edit',
+  // },
+  // {
+  //   label: 'Delete',
+  // },
 ];
 
 const Client = () => {
@@ -110,15 +114,19 @@ const Client = () => {
 
       <Grid item xs sm xl>
         <Card style={{borderRadius: 10, boxShadow: 3}}>
-          <Box sx={{m: 2}}>
-            <Typography variant="subtitle2" sx={{fontWeight: 'bold'}}>Orders</Typography>
-          </Box>
           <OrderTable
             rows={rows}
             head={headCells}
+            title='Orders'
           />
         </Card>
       </Grid>
+
+      {/* <Grid item xs sm xl>
+        <Card style={{borderRadius: 10, boxShadow: 3}} sx={{p: 2}}>
+            <Typography variant="subtitle2" sx={{fontWeight: 'bold'}}>Bill</Typography>
+        </Card>
+      </Grid> */}
     </Grid>
     </>
   )

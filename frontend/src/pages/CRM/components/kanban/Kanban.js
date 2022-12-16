@@ -1,16 +1,16 @@
 import React, {useEffect} from 'react';
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { getInvoices } from '../../actions/invoiceActions';
+import { getInvoices } from '../../../../actions/invoiceActions';
 
-// import Kanban from './Kanban'
+import DragPage from './DragPage';
 
-const Dashboard = () => {
+const Kanban = () => {
 
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const user = JSON.parse(localStorage.getItem('profile'))
-  const rows = useSelector(state => state.invoices.invoices)
+  // const rows = useSelector(state => state.invoices.invoices)
   const isLoading = useSelector(state => state.invoices.isLoading)
 
   useEffect(() => {
@@ -23,10 +23,10 @@ const Dashboard = () => {
   // console.log(useSelector(state => state))
 
   return (
-    <div>
-      dashboard
-    </div>
+    <>
+      <DragPage />
+    </>
   )
 }
 
-export default Dashboard
+export default Kanban

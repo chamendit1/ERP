@@ -85,19 +85,19 @@ import { DialogTitle, DialogContent , DialogActions } from '@mui/material';
      const [orderStatus, setOrderStatus ] = useState('')
      const [newClientOpen, setNewClientOpen] = useState(false)
      
-     useEffect(() => {
-        dispatch(getClientsByUser({search: user?.result._id || user?.result?.googleId}));
-      }, [open]);
+    //  useEffect(() => {
+    //     dispatch(getClientsByUser({search: user?.result._id || user?.result?.googleId}));
+    //   }, [open]);
 
-      console.log(id)
+    //   console.log(id)
 
 
-    useEffect(() => {
-      if(id) {
-        dispatch(getClient(id));
-        setClient(clientState)
-      }
-    }, [open]);
+    // useEffect(() => {
+    //   if(id) {
+    //     dispatch(getClient(id));
+    //     setClient(clientState)
+    //   }
+    // }, [open]);
 
   useEffect(() => {
       if(invoice) {
@@ -217,7 +217,7 @@ const handleRates =(e) => {
       } else {
 
       dispatch(createInvoice({
-          ...invoiceData, 
+          ...invoiceData,
           subTotal: subTotal, 
           total: total, 
           vat: vat, 

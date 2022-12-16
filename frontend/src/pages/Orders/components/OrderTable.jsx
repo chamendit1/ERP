@@ -168,13 +168,13 @@ const EnhancedTableToolbar = (props) => {
         </Typography>
       ) : (
         <Typography
-          sx={{ flex: '1 1 100%' }}
-          // variant="subtitle1"
+          sx={{ flex: '1 1 100%', fontWeight: 'bold' }}
+          variant="subtitle1"
           
           id="tableTitle"
           component="div"
         >
-          {/* Customer */}
+          Orders
         </Typography>
       )}
       <AddOrder setOpen={setOpen} open={open} />
@@ -229,7 +229,6 @@ export default function EnhancedTable({ rows, head }) {
     if (event.target.checked) {
       const newSelected = rows.map((n) => n._id);
       setSelected(newSelected);
-      console.log(newSelected)
       return;
     }
     setSelected([]);
@@ -269,7 +268,6 @@ export default function EnhancedTable({ rows, head }) {
 
   const handleDelete = (selected)=> {
     dispatch(deleteInvoice(selected))
-    console.log(selected)
   }
  
   const openInvoice = (id) => {
@@ -292,14 +290,12 @@ export default function EnhancedTable({ rows, head }) {
         : "red";
   }
 
-  console.log(rows)
 
   const isSelected = (name) => selected.indexOf(name) !== -1;
 
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
-    console.log(rows)
 
   return (
     <Card style={{borderRadius: 10, boxShadow: 3}}>
