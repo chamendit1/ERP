@@ -6,10 +6,11 @@ Built with the MERN stack (MongoDB, Express, React and NodeJS).
 A full stack invoicing application made using the MERN stack (MongoDB, Express, React & Nodejs), specially designed for small to medium businesses. 
 
 ## Key Features
-- 
 - Multiple user registration.
-- Authentication using jsonwebtoken (jwt) and Google auth
-
+- Authentication using jsonwebtoken (jwt)
+- Manage Customers and Orders
+- Invoicing
+- Record Payment
 
 ## Technologies used
 This project was created using the following technologies.
