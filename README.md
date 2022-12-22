@@ -1,17 +1,6 @@
 ### []()
 # Enterprise Resource Planning Software
 Built with the MERN stack (MongoDB, Express, React and NodeJS).
-  * [Introduction](#introduction)
-  * [Key Features](#key-features)
-  * [Technologies used](#technologies-used)
-      - [Frontend](#frontend)
-      - [Server](#server)
-      - [Database](#database)
-  * [Configuration and Setup](#configuration-and-setup)
-  * [Troubleshooting](#troubleshooting)
-  * [Appreciation](#appreciation)
-  * [Author](#author)
-  * [License](#license)
 
 ## Introduction
 A full stack invoicing application made using the MERN stack (MongoDB, Express, React & Nodejs), specially designed for small to medium businesses. 
