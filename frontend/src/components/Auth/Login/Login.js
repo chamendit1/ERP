@@ -13,9 +13,9 @@ import ProgressButton from 'react-progress-button'
 
 import '../Auth.css'
 
-import { Avatar, Button, Card, Grid, Typography, Box} from '@mui/material'
+import { Avatar, Button, Card, Grid, Typography, Box, Select, MenuItem, InputLabel, OutlinedInput, FormControl, FormGroup, FormControlLabel, Checkbox} from '@mui/material'
 
-const initialState ={ firstName: '', lastName: '', email: '', password: '', confirmPassword: '', profilePicture: '', bio: ''}
+const initialState ={ firstName: '', lastName: '', email: '', password: '', confirmPassword: '', profilePicture: '', role: '', access: []}
 
 const Login = () => {
 
@@ -32,6 +32,10 @@ const Login = () => {
     const handleChange =(e)=> {
         setFormData( {...formData, [e.target.name] : e.target.value} )
     }
+    const handleAccess =(e)=> {
+      setFormData( {...formData, 
+        [e.target.name] : [...formData.access , e.target.value] } )
+  }
 
     const handleSubmit =(e) => {
         e.preventDefault()
@@ -60,15 +64,41 @@ const Login = () => {
           <Typography variant='body2' color='grey'>Enter your email and password to sign in</Typography>
           <form onSubmit={handleSubmit}>
             <Grid container spacing={2} sx={{mt:1,mb:3}}>
+              
               { isSignup && (
               <>
                 <Field name="firstName" label="First Name" handleChange={handleChange} autoFocus half />
                 <Field name="lastName" label="Last Name" handleChange={handleChange} half />
               </>
               )}
+
               <Field name="email" label="Email Address" handleChange={handleChange} type="email" />
               <Field name="password" label="Password" handleChange={handleChange} type={showPassword ? 'text' : 'password'} handleShowPassword={handleShowPassword} />
-              { isSignup && <Field name="confirmPassword" label="Repeat Password" handleChange={handleChange} type="password" /> }
+              
+              { isSignup && (
+              <>
+                <Field name="confirmPassword" label="Repeat Password" handleChange={handleChange} type="password" /> 
+                <FormControl >
+                  <InputLabel id="demo-multiple-name-label">Role</InputLabel>
+                  <Select  
+                    labelId="demo-multiple-name-label"
+                    label="Role"
+                    name='role'
+                    onChange={handleChange}
+                  >
+                    <MenuItem value={'Manager'}>Manager</MenuItem>
+                    <MenuItem value={'Accountant'}>Accountant</MenuItem>
+                    <MenuItem value={'Employee'}>Employee</MenuItem>
+                  </Select>
+                </FormControl>
+                <FormGroup sx={{ m: 2, width: '100%' }}>
+                  <FormControlLabel name='access' onChange={handleAccess} control={<Checkbox value={'CRM'} />} label="CRM" />
+                  <FormControlLabel name='access' onChange={handleAccess} control={<Checkbox value={'Accounting'} />} label="Accounting" />
+                </FormGroup>
+              
+              </>
+              )
+              }
             </Grid>
 
             <Grid container justifyContent="center">

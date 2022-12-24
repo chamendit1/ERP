@@ -2,6 +2,10 @@ import * as api from '../api/index'
 import { AUTH, CREATE_PROFILE } from './constants'
 
 
+
+
+
+
 export const signin =(formData) => async(dispatch) => {
     console.log(formData)
     try {
@@ -30,6 +34,20 @@ export const signup =(formData) => async(dispatch) => {
         dispatch({ type: CREATE_PROFILE, payload: info });
         window.location.href="/dashboard"
         // history.push('/dashboard')
+        // openSnackbar("Sign up successfull")
+
+    } catch (error) {
+        console.log(error)
+        // openSnackbar(error?.response?.data?.message)
+    }
+}
+
+export const update =(formData) => async(dispatch) => {
+
+    try {
+        //Sign up the user
+        const { data } = await api.update(formData)
+        dispatch({ type: AUTH, data})
         // openSnackbar("Sign up successfull")
 
     } catch (error) {
