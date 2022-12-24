@@ -1,8 +1,6 @@
-import { Box, Typography, Grid } from '@mui/material'
+import { Box, Typography, Grid, Button, MenuItem, Menu, MenuList } from '@mui/material'
 import React, { useState, useEffect } from 'react'
-import { useLocation, Link } from 'react-router-dom'
-
-
+import { useLocation, Link, useNavigate } from 'react-router-dom'
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import ArticleIcon from '@mui/icons-material/Article';
@@ -20,12 +18,30 @@ const Sidebar = () => {
   useEffect(() => {
     setUser(JSON.parse(localStorage.getItem('profile')))
   }, [location])
+  const navigate = useNavigate()
+
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleNav = (e) => {
+    navigate(`/crm/${e.target.id}`)
+  };
   
-//   const [width, setWidth]= useState("15%")
-//   function hanldeWidthChange() {
-//     // you can set width to any value you want
-//     setWidth("100px")
-//  }
+  const handleNavClientList = () => {
+    navigate('/crm/client-list')
+  };
+  const handleNavOrderList = () => {
+    navigate('/crm/order-list')
+  };
+  const handleNavPipeline = () => {
+    navigate('/crm')
+  };
 
     if(!user) return null
 
@@ -36,42 +52,57 @@ const Sidebar = () => {
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          height: '100vh'
           }}>
-          <Box component={Link} to="/" display="flex" alignItems="center" style={{marginTop: '1.3rem' ,height: '5rem', textDecoration: 'none'}}>
-            <Typography variant='h5' fontWeight='bold'>
-              ERP
-            </Typography>
-          </Box>
+          {/* <Box component={Link} to="/" display="flex" alignItems="center" style={{marginTop: '1.3rem' ,height: '5rem', textDecoration: 'none'}}>
+            <Grid alignItems='center' style={{ display: 'inline-flex'}}>
+              <DashboardIcon fontSize="large"/>
+              <Typography variant='h6'>Dashboard</Typography>
+            </Grid>
+          </Box> */}
 
-          <Box className='sidebar-data' component={Link} to="/dashboard">
+          <Box>
+            <Button className='sidebar-data'>
             <Grid container justifyContent="center" alignItems='center'>
               <Box className='sidebar-logo'>
                   <DashboardIcon fontSize="large"/>
               </Box>
               <Typography className='sidebar-text'>Dashboard</Typography>
             </Grid>
+            </Button>
           </Box>
 
-          <Box className='sidebar-data' component={Link} to="/crm">
+          <Box>
+            <Button className='sidebar-data' onClick={handleClick}>
             <Grid container justifyContent="center" alignItems='center'>
               <Box className='sidebar-logo' >
                   <PeopleAltIcon fontSize="large"/>
               </Box>
               <Typography className='sidebar-text'>CRM</Typography>
             </Grid>
+            </Button>
+            <Menu
+              id="basic-menu"
+              anchorEl={anchorEl}
+              open={open}
+              onClose={handleClose}
+            >
+              <MenuItem id='pipeline' onClick={handleNav}>Pipeline</MenuItem>
+              <MenuItem id='client-list' onClick={handleNav}>Customers</MenuItem>
+              {/* <MenuItem onClick={handleNavClientList}>Quotations</MenuItem> */}
+              <MenuItem id='order-list' onClick={handleNav}>Orders</MenuItem>
+            </Menu>
           </Box>
 
-          {/* <Box className='sidebar-data' component={Link} to="/client-list">
+          <Box className='sidebar-data' component={Link} to="/admin">
             <Grid container justifyContent="center" alignItems='center'>
               <Box className='sidebar-logo' >
                   <PeopleAltIcon fontSize="large"/>
               </Box>
-              <Typography className='sidebar-text'>Clients</Typography>
+              <Typography className='sidebar-text'>ADMIN</Typography>
             </Grid>
           </Box>
 
-          <Box className='sidebar-data' component={Link} to="/order-list">
+          {/* <Box className='sidebar-data' component={Link} to="/order-list">
             <Grid container justifyContent="center" alignItems='center'>
               <Box className='sidebar-logo'>
                 <ArticleIcon fontSize="large"/>
@@ -106,24 +137,7 @@ const Sidebar = () => {
               <Typography className='sidebar-text'>Sales</Typography>
             </Grid>
           </Box>
-          
-
-          {/* <Box component={Link} to="/orders"  display="flex" alignItems="center" sx={{
-            backgroundColor: 'white',
-            borderRadius: 5,
-            padding: '1rem 1rem',
-            marginTop: '1rem'
-            }}>              
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-layers"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
-          </Box>
-          <Box component={Link} to="/orders"  display="flex" alignItems="center" sx={{
-            backgroundColor: 'white',
-            borderRadius: 5,
-            padding: '1rem 1rem',
-            marginTop: '1rem'
-            }}>              
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-settings"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
-          </Box> */}
+        
         </Box>
       </Box>
     )

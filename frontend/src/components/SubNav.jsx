@@ -41,7 +41,7 @@ import {
 // const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 
-const Navbar = ({children}) => {
+const SubNav = ({children}) => {
     const dispatch = useDispatch()
     const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')))
     const navigate = useNavigate()
@@ -104,21 +104,8 @@ const Navbar = ({children}) => {
     prevOpen.current = open;
   }, [open]);
 
-    if(!user) return (
-        <Card style={{borderRadius: 10, boxShadow: 3}}>
-          <Grid container justifyContent="space-between" alignItems='center'style={{padding: '0 1.5rem', height:'3rem'}}>
-            <Grid item>
-              {/* <img style={{width: '50px', cursor: 'pointer'}} onClick={()=> navigate('/')} src="" alt="ERP" /> */}
-              <Typography>ERP</Typography>
-            </Grid>
-            <Grid item>
-            <Button onClick={()=> navigate('/login')}>Get started</Button>
-            </Grid>
-          </Grid>
-        </Card>
-    )
     return ( 
-      <Paper style={{padding: '0 1rem'}}>
+      <Box style={{padding: '0 1rem'}}>
         <Toolbar disableGutters>
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none'}}}>
             {children}
@@ -126,39 +113,9 @@ const Navbar = ({children}) => {
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex'} }}>
             {children}
           </Box>
-          
-
-          <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-              </IconButton>
-            </Tooltip>
-            <Menu
-              sx={{ mt: '45px' }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
-              <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown} >
-                {/* <MenuItem onClick={() => openLink('settings') }>{(user?.result?.name).split(" ")[0]}</MenuItem> */}
-                <MenuItem onClick={()=> logout()} >Logout</MenuItem>
-              </MenuList>
-            </Menu>
-          </Box>
         </Toolbar>
-      </Paper>
+      </Box>
     )
 }
 
-export default Navbar
+export default SubNav

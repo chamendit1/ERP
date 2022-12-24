@@ -10,19 +10,10 @@ import Order from "./pages/Orders/Order";
 
 import Accounting from './pages/Accounting/index'
 import CRM from "./pages/CRM";
-import LayoutNav from "./components/Layout/LayoutNav";
 import Sales from './pages/Sales'
 import Navbar from "./components/Navbar";
+import Admin from './components/Admin/Admin'
 
-const WithNav = () => <LayoutNav>
-  <Routes>
-    <Route path="/" element={<Home/>}/>
-    <Route path="/dashboard" element={<Dashboard/>}/>
-    <Route path="/login" element={<Login/>} />
-    <Route path="/forgot" element={<Orders/>} />
-    <Route path="/reset/:token" element={<Orders/>} />
-  </Routes>
-</LayoutNav>
 
 function App() {
 
@@ -37,12 +28,12 @@ function App() {
           <Route path="/" element={<Home/>}/>
 
           <Route path="/crm/*" element={<CRM/>}/>
-          {/* <Route path="/client-list" element={<Clients/>}/>
-          <Route path="/order-list" element={<Orders/>}/> */}
           <Route path="sales" element={<Sales/>} />
           <Route path="/client/:id" element={<Client/>} />
           <Route path="/order/:id" element={<Order/>} />
           <Route path="/Accounting" element={<Accounting/>}/>
+
+          <Route path="/Admin" element={<Admin/>}/>
         </Routes>
       </Layout>
     </BrowserRouter>

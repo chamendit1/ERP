@@ -9,24 +9,22 @@ import Sidebar from '../Sidebar'
 const Layout = ({children}) => {
   const user = JSON.parse(localStorage.getItem('profile'))
     return (
-      <Box>
+      <>
+        <Navbar />
         <Grid container>
-          <Grid item>
-            <Box>
-                {user && <Sidebar/>}
-            </Box>
+          <Grid item border={'1px solid black'}>
+            {user && <Sidebar/>}
           </Grid>
           <Grid item xs>
           <Box style={{
             padding: "0rem 2rem",
             minHeight: '100vh'
             }}>
-              <Navbar />
               {children}
           </Box>
           </Grid>
         </Grid>
-      </Box>
+      </>
     )
 }
 

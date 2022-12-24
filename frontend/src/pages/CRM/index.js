@@ -7,6 +7,7 @@ import Orders from '../Orders/Orders'
 import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import ArticleIcon from '@mui/icons-material/Article';
 import Kanban from './components/kanban/Kanban'
+import SubNav from '../../components/SubNav'
 
 const navItems = [
   {
@@ -49,10 +50,9 @@ const CRM = () => {
 
 
   return (
-    
-    <div>
-      <Navbar>
-        <Box  >
+    <>
+      <SubNav>
+        <Box>
           <Button onClick={handleClick}>Sales</Button>
           <Menu
             id="basic-menu"
@@ -86,14 +86,14 @@ const CRM = () => {
             <MenuItem onClick={handleClose}>Orders</MenuItem>
           </Menu> */}
         </Box>
-      </Navbar>
+      </SubNav>
 
       <Routes>
         <Route path="/client-list" element={<Clients/>}/>
         <Route path="/order-list" element={<Orders/>}/>
-        <Route path="/" element={<Kanban/>}/>
+        <Route path="/pipeline" element={<Kanban/>}/>
       </Routes>
-    </div>
+    </>
   )
 }
 
