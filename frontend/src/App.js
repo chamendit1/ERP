@@ -14,6 +14,7 @@ import Sales from './pages/Sales'
 import Navbar from "./components/Navbar";
 import Admin from './components/Admin/Admin'
 import RequireAuth from "./components/Auth/RequireAuth";
+import Settings from './components/Settings/Settings'
 
 function App() {
 
@@ -46,6 +47,8 @@ function App() {
           {/* <Route element={<RequireAuth allowedRoles={['Admin']} />}> */}
             <Route path="/Admin" element={<Admin/>}/>
           {/* </Route> */}
+
+          <Route path="/settings" element={<Settings/>}/>
 
 
           

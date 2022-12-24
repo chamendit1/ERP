@@ -82,10 +82,10 @@ const Navbar = ({children}) => {
     const [open, setOpen] = React.useState(false);
     const anchorRef = React.useRef(null);
 
-  // const openLink =(link) => {
-  //     navigate(`/${link}`)
-  //     setOpen(false);
-  // }
+  const openLink =(link) => {
+      navigate(`/${link}`)
+      setOpen(false);
+  }
 
   function handleListKeyDown(event) {
     if (event.key === 'Tab') {
@@ -151,7 +151,7 @@ const Navbar = ({children}) => {
               onClose={handleCloseUserMenu}
             >
               <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown} >
-                {/* <MenuItem onClick={() => openLink('settings') }>{(user?.result?.name).split(" ")[0]}</MenuItem> */}
+                <MenuItem onClick={() => openLink('settings') }>{(user?.result?.name).split(" ")[0]}</MenuItem>
                 <MenuItem onClick={()=> logout()} >Logout</MenuItem>
               </MenuList>
             </Menu>
