@@ -67,8 +67,8 @@ const DragPage = (  ) => {
       state.tasks = []
       state.tasks = dat
     // })
-  }, [dat]);
-  console.log(state)
+  }, [dat, dispatch, state]);
+  // console.log(state)
 
   useEffect(() => { 
     state.columnOrder.map((columnId) => {
@@ -156,10 +156,11 @@ const DragPage = (  ) => {
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
-      <Grid container spacing={0} >
+      <Grid container spacing={2} display={'flex'} >
         {state.columnOrder.map((columnId) => {
           const column = state.columns[columnId]
           const length = state.tasks.length
+          console.log(state.columns[columnId])
           const tasks = column.taskIds.map((taskId) => 
           {
             for (let i = 0; i < length; i++) { 
@@ -169,7 +170,6 @@ const DragPage = (  ) => {
            }
           }
           );
-          console.log(tasks)
 
           return <DragGrids key={column.id} column={column} tasks={tasks} />;
         })}

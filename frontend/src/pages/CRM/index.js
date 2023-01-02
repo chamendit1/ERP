@@ -1,6 +1,6 @@
 import React from 'react'
 import Navbar from '../../components/Navbar'
-import { Button, Box, MenuItem, Menu, MenuList } from '@mui/material'
+import { Button, Card, Box, MenuItem, Menu, MenuList, Grid, Divider, ButtonGroup, Typography } from '@mui/material'
 import { useLocation, Link, Routes, Route, useNavigate } from 'react-router-dom'
 import Clients from '../Clients/Clients'
 import Orders from '../Orders/Orders'
@@ -8,6 +8,13 @@ import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import ArticleIcon from '@mui/icons-material/Article';
 import Kanban from './components/kanban/Kanban'
 import SubNav from '../../components/SubNav'
+import Breadcrumb from '../../components/Breadcrumb/Breadcrumb'
+import Dashboard from './components/Dashboard'
+import '../../css/crm.css'
+import DescriptionIcon from '@mui/icons-material/Description';
+
+import AssessmentIcon from '@mui/icons-material/Assessment';
+import '../../css/kanban.css'
 
 const navItems = [
   {
@@ -39,60 +46,34 @@ const CRM = () => {
   };
 
   const handleNavClientList = () => {
-    navigate('/crm/client-list')
+    navigate('/CRM/Clients')
   };
   const handleNavOrderList = () => {
-    navigate('/crm/order-list')
+    navigate('/CRM/Orders')
   };
   const handleNavPipeline = () => {
-    navigate('/crm')
+    navigate('/CRM/Pipeline')
   };
 
 
   return (
     <>
-      <SubNav>
-        <Box>
-          <Button onClick={handleClick}>Sales</Button>
-          <Menu
-            id="basic-menu"
-            anchorEl={anchorEl}
-            open={open}
-            onClose={handleClose}
-            MenuListProps={{
-              'aria-labelledby': 'basic-button',
-            }}
-          >
-            <MenuItem onClick={handleNavPipeline}>Pipeline</MenuItem>
-            <MenuItem onClick={handleNavClientList}>Customers</MenuItem>
-            {/* <MenuItem onClick={handleNavClientList}>Quotations</MenuItem> */}
-            <MenuItem onClick={handleNavOrderList}>Orders</MenuItem>
-          </Menu>
-        </Box>
-        <Box  >
-          <Button onClick={handleClick}>Reporting</Button>
-          {/* <Menu
-            id="basic-menu"
-            anchorEl={anchorEl}
-            open={open}
-            onClose={handleClose}
-            MenuListProps={{
-              'aria-labelledby': 'basic-button',
-            }}
-          >
-            <MenuItem onClick={handleClose}>Pipeline</MenuItem>
-            <MenuItem onClick={handleClose}>Customers</MenuItem>
-            <MenuItem onClick={handleNav}>Quotations</MenuItem>
-            <MenuItem onClick={handleClose}>Orders</MenuItem>
-          </Menu> */}
-        </Box>
-      </SubNav>
+    <Grid container>
+      {/* <Grid item xs={12} height={'10vh'}>
+      </Grid> */}
 
-      <Routes>
-        <Route path="/client-list" element={<Clients/>}/>
-        <Route path="/order-list" element={<Orders/>}/>
-        <Route path="/pipeline" element={<Kanban/>}/>
-      </Routes>
+      <Grid item xs={12} height={'90vh'} >
+        <Routes>
+          <Route path="/" element={<Dashboard/>}/>
+          <Route path="/Clients" element={<Clients/>}/>
+          <Route path="/Orders" element={<Orders/>}/>
+          <Route path="/Pipeline" element={<Kanban/>}/>
+        </Routes>
+      </Grid>
+    </Grid>
+      
+
+
     </>
   )
 }

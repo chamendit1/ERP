@@ -6,17 +6,20 @@ import {
 } from "@mui/material";
 
 import Home from "@mui/icons-material/Home";
-
+import '../../css/breadcrumb.css'
 const Breadcrumb = props => {
   const {
-    history,
+    navigate,
     location: { pathname }
   } = props;
   const pathnames = pathname.split("/").filter(x => x);
+  const isLast = pathnames.length - 1;
+  console.log(isLast)
   return (
+    <>
     <MUIBreadcrumbs aria-label="breadcrumb">
       {pathnames.length > 0 ? (
-        <Link onClick={() => history.push("/")}><Home fontSize="small"/></Link>
+        <Link onClick={() => navigate("/")} style={{textDecoration: 'none'}} sx={{ display: "flex", alignItems: "center" }} ><Home fontSize="small"/></Link>
       ) : (
         <Typography><Home fontSize="small"/></Typography>
       )}
@@ -24,14 +27,16 @@ const Breadcrumb = props => {
         const routeTo = `/${pathnames.slice(0, index + 1).join("/")}`;
         const isLast = index === pathnames.length - 1;
         return isLast ? (
-          <Typography key={name}>{name}</Typography>
+          <Typography className="text" key={name}>{name}</Typography>
         ) : (
-          <Link key={name} onClick={() => history.push(routeTo)}>
-            {name}
+          <Link key={name} onClick={() => navigate(routeTo)} to={'/'} style={{textDecoration: 'none'}}>
+            <Typography className="text">{name}</Typography>
           </Link>
         );
       })}
     </MUIBreadcrumbs>
+    <p>{pathnames[isLast]}</p>
+    </>
   );
 };
 

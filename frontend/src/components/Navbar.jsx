@@ -39,6 +39,7 @@ import {
 // import Breadcrumb from './Breadcrumb/Breadcrumb'
 
 // const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+import '../css/navbar.css'
 
 
 const Navbar = ({children}) => {
@@ -105,7 +106,7 @@ const Navbar = ({children}) => {
   }, [open]);
 
     if(!user) return (
-        <Card style={{borderRadius: 10, boxShadow: 3}}>
+        <Card style={{height: '5vh'}}>
           <Grid container justifyContent="space-between" alignItems='center'style={{padding: '0 1.5rem', height:'3rem'}}>
             <Grid item>
               {/* <img style={{width: '50px', cursor: 'pointer'}} onClick={()=> navigate('/')} src="" alt="ERP" /> */}
@@ -118,7 +119,8 @@ const Navbar = ({children}) => {
         </Card>
     )
     return ( 
-      <Paper style={{padding: '0 1rem'}}>
+      <>
+      {/* <Box className='navbar'>
         <Toolbar disableGutters>
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none'}}}>
             {children}
@@ -157,7 +159,8 @@ const Navbar = ({children}) => {
             </Menu>
           </Box>
         </Toolbar>
-      </Paper>
+      </Box> */}
+      </>
     )
 }
 

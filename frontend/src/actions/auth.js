@@ -30,7 +30,18 @@ export const signup =(formData) => async(dispatch) => {
         //Sign up the user
         const { data } = await api.signUp(formData)
         dispatch({ type: AUTH, data})
-        const { info } = await api.createProfile({name: data?.result?.name, email: data?.result?.email, userId: data?.result?._id, phoneNumber: '', businessName: '', contactAddress: '', logo: '', website: ''});
+        const { info } = await api.createProfile({
+            name: data?.result?.name, 
+            email: data?.result?.email, 
+            userId: data?.result?._id, 
+            phoneNumber: '', 
+            businessName: '', 
+            contactAddress: '', 
+            logo: '', 
+            website: '',
+            access: data?.result?.access,
+            role: data?.result?.role,  
+        });
         dispatch({ type: CREATE_PROFILE, payload: info });
         window.location.href="/dashboard"
         // history.push('/dashboard')

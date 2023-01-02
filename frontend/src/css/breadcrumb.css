@@ -1,0 +1,12 @@
+.text {
+    
+    color: #566a7f;
+    font-weight: bold;
+    font-size: 0.875rem;
+    /* text-decoration: none; */
+}
+
+p {
+    font-weight: bold;
+    font-size: 1.5rem;
+}

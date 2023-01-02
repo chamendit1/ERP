@@ -39,6 +39,9 @@ import {
 // import Breadcrumb from './Breadcrumb/Breadcrumb'
 
 // const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+import '../css/navbar.css'
+import Breadcrumb from './Breadcrumb/Breadcrumb';
+
 
 
 const SubNav = ({children}) => {
@@ -103,17 +106,26 @@ const SubNav = ({children}) => {
 
     prevOpen.current = open;
   }, [open]);
-
+// console.log(location)
     return ( 
-      <Box style={{padding: '0 1rem'}}>
-        <Toolbar disableGutters>
-          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none'}}}>
-            {children}
-          </Box>
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex'} }}>
-            {children}
-          </Box>
-        </Toolbar>
+      <Box className='subnav' padding={'1rem 0rem'}>
+          <Grid container sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none'}}}>
+            <Grid item xs={12}>
+              <Breadcrumb navigate={navigate} location={location}/>
+            </Grid>
+            <Grid item xs>
+              {children}
+            </Grid>
+            
+          </Grid>
+          <Grid container sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex'} }} >
+            <Grid item xs={12}>
+              <Breadcrumb navigate={navigate} location={location}/>
+            </Grid>
+            <Grid item xs>
+              {children}
+            </Grid>
+          </Grid>
       </Box>
     )
 }

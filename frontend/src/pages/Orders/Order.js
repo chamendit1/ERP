@@ -240,8 +240,8 @@ console.log(useSelector((state) => state.invoices))
           <Box sx={{m: 1}}>
           <Typography variant="h4" style={{fontWeight: 'bold'}}>Order #{invoiceData.invoiceNumber}</Typography>
           </Box>
-        </Grid>
-        <Grid item xs={9}>
+      </Grid>
+      <Grid item xs={9}>
           <Box sx={{m: 1}}>
             <Generate />
           </Box>
@@ -249,8 +249,11 @@ console.log(useSelector((state) => state.invoices))
       </Grid>
       <Grid container spacing={2}>
 
+        
+        {/* Left Grid */}
         <Grid item xs={9}>
             <Grid container spacing={2}>
+              {/* Order Details */}
               <Grid item xs={12}>
               <Card style={{borderRadius: 10, boxShadow: 3}}>
                 <Box sx={{m: 2}}>
@@ -264,35 +267,54 @@ console.log(useSelector((state) => state.invoices))
                 <Box sx={{m: 2}}><Button> Invoice </Button></Box>
               </Card>
               </Grid>
-              
+              {/* Table */}
               <Grid item xs={12}>
-              <Card style={{borderRadius: 10, boxShadow: 3}}>
-                <Table aria-label="simple table">
-                  <TableHead>
-                      <TableRow>
-                          <TableCell>Item</TableCell>
-                          <TableCell >Qty</TableCell>
-                          <TableCell>Price</TableCell>
-                          <TableCell >Disc(%)</TableCell>
-                          <TableCell >Amount</TableCell>
-                      </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {invoiceData?.items?.map((itemField, index) => (
-                      <TableRow key={index}>
-                          <TableCell  scope="row" style={{width: '30%' }}> {itemField.itemName}</TableCell>
-                          <TableCell align="right"> <InputBase sx={{ ml: 1, flex: 1 }} type="number" name="quantity" value={itemField?.quantity} placeholder="0" readOnly /> </TableCell>
-                          <TableCell align="right"> <InputBase sx={{ ml: 1, flex: 1 }} type="number" name="unitPrice" value={itemField?.unitPrice} placeholder="0" readOnly /> </TableCell>
-                          <TableCell align="right"> <InputBase sx={{ ml: 1, flex: 1 }} type="number" name="discount"  value={itemField?.discount} readOnly /> </TableCell>
-                          <TableCell align="right"> <InputBase sx={{ ml: 1, flex: 1 }} type="number" name="amount"  value={((itemField?.quantity * itemField.unitPrice) - (itemField.quantity * itemField.unitPrice) * itemField.discount / 100)} readOnly /> </TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              </Card>
+                <Card style={{borderRadius: 10, boxShadow: 3}}>
+                  <Table aria-label="simple table">
+                    <TableHead>
+                        <TableRow>
+                            <TableCell>Item</TableCell>
+                            <TableCell >Qty</TableCell>
+                            <TableCell>Price</TableCell>
+                            <TableCell >Disc(%)</TableCell>
+                            <TableCell >Amount</TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                      {invoiceData?.items?.map((itemField, index) => (
+                        <TableRow key={index}>
+                            <TableCell  scope="row" style={{width: '30%' }}> {itemField.itemName}</TableCell>
+                            <TableCell align="right"> <InputBase sx={{ ml: 1, flex: 1 }} type="number" name="quantity" value={itemField?.quantity} placeholder="0" readOnly /> </TableCell>
+                            <TableCell align="right"> <InputBase sx={{ ml: 1, flex: 1 }} type="number" name="unitPrice" value={itemField?.unitPrice} placeholder="0" readOnly /> </TableCell>
+                            <TableCell align="right"> <InputBase sx={{ ml: 1, flex: 1 }} type="number" name="discount"  value={itemField?.discount} readOnly /> </TableCell>
+                            <TableCell align="right"> <InputBase sx={{ ml: 1, flex: 1 }} type="number" name="amount"  value={((itemField?.quantity * itemField.unitPrice) - (itemField.quantity * itemField.unitPrice) * itemField.discount / 100)} readOnly /> </TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </Card>
               </Grid>
 
+
+
               <Grid item xs={12}>
+                <Card style={{borderRadius: 10, boxShadow: 3}}>
+                <Box sx={{m: 2}}>
+                <Typography variant="h6" style={{fontWeight: 'bold'}}> Payment History</Typography>
+                </Box>
+                  {invoice?.paymentRecords.length !== 0 && (
+                    <PaymentHistory paymentRecords={invoiceData?.paymentRecords} subtotal={subTotal} createdAt={invoiceData.createdAt}/>
+                  )}
+                </Card>
+              </Grid>
+            </Grid>
+        </Grid>
+
+        {/* Right Grid */}
+        <Grid item xs={3}>
+          <Grid container spacing={2}>
+            {/* invoice Summary */}
+            <Grid item xs={12}>
               <Card style={{borderRadius: 10, boxShadow: 3}} sx={{p:2}}>
                 <Box>
                   <Typography variant="h6" style={{fontWeight: 'bold'}} gutterBottom>Invoice Summary</Typography>
@@ -313,57 +335,35 @@ console.log(useSelector((state) => state.invoices))
                       <Typography  variant="subtitle2" style={{fontWeight: 'bold'}}>{vat}</Typography>
                       <Typography  variant="subtitle2" style={{fontWeight: 'bold'}}>{currency} {toCommas(total)}</Typography>
                       <Typography  variant="subtitle2" style={{fontWeight: 'bold'}}>{currency} {toCommas(totalAmountReceived)}</Typography>
-                      <Typography  variant="subtitle2" style={{fontWeight: 'bold'}}>{currency} {toCommas(total - totalAmountReceived)}</Typography>
+                      <Typography  variant="subtitle2" style={{fontWeight: 'bold'}}>{currency} {Math.round((total - totalAmountReceived)*100)/100}</Typography>
                     </Box>
                     </Grid>
                 </Grid>
               </Card>
-              </Grid>
-
-              <Grid item xs={12}>
-                <Card style={{borderRadius: 10, boxShadow: 3}}>
-                <Box sx={{m: 2}}>
-                <Typography variant="h6" style={{fontWeight: 'bold'}}> Payment History</Typography>
-                </Box>
-                  {invoice?.paymentRecords.length !== 0 && (
-                    <PaymentHistory paymentRecords={invoiceData?.paymentRecords} subtotal={subTotal} createdAt={invoiceData.createdAt}/>
-                  )}
-                </Card>
-              </Grid>
             </Grid>
-        </Grid>
-
-        {/* Customer */}
-
-        <Grid item xs={3}>
-          <Grid container spacing={2}>
-            {/* <Grid item>
-            <Card style={{borderRadius: 10, boxShadow: 3}}>
-              <Box sx={{m: 1}}>
-                Customer
-              </Box>
-              </Card>
-            </Grid> */}
+            {/* Track Order */}
             <Grid item>
             <Card style={{borderRadius: 10, boxShadow: 3}}>
             <Box sx={{p: 2}}>
               <Box display='flex' justifyContent='space-between' >
                 <Typography variant="h6" style={{fontWeight: 'bold'}} gutterBottom>Track Order</Typography>
-                  <Button onClick={() => processOrder()}>{checkOrderStatus()}</Button>
-                  <Button onClick={() => redoOrder()}>Redo</Button>
+                {/* <Button onClick={() => processOrder()}>{checkOrderStatus()}</Button>
+                <Button onClick={() => redoOrder()}>Redo</Button> */}
+              </Box>
+              <Box display='flex' justifyContent='space-between' >
+                {/* <Typography>Admin</Typography> */}
+                <Button onClick={() => processOrder()}>{checkOrderStatus()}</Button>
+                <Button onClick={() => redoOrder()}>Redo</Button>
               </Box>
               <Steps/>
             </Box>
             </Card>
             </Grid>
+
           </Grid>
         </Grid>
+
       </Grid>
-
-    
-
-    
-
     </Box>
   );
 }

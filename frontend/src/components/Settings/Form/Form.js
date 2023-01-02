@@ -51,7 +51,7 @@ const Settings = ({user}) => {
   };
 
   const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
-
+  console.log(profiles)
   return (
     <div>
      {switchEdit === 0 && (
@@ -60,9 +60,11 @@ const Settings = ({user}) => {
        <Avatar style={{width: '100px', height: '100px', margin: '30px'}} src={profiles?.logo} alt="" >
          </Avatar>
          <p>{profiles?.businessName}</p>
+         <p>{profiles?.role}</p>
          <p>{profiles?.contactAddress}</p>
          <p>{profiles?.phoneNumber}</p>
          <p>{profiles?.email}</p>
+         <p>Access: {profiles?.access}</p>
          <Button variant="outlined" style={{margin: '30px', padding: '15px 30px'}} onClick={() => setSwitchEdit(1)}>Edit Profile</Button>
        </Paper>
        </Container>
@@ -76,9 +78,9 @@ const Settings = ({user}) => {
         <form  onSubmit={handleSubmit}>
           <Grid container spacing={2}>
             <Uploader form={form} setForm={setForm} />
+            <Input name="businessName" label="Business Name" handleChange={handleChange} type="text" value={form?.businessName}/>
             <Input name="email" label="Email Address" handleChange={handleChange} type="email" half value={form?.email} />
             <Input name="phoneNumber" label="Phone Number" handleChange={handleChange} type="text" half value={form?.phoneNumber}/>
-            <Input name="businessName" label="Business Name" handleChange={handleChange} type="text" value={form?.businessName}/>
             <Input name="contactAddress" label="Contact Address" handleChange={handleChange} type="text" value={form?.contactAddress} />
           </Grid>
           <Button type="submit" fullWidth variant="contained" color="primary" >

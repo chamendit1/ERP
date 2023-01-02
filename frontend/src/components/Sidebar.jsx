@@ -1,4 +1,4 @@
-import { Box, Typography, Grid, Button, MenuItem, Menu, MenuList } from '@mui/material'
+import { Box, Typography, Grid, Button, MenuItem, Menu, MenuList, Tooltip, IconButton, Avatar } from '@mui/material'
 import React, { useState, useEffect } from 'react'
 import { useLocation, Link, useNavigate } from 'react-router-dom'
 import DashboardIcon from '@mui/icons-material/Dashboard';
@@ -6,9 +6,11 @@ import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import ArticleIcon from '@mui/icons-material/Article';
 import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
 import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
-
+import '../css/sidebar.css'
 import ReceiptIcon from '@mui/icons-material/Receipt';
 // import Receipt from '@mui/icons-material/Receipt';
+import { useDispatch } from 'react-redux'
+
 
 const Sidebar = () => {
 
@@ -43,6 +45,36 @@ const Sidebar = () => {
     navigate('/crm')
   };
 
+  const dispatch = useDispatch()
+
+  const [anchorElUser, setAnchorElUser] = useState(null);
+  const [openUser, setOpenUser] = useState(false);
+
+  const handleOpenUserMenu = (event) => {
+    setAnchorElUser(event.currentTarget);
+  };
+
+  const handleCloseUserMenu = () => {
+    setAnchorElUser(null);
+  };
+  const logout =() => {
+    dispatch({ type: 'LOGOUT' })
+    navigate('/')
+    setUser(null)
+  }  
+
+
+  function handleListKeyDown(event) {
+    if (event.key === 'Tab') {
+      event.preventDefault();
+      setOpenUser(false);
+    }
+  }
+  const openLink =(link) => {
+    navigate(`/${link}`)
+    setOpenUser(false);
+}
+
     if(!user) return null
 
 
@@ -60,19 +92,17 @@ const Sidebar = () => {
             </Grid>
           </Box> */}
 
-          <Box>
-            <Button className='sidebar-data'>
+          <Box className='sidebar-data' component={Link} to="/Dashboard">
             <Grid container justifyContent="center" alignItems='center'>
               <Box className='sidebar-logo'>
-                  <DashboardIcon fontSize="large"/>
+                <DashboardIcon fontSize="large"/>
               </Box>
               <Typography className='sidebar-text'>Dashboard</Typography>
             </Grid>
-            </Button>
           </Box>
 
-          <Box>
-            <Button className='sidebar-data' onClick={handleClick}>
+          {/* <Box className='sidebar-data'>
+            <Button  onClick={handleClick}>
             <Grid container justifyContent="center" alignItems='center'>
               <Box className='sidebar-logo' >
                   <PeopleAltIcon fontSize="large"/>
@@ -88,12 +118,21 @@ const Sidebar = () => {
             >
               <MenuItem id='pipeline' onClick={handleNav}>Pipeline</MenuItem>
               <MenuItem id='client-list' onClick={handleNav}>Customers</MenuItem>
-              {/* <MenuItem onClick={handleNavClientList}>Quotations</MenuItem> */}
+              <MenuItem onClick={handleNavClientList}>Quotations</MenuItem>
               <MenuItem id='order-list' onClick={handleNav}>Orders</MenuItem>
             </Menu>
+          </Box> */}
+
+          <Box className='sidebar-data' component={Link} to="/CRM">
+            <Grid container justifyContent="center" alignItems='center'>
+              <Box className='sidebar-logo' >
+                  <PeopleAltIcon fontSize="large"/>
+              </Box>
+              <Typography className='sidebar-text'>CRM</Typography>
+            </Grid>
           </Box>
 
-          <Box className='sidebar-data' component={Link} to="/admin">
+          <Box className='sidebar-data' component={Link} to="/Admin">
             <Grid container justifyContent="center" alignItems='center'>
               <Box className='sidebar-logo' >
                   <PeopleAltIcon fontSize="large"/>
@@ -109,7 +148,7 @@ const Sidebar = () => {
               </Box>
               <Typography className='sidebar-text'>Orders</Typography>
             </Grid>
-          </Box> */}
+          </Box>
 
           <Box className='sidebar-data' component={Link} to="/Accounting">
             <Grid container justifyContent="center" alignItems='center'>
@@ -136,6 +175,35 @@ const Sidebar = () => {
               </Box>
               <Typography className='sidebar-text'>Sales</Typography>
             </Grid>
+          </Box> */}
+
+          <Box sx={{ flexGrow: 0 }}>
+            <Tooltip title="Open settings">
+              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+              </IconButton>
+            </Tooltip>
+            <Menu
+              sx={{ mt: '45px' }}
+              id="menu-appbar"
+              anchorEl={anchorElUser}
+              anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              open={Boolean(anchorElUser)}
+              onClose={handleCloseUserMenu}
+            >
+              <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown} >
+                <MenuItem onClick={() => openLink('settings') }>{(user?.result?.name).split(" ")[0]}</MenuItem>
+                <MenuItem onClick={()=> logout()} >Logout</MenuItem>
+              </MenuList>
+            </Menu>
           </Box>
         
         </Box>

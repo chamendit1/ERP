@@ -4,6 +4,7 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Navbar from '../Navbar'
 import Sidebar from '../Sidebar'
+import SubNav from '../SubNav';
 // import Header from '../Header/Header';
 
 const Layout = ({children}) => {
@@ -12,16 +13,18 @@ const Layout = ({children}) => {
       <>
         <Navbar />
         <Grid container>
-          <Grid item border={'1px solid black'}>
+          <Grid item>
             {user && <Sidebar/>}
           </Grid>
-          <Grid item xs>
-          <Box style={{
-            padding: "0rem 2rem",
-            minHeight: '100vh'
-            }}>
-              {children}
-          </Box>
+
+          <Grid item xs style={{
+              padding: "0rem 2rem",
+              maxHeight: '100vh',
+              overflow: 'scroll',
+              overflowY: 'hidden',
+              }}>
+                <SubNav/>
+                {children}
           </Grid>
         </Grid>
       </>

@@ -262,6 +262,8 @@ const handleRates =(e) => {
     setInvoiceData({ initialState })
   }
 
+  console.log(invoiceData)
+
   return (
     <div>
     <AddClient setOpen={setNewClientOpen} open={newClientOpen} />

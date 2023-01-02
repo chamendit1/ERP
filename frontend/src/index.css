@@ -2,6 +2,7 @@
 * {    
   margin: 0 ;
   padding: 0;
+  font-family: Helvetica;
 }
 body {
   margin: 0;
@@ -17,40 +18,9 @@ body {
   color: #566a7f
 }
 
-.sidebar { 
-  transition: width 600ms ease;
-  z-index: 100;
-  text-decoration: none;
-  background-color: white;
-  border-radius: 10px;
-  height: 100vh;
-}
 
-.sidebar-data {
-  height: 5rem;
-  width: 5rem;
-  margin-top: 1rem;
-  border-radius: 15px;
-  text-decoration: none;
-  color: #566a7f
-}
 
-.sidebar-logo {
-  padding: 0.5rem 0.5rem;
-  display: flex;
-  align-items: center;
-}
 
-/* kanban */
-.droppable {
-  border-radius: 10px;
-  background-color: #8f8f91;
-  padding: 1rem;
-}
-
-.kanbancolumn {
-
-}
 
 
 /* Animation */

@@ -1,0 +1,30 @@
+/* kanban */
+.container {
+    /* display: flex; */
+    height: 85vh;
+    width: 150vh;
+}
+
+.bar{
+    /* height: px; */
+    /* border: 1px solid navajowhite; */
+    padding: 0.5rem 0rem;
+    /* width: auto; */
+}
+
+.kanban {
+    /* background-color: #bebec5; */
+    padding: 2rem 0rem;
+    height: auto;
+}
+
+.droppable {
+    border-radius: 10px;
+    background-color: #8f8f91;
+    padding: 1rem;
+  }
+.kanbancolumn {
+    border-radius: 10px;
+    background-color: #9090d1;
+    padding: 0.5rem;
+}

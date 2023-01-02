@@ -12,9 +12,11 @@ import Accounting from './pages/Accounting/index'
 import CRM from "./pages/CRM";
 import Sales from './pages/Sales'
 import Navbar from "./components/Navbar";
-import Admin from './components/Admin/Admin'
+import Admin from "./pages/Admin/Admin";
 import RequireAuth from "./components/Auth/RequireAuth";
 import Settings from './components/Settings/Settings'
+import Users from "./pages/Admin/components/Users";
+import User from "./pages/Admin/components/User";
 
 function App() {
 
@@ -34,10 +36,10 @@ function App() {
   
 
           <Route element={<RequireAuth allowedRoles={['CRM']} />}>
-            <Route path="/crm/*" element={<CRM/>}/>
-            <Route path="/client/:id" element={<Client/>} />
-            <Route path="/order/:id" element={<Order/>} />
-            <Route path="sales" element={<Sales/>} />
+            <Route path="/CRM/*" element={<CRM/>}/>
+            <Route path="/Client/:id" element={<Client/>} />
+            <Route path="/Order/:id" element={<Order/>} />
+            <Route path="/sales" element={<Sales/>} />
           </Route>
 
           <Route element={<RequireAuth allowedRoles={['Accounting']} />}>
@@ -46,6 +48,8 @@ function App() {
 
           {/* <Route element={<RequireAuth allowedRoles={['Admin']} />}> */}
             <Route path="/Admin" element={<Admin/>}/>
+            <Route path="/users" element={<Users/>}/>
+            <Route path="/user/:id" element={<User/>} />
           {/* </Route> */}
 
           <Route path="/settings" element={<Settings/>}/>
