@@ -52,7 +52,7 @@ const ProfileCard = (props) => {
         <Button size="small" color="primary" onClick={() => handleClickOpen(props.id)}>
           Edit
         </Button>
-        <User open={open} onClose={handleClose} id={value}/>
+        <User open={open} onClose={handleClose} id={value} data={props.data}/>
       </CardActions>
     </Card>
   )

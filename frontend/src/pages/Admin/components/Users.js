@@ -32,6 +32,7 @@ const Users = () => {
             access={data.access} 
             email={data.email}
             role={data.role}
+            data={data}
             id={data._id}
             />
           </Grid>
