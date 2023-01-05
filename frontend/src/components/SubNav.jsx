@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import decode from 'jwt-decode'
-
+import MenuIcon from '@mui/icons-material/Menu';
 // import Button from '@material-ui/core/Button';
 // import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 // import Grow from '@material-ui/core/Grow';
@@ -22,6 +22,7 @@ import {
   Button,
   Typography,
   Paper,
+  Icon,
 } from '@mui/material';
 // import { makeStyles } from '@material-ui/core/styles';
 // import axios from 'axios'
@@ -44,7 +45,7 @@ import Breadcrumb from './Breadcrumb/Breadcrumb';
 
 
 
-const SubNav = ({children}) => {
+const SubNav = ( {handleDrawer, children}) => {
     const dispatch = useDispatch()
     const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')))
     const navigate = useNavigate()
@@ -107,6 +108,8 @@ const SubNav = ({children}) => {
     prevOpen.current = open;
   }, [open]);
 // console.log(location)
+
+
     return ( 
       <Box className='subnav' padding={'1rem 0rem'}>
           <Grid container sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none'}}}>
@@ -119,7 +122,12 @@ const SubNav = ({children}) => {
             
           </Grid>
           <Grid container sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex'} }} >
-            <Grid item xs={12}>
+            {/* <Grid item marginRight={'1rem'}>
+              <IconButton onClick={handleDrawer}>
+                <MenuIcon/>
+              </IconButton>
+            </Grid> */}
+            <Grid item xs>
               <Breadcrumb navigate={navigate} location={location}/>
             </Grid>
             <Grid item xs>

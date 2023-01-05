@@ -29,22 +29,16 @@ const Kanban = () => {
       <Divider/>
       <Box className='bar'>
         <Button variant="contained" startIcon={<AddCircleOutlineIcon />}>              
-          {/* <AssessmentIcon fontSize='large'/> */}
           <Typography>New Order</Typography>
         </Button>
-        {/* <Button onClick={handleNavClientList}>            
-        <PeopleAltIcon fontSize='large'/>
-        <Typography>Clients</Typography>
-        </Button> |
-        <Button onClick={handleNavOrderList}>
-          <DescriptionIcon fontSize='large'/>
-          <Typography>Orders</Typography>
-        </Button> */}
+      </Box>
+      <Box className='box'>
+        <Box className='kanban'>
+          <DragPage />
+        </Box>
       </Box>
 
-      <Box className='kanban'>
-        <DragPage />
-      </Box>
+
 
     </Box>
   )

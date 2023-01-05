@@ -1,21 +1,24 @@
 /* kanban */
 .container {
-    /* display: flex; */
-    height: 85vh;
-    width: 150vh;
+    /* overflow: auto; */
+    /* border: 1px solid white; */
 }
 
 .bar{
-    /* height: px; */
-    /* border: 1px solid navajowhite; */
     padding: 0.5rem 0rem;
-    /* width: auto; */
+}
+.box { 
+    overflow: auto;
+    height: 70vh;
+    /* width: 80vh; */
 }
 
 .kanban {
-    /* background-color: #bebec5; */
+    background-color: #bebec5;
     padding: 2rem 0rem;
-    height: auto;
+    height: 200vh;
+    width: 100vh;
+    border: 1px solid white;
 }
 
 .droppable {

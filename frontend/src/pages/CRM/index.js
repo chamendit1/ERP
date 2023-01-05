@@ -10,7 +10,7 @@ import Kanban from './components/kanban/Kanban'
 import SubNav from '../../components/SubNav'
 import Breadcrumb from '../../components/Breadcrumb/Breadcrumb'
 import Dashboard from './components/Dashboard'
-import '../../css/crm.css'
+import './crm.css'
 import DescriptionIcon from '@mui/icons-material/Description';
 
 import AssessmentIcon from '@mui/icons-material/Assessment';
@@ -36,44 +36,38 @@ const navItems = [
 
 const CRM = () => {
   const navigate = useNavigate()
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const open = Boolean(anchorEl);
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
+  // const [anchorEl, setAnchorEl] = React.useState(null);
+  // const open = Boolean(anchorEl);
+  // const handleClick = (event) => {
+  //   setAnchorEl(event.currentTarget);
+  // };
+  // const handleClose = () => {
+  //   setAnchorEl(null);
+  // };
 
-  const handleNavClientList = () => {
-    navigate('/CRM/Clients')
-  };
-  const handleNavOrderList = () => {
-    navigate('/CRM/Orders')
-  };
-  const handleNavPipeline = () => {
-    navigate('/CRM/Pipeline')
-  };
+  // const handleNavClientList = () => {
+  //   navigate('/CRM/Clients')
+  // };
+  // const handleNavOrderList = () => {
+  //   navigate('/CRM/Orders')
+  // };
+  // const handleNavPipeline = () => {
+  //   navigate('/CRM/Pipeline')
+  // };
 
 
   return (
     <>
-    <Grid container>
-      {/* <Grid item xs={12} height={'10vh'}>
-      </Grid> */}
-
-      <Grid item xs={12} height={'90vh'} >
-        <Routes>
-          <Route path="/" element={<Dashboard/>}/>
-          <Route path="/Clients" element={<Clients/>}/>
-          <Route path="/Orders" element={<Orders/>}/>
-          <Route path="/Pipeline" element={<Kanban/>}/>
-        </Routes>
+      <Grid container>
+        <Grid item xs={12} height={'90vh'} >
+          <Routes>
+            <Route path="/" element={<Dashboard/>}/>
+            <Route path="/Clients" element={<Clients/>}/>
+            <Route path="/Orders" element={<Orders/>}/>
+            <Route path="/Pipeline" element={<Kanban/>}/>
+          </Routes>
+        </Grid>
       </Grid>
-    </Grid>
-      
-
-
     </>
   )
 }

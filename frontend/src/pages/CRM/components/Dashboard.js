@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import AssessmentIcon from '@mui/icons-material/Assessment';
 import DescriptionIcon from '@mui/icons-material/Description';
 import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
-import '../../../css/crm.css'
+import '../crm.css'
 
 const Dashboard = () => {
   return (

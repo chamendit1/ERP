@@ -33,7 +33,7 @@ function App() {
           <Route path="/dashboard" element={<Dashboard/>}/>
 
 
-  
+          <Route path="/Clients" element={<Clients/>} />
 
           <Route element={<RequireAuth allowedRoles={['CRM']} />}>
             <Route path="/CRM/*" element={<CRM/>}/>
