@@ -12,6 +12,7 @@ import { DialogTitle, DialogContent, DialogActions } from '@mui/material'
 import dayjs from 'dayjs';
 import { useDispatch } from 'react-redux'
 import { updateInvoice } from '../../actions/invoiceActions';
+import { createTransaction } from '../../actions/transactionActions';
 
 
 const DTitle = ({ children, onClose}) => {
@@ -93,6 +94,7 @@ const Modal = ({ setOpen, open, invoice }) => {
 
     const handleSubmitPayment =(e)=> {
         e.preventDefault()
+          dispatch(createTransaction(payment))
           dispatch(updateInvoice(invoice._id, updatedInvoice))
           .then(() => {
             handleClose()

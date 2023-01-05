@@ -7,5 +7,6 @@ import profiles from './profiles'
 import orders from './orders'
 import inventories from './inventories'
 import products from './products'
+import transactions from './transactions'
 
-export default combineReducers({ invoices, clients, auth, profiles, orders, inventories, products })
+export default combineReducers({ transactions, invoices, clients, auth, profiles, orders, inventories, products })

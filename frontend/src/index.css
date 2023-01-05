@@ -1,21 +1,29 @@
-
 * {    
   margin: 0 ;
   padding: 0;
   font-family: Helvetica;
+  color: aliceblue;
 }
 body {
   margin: 0;
 }
 
 :root {
-  background-color: #f5f5f9;
+  /* background-color: #f5f5f9; */
+  background-color: var(--dark1);
+  /* Palette */
+  --dark1: #121212;
+  --dark2: #272727;
+  --dark3: #363636;
+  --dark4: #5b5b5b;
+
+  --text: #fff;
 }
 
 /* Navbar */
 .navbar-link {
   text-decoration: none;
-  color: #566a7f
+  /* color: #566a7f */
 }
 
 
@@ -52,15 +60,5 @@ body {
 
 /* Large screens */
 @media only screen and (min-width: 600px) {
-  .sidebar {
-    width: 7rem;
-    
-  }
-  .sidebar .sidebar-data:hover {
-    background-color: rgb(218, 217, 217);
-    animation: shake 0.5s;
-    animation-iteration-count: infinite;
-  }
-  
 
 }

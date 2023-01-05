@@ -20,13 +20,13 @@ export const updateInvoice = (id, updatedInvoice) => API.patch(`/invoices/${id}`
 export const deleteInvoice =(id) => API.delete(`/invoices/${id}`)
 //export const fetchInvoicesByUser = (searchQuery) => API.get(`/invoices/invoices?searchQuery=${searchQuery.search}`);
 
-export const fetchPurchases =() => API.get('/Purchases')
-export const fetchPurchase =(id) => API.get(`/Purchase/${id}`)
-export const fetchPurchasesByClient = (id) => API.get(`/Purchases/clients/${id}`);
+export const fetchTransactions =() => API.get('/Transaction')
+export const fetchTransaction =(id) => API.get(`/Transaction/${id}`)
+export const fetchTransactionsByClient = (id) => API.get(`/Transactions/clients/${id}`);
 
-export const addPurchase =( Purchase ) => API.post('/Purchase', Purchase)
-export const updatePurchase = (id, updatedPurchase) => API.patch(`/Purchase/${id}`, updatedPurchase)
-export const deletePurchase =(id) => API.delete(`/Purchase/${id}`)
+export const addTransaction =( Transaction ) => API.post('/Transaction', Transaction)
+export const updateTransaction = (id, updatedTransaction) => API.patch(`/Transaction/${id}`, updatedTransaction)
+export const deleteTransaction =(id) => API.delete(`/Transaction/${id}`)
 
 
 

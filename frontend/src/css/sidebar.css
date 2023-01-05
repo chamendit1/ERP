@@ -2,7 +2,8 @@
     /* transition: width 600ms ease; */
     z-index: 100;
     /* text-decoration: none; */
-    background-color: rgb(214, 214, 214);
+    /* background-color: rgb(247, 0, 0); */
+    background-color: var(--dark2);
     /* border-radius: 10px; */
     height: 100vh;
   }
@@ -13,7 +14,7 @@
     margin-top: 1rem;
     border-radius: 15px;
     text-decoration: none;
-    color: #566a7f
+    color: #ffffff
   }
   
   .sidebar-logo {
@@ -21,3 +22,18 @@
     display: flex;
     align-items: center;
   }
+
+  /* Large screens */
+@media only screen and (min-width: 600px) {
+  .sidebar {
+    width: 7rem;
+    
+  }
+  .sidebar .sidebar-data:hover {
+    background-color: #E5BA73;
+    animation: shake 0.5s;
+    animation-iteration-count: infinite;
+  }
+  
+
+}

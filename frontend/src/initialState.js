@@ -16,6 +16,13 @@ export const initialState = {
     owner: '',
 }
 
+export const transactionState = {
+    items: [
+        {itemName: '', unitPrice: '', quantity: '', discount: ''},
+    ],
+
+}
+
 
 export const clientState = {
     name: '',

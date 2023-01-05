@@ -27,8 +27,8 @@ function App() {
 
           <Route path="/login" element={<Login/>} />
           <Route path="/" element={<Home/>}/>
-          <Route path="/forgot" element={<Orders/>} />
-          <Route path="/reset/:token" element={<Orders/>} />
+          {/* <Route path="/forgot" element={<Orders/>} />
+          <Route path="/reset/:token" element={<Orders/>} /> */}
 
           <Route path="/dashboard" element={<Dashboard/>}/>
 

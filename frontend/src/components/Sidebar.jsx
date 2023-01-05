@@ -79,7 +79,7 @@ const Sidebar = () => {
 
 
     return (
-      <Box className='sidebar' boxShadow={3} >
+      <Box className='sidebar' boxShadow={1} >
         <Box style={{
           display: 'flex',
           flexDirection: 'column',

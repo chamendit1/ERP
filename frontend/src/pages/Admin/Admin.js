@@ -25,6 +25,9 @@ const Admin = () => {
 
       <Grid item xs={12} height={'90vh'} >
         <Button variant="outlined" onClick={() => { navigate('/Users')}}> Users</Button>
+        <Button variant="outlined" onClick={() => { navigate('/CRM/Clients')}}> Clients</Button>
+        <Button variant="outlined" onClick={() => { navigate('/CRM/Orders')}}> Orders</Button>
+        <Button variant="outlined" onClick={() => { navigate('/Accounting')}}> Accounting</Button>
       </Grid>
     </Grid>
     </>
