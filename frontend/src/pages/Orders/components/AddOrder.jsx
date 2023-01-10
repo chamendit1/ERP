@@ -39,6 +39,7 @@ import { initialState } from '../../../initialState'
 // import stylecss from './Order.module.css'
 import AddClient from '../../Clients/components/AddClient' // Need to cross check with original
 import { DialogTitle, DialogContent , DialogActions } from '@mui/material';
+import { getBoard, updateBoard } from '../../../actions/board';
 
  
  const DTitle = (props) => {
@@ -61,10 +62,11 @@ import { DialogTitle, DialogContent , DialogActions } from '@mui/material';
 
  // Add Invoice
  
- const AddOrder = ({ setOpen, open, currentId, setCurrentId }) => {
+ const AddOrder = ({ setOpen, open, boards}) => {
      const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')))
      const [ client, setClient] = useState(null)
      // eslint-disable-next-line 
+     console.log(boards[0]._id)
 
      const [invoiceData, setInvoiceData] = useState(initialState)
      const [rates, setRates] = useState(0)
@@ -95,9 +97,9 @@ import { DialogTitle, DialogContent , DialogActions } from '@mui/material';
     // useEffect(() => {
     //   if(id) {
     //     dispatch(getClient(id));
-    //     setClient(clientState)
     //   }
     // }, [open]);
+
 
   useEffect(() => {
       if(invoice) {
@@ -196,10 +198,11 @@ const handleRates =(e) => {
       setInvoiceData((prevState) => ({...prevState, values}))
       // console.log(values)
   }
-  
+  // console.log(rows[0]._id)
   const handleSubmit =  async (e ) => {
       e.preventDefault()
       if(invoice) {
+      // dispatch(updateBoard(boards[orderStatus]._id, {...boards[orderStatus], taskId: [...boards[orderStatus].taskId, invoiceData.invoiceNumber]}))
        dispatch(updateInvoice( invoice._id, {
            ...invoiceData, 
            subTotal: subTotal, 
@@ -215,7 +218,8 @@ const handleRates =(e) => {
        //navigate(`/invoice/${invoice._id}`)
        handleClose()
       } else {
-
+        // console.log(invoiceNumber)
+      // dispatch(updateBoard(boards[0]._id, {...boards[0], taskId: [...boards[0].taskId, invoiceData.invoiceNumber]}))
       dispatch(createInvoice({
           ...invoiceData,
           subTotal: subTotal, 
@@ -258,7 +262,7 @@ const handleRates =(e) => {
    };
 
    const clear =() => {
-    setCurrentId(null) 
+    // setCurrentId(null) 
     setInvoiceData({ initialState })
   }
 
@@ -270,7 +274,7 @@ const handleRates =(e) => {
       <form onSubmit={handleSubmit} className="mu-form">
       <Dialog onClose={handleClose} aria-labelledby="customized-dialog-title" open={open} maxWidth='md' fullWidth>
         <DTitle id="customized-dialog-title" onClose={handleClose} style={{paddingLeft: '20px', color: 'white'}}>
-          {currentId? 'Edit Customer' : 'New Order'}
+          {'New Order'}
         </DTitle>
              
         <DialogContent dividers>

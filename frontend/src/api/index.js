@@ -2,6 +2,7 @@ import axios from 'axios'
 
 // const API = axios.create({ baseURL: 'http://localhost:5000'})
 const API = axios.create({ baseURL: process.env.REACT_APP_API})
+// const API2 = axios.create({ baseURL: process.env.REACT_APP_API2})
 
 API.interceptors.request.use((req) => {
     if(localStorage.getItem('profile')) {
@@ -10,6 +11,18 @@ API.interceptors.request.use((req) => {
 
     return req
 })
+
+export const fetchColumn =(id) => API.get(`/column/${id}`)
+export const fetchColumns =() => API.get('/column')
+export const addColumn =( board ) => API.post('/column', board)
+export const updateColumn = (id, updatedColumn) => API.patch(`/column/${id}`, updatedColumn)
+export const deleteColumn =(id) => API.delete(`/column/${id}`)
+
+export const fetchBoard =(id) => API.get(`/board/${id}`)
+export const fetchBoards =() => API.get('/board')
+export const addBoard =( board ) => API.post('/board', board)
+export const updateBoard = (id, updatedBoard) => API.patch(`/board/${id}`, updatedBoard)
+export const deleteBoard =(id) => API.delete(`/board/${id}`)
 
 export const fetchInvoices =() => API.get('/invoices')
 export const fetchInvoice =(id) => API.get(`/invoices/${id}`)

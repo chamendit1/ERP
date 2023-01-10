@@ -105,19 +105,19 @@ const Navbar = ({children}) => {
     prevOpen.current = open;
   }, [open]);
 
-    if(!user) return (
-        <Card style={{height: '5vh'}}>
-          <Grid container justifyContent="space-between" alignItems='center'style={{padding: '0 1.5rem', height:'3rem'}}>
-            <Grid item>
-              {/* <img style={{width: '50px', cursor: 'pointer'}} onClick={()=> navigate('/')} src="" alt="ERP" /> */}
-              <Typography>ERP</Typography>
-            </Grid>
-            <Grid item>
-            <Button onClick={()=> navigate('/login')}>Get started</Button>
-            </Grid>
-          </Grid>
-        </Card>
-    )
+    // if(!user) return (
+    //     <Card style={{height: '5vh'}}>
+    //       <Grid container justifyContent="space-between" alignItems='center'style={{padding: '0 1.5rem', height:'3rem'}}>
+    //         <Grid item>
+    //           {/* <img style={{width: '50px', cursor: 'pointer'}} onClick={()=> navigate('/')} src="" alt="ERP" /> */}
+    //           <Typography>ERP</Typography>
+    //         </Grid>
+    //         <Grid item>
+    //         <Button onClick={()=> navigate('/login')}>Get started</Button>
+    //         </Grid>
+    //       </Grid>
+    //     </Card>
+    // )
     return ( 
       <>
       {/* <Box className='navbar'>

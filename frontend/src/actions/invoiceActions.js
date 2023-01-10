@@ -7,7 +7,7 @@ import { ADD_NEW, UPDATE, DELETE, GET_INVOICE, START_LOADING, END_LOADING, FETCH
      try {
          dispatch({ type: START_LOADING })
          const { data } = await api.fetchInvoices()
-         console.log(data)
+        //  console.log(data)
          dispatch({ type: FETCH_ALL, payload: data });
          dispatch({ type: END_LOADING })
      } catch (error) {
@@ -78,7 +78,7 @@ export const createInvoice =(invoice, history, openSnackbar) => async (dispatch)
         dispatch({ type: START_LOADING })
         const { data } = await api.addInvoice(invoice)
         dispatch({ type: ADD_NEW, payload: data })
-        history.push(`/invoice/${data._id}`)
+        // history.push(`/invoice/${data._id}`)
         dispatch({ type: END_LOADING })
         openSnackbar("Created successfull")
 
@@ -88,7 +88,7 @@ export const createInvoice =(invoice, history, openSnackbar) => async (dispatch)
 }
 
 export const updateInvoice =(id, invoice, openSnackbar) => async (dispatch) => {
-    // console.log(id)
+    console.log(id)
     try {
         const { data } = await api.updateInvoice(id, invoice)
         dispatch({ type: UPDATE, payload: data })

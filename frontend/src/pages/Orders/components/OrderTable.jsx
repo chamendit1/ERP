@@ -23,17 +23,14 @@ import { Card } from '@mui/material';
 
 import { useNavigate } from 'react-router-dom';
 import moment from 'moment'
-
 import { useDispatch } from 'react-redux'
 import { deleteInvoice, deleteInvoices } from '../../../actions/invoiceActions';
-// import { useSnackbar } from 'react-simple-snackbar'
-// import AddClient from '../../Clients/components/AddClient';
-
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { useState } from 'react';
 import DeleteOutlineRoundedIcon from '@mui/icons-material/DeleteOutlineRounded';
 import BorderColorIcon from '@mui/icons-material/BorderColor';
 import AddOrder from './AddOrder';
+import './Table.css'
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -67,6 +64,11 @@ function stableSort(array, comparator) {
 
 
 
+
+
+
+
+
 function EnhancedTableHead(props) {
   const { onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort, headCells } =
     props;
@@ -75,7 +77,7 @@ function EnhancedTableHead(props) {
   };
 
   return (
-    <TableHead>
+    <TableHead >
       <TableRow>
         <TableCell padding="checkbox">
         <Box style={{
@@ -88,7 +90,7 @@ function EnhancedTableHead(props) {
             checked={rowCount > 0 && numSelected === rowCount}
             onChange={onSelectAllClick}
           />
-          <Typography>ID</Typography>
+          <Typography variant='subtitle2'>ID</Typography>
           </Box>
         </TableCell>
         {headCells.map((headCell) => {
@@ -99,7 +101,7 @@ function EnhancedTableHead(props) {
               align={'left'}
               sortDirection={orderBy === headCell.id ? order : false}
             >
-                {headCell.label}
+                <Typography variant='subtitle2'>{headCell.label}</Typography>
             </TableCell>
             )
           } else {
@@ -114,7 +116,7 @@ function EnhancedTableHead(props) {
                 direction={orderBy === headCell.id ? order : 'asc'}
                 onClick={createSortHandler(headCell.id)}
               >
-                {headCell.label}
+                <Typography variant='subtitle2'>{headCell.label}</Typography>
                 {orderBy === headCell.id ? (
                   <Box component="span" sx={visuallyHidden}>
                     {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
@@ -139,8 +141,12 @@ EnhancedTableHead.propTypes = {
   rowCount: PropTypes.number.isRequired,
 };
 
+
+
+
+
 const EnhancedTableToolbar = (props) => {
-  const { numSelected, selected, onDelete } = props;
+  const { numSelected, selected, onDelete, boards } = props;
   const deleteInvoice = (selected) => {
     onDelete(selected);
   };
@@ -156,28 +162,26 @@ const EnhancedTableToolbar = (props) => {
         }),
       }}
     >
-      
       {numSelected > 0 ? (
         <Typography
           sx={{ flex: '1 1 100%' }}
-          color="inherit"
+          // color="inherit"
           // variant="subtitle1"
-          component="div"
+          // component="div"
         >
-          {numSelected} selected
+          {numSelected} Selected
         </Typography>
       ) : (
         <Typography
           sx={{ flex: '1 1 100%', fontWeight: 'bold' }}
-          variant="subtitle1"
-          
-          id="tableTitle"
-          component="div"
+          // variant="subtitle1"
+          // id="tableTitle"
+          // component="div"
         >
-          Orders
+          DataTable Simple
         </Typography>
       )}
-      <AddOrder setOpen={setOpen} open={open} />
+      <AddOrder setOpen={setOpen} open={open} boards={boards}/>
       {
           <IconButton onClick={() => setOpen((prev) => !prev) }>
             <AddCircleOutlineIcon />
@@ -208,7 +212,7 @@ EnhancedTableToolbar.propTypes = {
 
 
 
-export default function EnhancedTable({ rows, head }) {
+export default function EnhancedTable({ rows, head, boards }) {
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('calories');
   const [selected, setSelected] = React.useState([]);
@@ -297,12 +301,18 @@ export default function EnhancedTable({ rows, head }) {
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
 
+
+  const Cell = ({children, row}) => (
+    <TableCell onClick={() => openInvoice(row._id)}><Typography  variant='subtitle2'>{children}</Typography></TableCell>
+  )
+
   return (
-    <Box style={{ backgroundColor: '#272727', borderRadius: 10, boxShadow: 3}}>
+    <Box className='OrderTable' >
       <EnhancedTableToolbar 
         numSelected={selected.length} 
         selected={selected}
         onDelete={handleDelete}
+        boards={boards}
         // openSnackbar={openSnackbar}
       />
         <Table>
@@ -334,30 +344,18 @@ export default function EnhancedTable({ rows, head }) {
                       <TableCell padding="checkbox">
                       <Box display='flex' justifyContent='space-between' alignItems='center'>
                         <Checkbox
-                            color="primary"
+                            // color="primary"
                             onClick={(event) => handleClick(event, row._id)}
                             checked={isItemSelected}
                           />
-                          #{row.invoiceNumber} 
+                          <Typography variant='subtitle2'>#{row.invoiceNumber} </Typography>
                         </Box>
                       </TableCell>
-                      
-                      <TableCell onClick={() => openInvoice(row._id)}>{moment(row.createdAt).format('Do MMM YY')}</TableCell>
-                      <TableCell onClick={() => openInvoice(row._id)} > <button style={checkStatus(row.status)}>{row.status}</button></TableCell>
-                      <TableCell onClick={() => openInvoice(row._id)} > {row.client.name} </TableCell>
-                      <TableCell onClick={() => openInvoice(row._id)} > {moment(row.dueDate).fromNow()} </TableCell>
-                      <TableCell onClick={() => openInvoice(row._id)} >{row.currency} {row.total? toCommas(row.total): row.total} </TableCell>
-
-                      {/* <TableCell style={{ width: '3%'}}>
-                        <IconButton onClick={() => editInvoice(row._id)}>
-                          <BorderColorIcon  style={{width: '20px', height: '20px'}} />
-                        </IconButton>
-                      </TableCell>
-                      <TableCell style={{ width: '3%'}}>
-                        <IconButton onClick={() => dispatch(deleteInvoice(row._id))}>
-                          <DeleteOutlineRoundedIcon  style={{width: '20px', height: '20px'}} />
-                        </IconButton>
-                      </TableCell> */}
+                      <Cell row={row}>{moment(row.createdAt).format('Do MMM YY')}</Cell>
+                      <Cell row={row}><button style={checkStatus(row.status)}>{row.status}</button></Cell>
+                      <Cell row={row}>{row.client.name}</Cell>
+                      <Cell row={row}>{moment(row.dueDate).fromNow()}</Cell>
+                      <Cell row={row}>{row.currency} {row.total? toCommas(row.total): row.total}</Cell>
                     </TableRow>
                   );
                 })}

@@ -11,7 +11,7 @@ import { Button } from '@mui/material';
 const Layout = ({children}) => {
   const user = JSON.parse(localStorage.getItem('profile'))
   const [openDrawer, setOpenDrawer] = useState({open: false, display: 'none'});
-  const [size, setSize]= useState(12);
+  // const [size, setSize]= useState(12);
   
   const handleDrawer = () => {
     setOpenDrawer({open: true, display: ''})
@@ -27,17 +27,13 @@ const Layout = ({children}) => {
       <>
         <Navbar />
         <Grid container>
-          <Grid item xs={1} >
-            {user && <Sidebar 
-            openDrawer={openDrawer} 
-            handleDrawerClose={handleDrawerClose}
-            />}
-          </Grid>
-          <Grid item xs={11} style={{
-            padding: "0rem 2rem",
+          { user && <Sidebar openDrawer={openDrawer} handleDrawerClose={handleDrawerClose}/>}
+          <Grid item xs={12} style={{
+            padding: "1rem 2rem",
             maxHeight: '100vh',
+            // border: '1px solid black'
             }}>
-            <SubNav handleDrawer={handleDrawer} />
+            {user && <SubNav handleDrawer={handleDrawer} />} 
             <Box>
               {children}
             </Box> 

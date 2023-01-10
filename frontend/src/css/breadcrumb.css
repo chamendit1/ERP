@@ -1,12 +1,17 @@
-.text {
-    
-    color: #566a7f;
-    font-weight: bold;
-    font-size: 0.875rem;
+.text-last {
+    color: #42464a;
+    /* font-weight: bold;
+    font-size: 0.5rem; */
     /* text-decoration: none; */
 }
 
-p {
-    font-weight: bold;
-    font-size: 1.5rem;
+.text {
+    color: #aaadaf;
+    /* font-weight: bold;
+    font-size: 0.5rem; */
+    /* text-decoration: none; */
+}
+
+.home {
+    color: #aaadaf;
 }

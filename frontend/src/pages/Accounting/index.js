@@ -66,12 +66,16 @@ const Index = () => {
       {/* <Grid item xs={12} height={'10vh'}>
       </Grid> */}
       <AddTransaction setOpen={setOpen} open={open} />
-      <Grid item xs={12} height={'90vh'} >
+      <Grid item xs={12} >
         <Button variant="outlined" onClick={() => setOpen((prev) => !prev) }> Add AddTransaction</Button>
         <Table
           rows={transactions}
           head={headCells}
         />
+      </Grid>
+      <Grid item xs={12} >
+        {/* components */}
+
       </Grid>
 
   </Grid>

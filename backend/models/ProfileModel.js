@@ -10,6 +10,7 @@ const profileSchema = mongoose.Schema({
     website: String,
     role: {type: String, required: true},
     access: [String],
+    active: Boolean,
     userId: [String],
 })
 

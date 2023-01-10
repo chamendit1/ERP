@@ -13,8 +13,8 @@ const useAuth = () => {
 
     if (user.token) {
         const { email, role, access } = user.result
-        console.log(user.result)
-        console.log(role)
+        // console.log(user.result)
+        // console.log(role)
         isManager = role.includes('Manager')
         isAdmin = role.includes('Admin')
 

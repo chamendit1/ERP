@@ -74,60 +74,70 @@ const Client = () => {
       }
   }, [client])
 
+  const data = [
+    {
+      // text: <Typography variant="subtitle2" sx={{fontWeight: 'bold'}}>Profile</Typography>,
+
+    },
+    {
+      text: <Typography variant="subtitle2" sx={{fontWeight: 'bold'}}>Transactions</Typography>,
+
+
+    },
+    {
+      text: <Typography variant="subtitle2" sx={{fontWeight: 'bold'}}>Invoices</Typography>,
+
+    },
+  ]
+
   return (
     <>
-    <Grid container spacing={2}>
-      <Grid item xs={12} sm={12} xl={12}>
-        <Card style={{borderRadius: 10, boxShadow: 3}} sx={{p: 2}}>
-        <Grid container>
-          <Grid item >
-            <Avatar variant="rounded" sx={{ height: '100%', width: '80px' }}></Avatar>
+    <Box sx={{ flexGrow: 1 }}>
+      <Grid className='ClientContainer' container spacing={{ xs: 2, md: 3 }} columns={{ xs: 2, sm: 6, md: 6, lg:12 }}>
+
+        <Grid className='ClientItem' item xs={2} sm={6} md={6} lg={6}>
+          <Card style={{borderRadius: 10, boxShadow: 3}} sx={{p: 2}}>
+          <Grid container>
+            <Grid item >
+              <Avatar variant="rounded" sx={{ height: '100%', width: '80px' }}></Avatar>
+            </Grid>
+            <Grid item xs sx={{p: 1}}>
+              <Typography variant="h6">{ClientData?.name}</Typography>
+              <Typography variant="subtitle2">{ClientData?.email}</Typography>
+              <Typography variant="subtitle2">{ClientData?.phone}</Typography>
+            </Grid>
           </Grid>
-          <Grid item xs sx={{p: 1}}>
-            <Typography variant="h6">{ClientData?.name}</Typography>
-            <Typography variant="subtitle2">{ClientData?.email}</Typography>
-            <Typography variant="subtitle2">{ClientData?.phone}</Typography>
-          </Grid>
+          </Card>
         </Grid>
 
+        {data.map((dat, index) => (
+          <Grid className="" item xs={2} sm={6} md={6} key={index}>
+            <Card style={{borderRadius: 10, boxShadow: 3}} sx={{p: 2}}>
+              {dat.text}
+            </Card>
+          </Grid>
+        ))}
 
-        </Card>
+
+        {/* <Grid item xs sm xl>
+          <Card style={{borderRadius: 10, boxShadow: 3}}>
+            <OrderTable
+              rows={rows}
+              head={headCells}
+              title='Orders'
+            />
+          </Card>
+        </Grid> */}
+
+        {/* <Grid item xs sm xl>
+          <Card style={{borderRadius: 10, boxShadow: 3}} sx={{p: 2}}>
+              <Typography variant="subtitle2" sx={{fontWeight: 'bold'}}>Bill</Typography>
+          </Card>
+        </Grid> */}
+
+
       </Grid>
-
-      <Grid item xs={12} sm={4} xl={4}>
-        <Card style={{borderRadius: 10, boxShadow: 3}} sx={{p: 2}}>
-          <Typography variant="subtitle2" sx={{fontWeight: 'bold'}}>Profile</Typography>
-        </Card>
-      </Grid>
-
-      <Grid item xs={12} sm={4} xl={4}>
-        <Card style={{borderRadius: 10, boxShadow: 3}} sx={{p: 2}}>
-          <Typography variant="subtitle2" sx={{fontWeight: 'bold'}}>Transactions</Typography>
-        </Card>
-      </Grid>
-
-      <Grid item xs={12} sm={4} xl={4}>
-        <Card style={{borderRadius: 10, boxShadow: 3}} sx={{p: 2}}>
-            <Typography variant="subtitle2" sx={{fontWeight: 'bold'}}>Invoices</Typography>
-        </Card>
-      </Grid>
-
-      <Grid item xs sm xl>
-        <Card style={{borderRadius: 10, boxShadow: 3}}>
-          <OrderTable
-            rows={rows}
-            head={headCells}
-            title='Orders'
-          />
-        </Card>
-      </Grid>
-
-      {/* <Grid item xs sm xl>
-        <Card style={{borderRadius: 10, boxShadow: 3}} sx={{p: 2}}>
-            <Typography variant="subtitle2" sx={{fontWeight: 'bold'}}>Bill</Typography>
-        </Card>
-      </Grid> */}
-    </Grid>
+    </Box>
     </>
   )
 }

@@ -1,0 +1,79 @@
+/* kanban */
+.kanban-container {
+    animation: fadeIn 1s ease-in-out;
+    /* overflow-y: hidden; */
+    /* overflow-x: hidden; */
+    border: 1px solid black;
+    /* flex-grow:1; */
+    height: 85vh;
+    margin: 0;
+}
+
+.bar{
+    padding: 0.5rem 0rem;
+    margin: 0;
+}
+
+.kanban {
+    height: 100%;
+    margin: 0;
+}
+
+.gridCo {
+    /* border: 1px solid rgb(150, 21, 110); */
+    margin: 0;
+    height: 100%;
+    width: 200vh;
+    display: flex;
+
+}
+
+.gridContainer {
+    margin: 0;
+    padding: 2rem 1rem;
+}
+
+
+.kanbanColumn {
+    border-radius: 10px;
+    background-color: #b77777;
+    /* overflow: auto; */
+    /* padding: 0.5rem; */
+    height: 100%;
+    /* border: 1px solid rgb(53, 132, 74); */
+}
+
+/* .kanbanTitleContainer {
+    border: 1px solid white;
+} */
+
+.kanbanTitle {
+    color: white;
+    font-size: 1.2rem;
+    padding: 1rem;
+    font-weight: bold;
+    height: 5%;
+    
+}
+
+/* .droppableContainer{
+    border: 1px solid white;
+} */
+
+
+.droppableGrid {
+    /* border: 1px solid rgb(149, 41, 41); */
+    overflow: auto;
+    border-radius: 10px;
+    background-color: #d6c0c0;
+    /* padding: 2rem 0rem; */
+    margin: 1rem;
+    height: 90%;
+  }
+
+.dragCard {
+    background-color: #ffffff;
+    border-radius: 10px;
+    padding: 1rem;
+    
+}

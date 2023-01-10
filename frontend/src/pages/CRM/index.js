@@ -9,12 +9,12 @@ import ArticleIcon from '@mui/icons-material/Article';
 import Kanban from './components/kanban/Kanban'
 import SubNav from '../../components/SubNav'
 import Breadcrumb from '../../components/Breadcrumb/Breadcrumb'
-import Dashboard from './components/Dashboard'
+import Dashboard from './components/Dashboard/Dashboard'
 import './crm.css'
 import DescriptionIcon from '@mui/icons-material/Description';
 
 import AssessmentIcon from '@mui/icons-material/Assessment';
-import '../../css/kanban.css'
+import './components/kanban/kanban.css'
 
 const navItems = [
   {

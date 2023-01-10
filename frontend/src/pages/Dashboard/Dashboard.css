@@ -1,0 +1,22 @@
+.DashboardMain {
+    /* border: 1px solid white; */
+    /* display: flex; */
+    height: 90vh;
+    /* align-items: stretch; */
+    padding: 3rem 0rem;
+}
+
+.items {
+    /* background-color: rgb(74, 161, 237); */
+    /* padding: 2rem; */
+}
+
+.data {
+    background-color: rgb(255, 255, 255);
+    /* border: 1px solid black; */
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    border-radius: 20px;
+    padding: 1rem;
+    /* width: 90%; */
+    height: 90%;
+}

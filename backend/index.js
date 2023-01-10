@@ -19,6 +19,8 @@ import profile from './routes/profile.js'
 import inventoryRoutes from './routes/inventories.js'
 import productRoutes from './routes/products.js'
 import transactionRoutes from './routes/transaction.js'
+import boardRoutes from './routes/board.js'
+import columnRoutes from './routes/column.js'
 
 // import pdfTemplate from './documents/index.js'
 import inv from './documents/invoice.js'
@@ -43,7 +45,8 @@ app.use('/profiles', profile)
 app.use('/inventories', inventoryRoutes)
 app.use('/products', productRoutes)
 app.use('/transaction', transactionRoutes)
-
+app.use('/board', boardRoutes)
+app.use('/column', columnRoutes)
 
 
 // NODEMAILER TRANSPORT FOR SENDING INVOICE VIA EMAIL

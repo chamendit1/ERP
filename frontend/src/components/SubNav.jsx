@@ -57,7 +57,7 @@ const SubNav = ( {handleDrawer, children}) => {
     },[location])
 
 
-    const logout =() => {
+    const handleLogout = () => {
         dispatch({ type: 'LOGOUT' })
         navigate('/')
         setUser(null)
@@ -69,7 +69,7 @@ const SubNav = ( {handleDrawer, children}) => {
         //If token expires, logout the user
         if(token) {
             const decodedToken = decode(token)
-            if(decodedToken.exp * 1000 < new Date().getTime()) logout()
+            if(decodedToken.exp * 1000 < new Date().getTime()) handleLogout()
         }
         // eslint-disable-next-line
     }, [location, user]) //when location changes, set the user
@@ -111,9 +111,14 @@ const SubNav = ( {handleDrawer, children}) => {
 
 
     return ( 
-      <Box className='subnav' padding={'1rem 0rem'}>
+      <Box className='subnav' padding={'1rem 0rem'} border={'1px solid black'}>
           <Grid container sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none'}}}>
-            <Grid item xs={12}>
+          <Grid item marginRight={'1rem'}>
+              <IconButton onClick={handleDrawer}>
+                <MenuIcon/>
+              </IconButton>
+            </Grid>
+            <Grid item xs>
               <Breadcrumb navigate={navigate} location={location}/>
             </Grid>
             <Grid item xs>
@@ -122,13 +127,16 @@ const SubNav = ( {handleDrawer, children}) => {
             
           </Grid>
           <Grid container sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex'} }} >
-            {/* <Grid item marginRight={'1rem'}>
+            <Grid item xs={0}>
               <IconButton onClick={handleDrawer}>
                 <MenuIcon/>
               </IconButton>
-            </Grid> */}
-            <Grid item xs>
+            </Grid>
+            <Grid item xs={10}>
               <Breadcrumb navigate={navigate} location={location}/>
+            </Grid>
+            <Grid item xs={1}>
+              <Button onClick={handleLogout}>Logout</Button>
             </Grid>
             <Grid item xs>
               {children}

@@ -31,7 +31,7 @@ export const getInvoicesByUser = async (req, res) => {
 
 export const getInvoicesByClient = async (req, res) => { 
     const { id } = req.params;
-    console.log(id)
+    // console.log(id)
 
     try {
         const invoice = await InvoiceModel.find({ owner: id });
@@ -63,7 +63,7 @@ export const createInvoice = async (req, res) => {
     const invoice = req.body
 
     const newInvoice = new InvoiceModel(invoice)
-    console.log(newInvoice)
+    // console.log(newInvoice)
 
     try {
         await newInvoice.save()
@@ -90,6 +90,8 @@ export const getInvoice = async (req, res) => {
 export const updateInvoice = async (req, res) => {
     const { id: _id } = req.params
     const invoice = req.body
+
+    console.log(req.body)
 
     if(!mongoose.Types.ObjectId.isValid(_id)) return res.status(404).send('No invoice with that id')
 

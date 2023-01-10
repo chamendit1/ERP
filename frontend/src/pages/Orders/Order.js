@@ -2,7 +2,7 @@
 import React, { useState, useEffect} from 'react'
 
 import { useDispatch, useSelector } from 'react-redux'
-import { useParams, useNavigate } from 'react-router-dom'
+import { useParams, useNavigate, Link } from 'react-router-dom'
 // import { toCommas } from '../../utils/utils'
 
 
@@ -226,145 +226,166 @@ console.log(useSelector((state) => state.invoices))
             : "Error";
     }
 
-    console.log(invoiceData)
+    
+
+    const OrderDetails= () => {
+      return (
+        <Box sx={{m: 2}}>
+          <Typography variant="h6" style={{fontWeight: 'bold'}}>Order #{invoiceData.invoiceNumber}</Typography>
+          <Typography variant="subtitle2" >Order Date: {moment(invoiceData.createdAt).format("Do MMM YYYY")}</Typography>
+          <Typography variant="subtitle2" style={{color: 'gray'}}>Payment Status</Typography>
+          <Typography variant="subtitle2" style={{color: checkStatus()}}>{totalAmountReceived >= total ? 'Paid':status}</Typography>
+          <Typography variant="subtitle2" style={{color: 'gray'}}>Due Date</Typography>
+          <Typography variant="subtitle2" >{selectedDate? moment(selectedDate).format("MMM Do YYYY") : '27th Sep 2021'}</Typography>
+        </Box>
+      )
+    }
+    const OrderTable= () => {
+      return (
+        <Table aria-label="simple table">
+          <TableHead>
+              <TableRow>
+                  <TableCell>Item</TableCell>
+                  <TableCell >Qty</TableCell>
+                  <TableCell>Price</TableCell>
+                  <TableCell >Disc(%)</TableCell>
+                  <TableCell >Amount</TableCell>
+              </TableRow>
+          </TableHead>
+          <TableBody>
+            {invoiceData?.items?.map((itemField, index) => (
+              <TableRow key={index}>
+                  <TableCell  scope="row" style={{width: '30%' }}> {itemField.itemName}</TableCell>
+                  <TableCell align="right"> <InputBase sx={{ ml: 1, flex: 1 }} type="number" name="quantity" value={itemField?.quantity} placeholder="0" readOnly /> </TableCell>
+                  <TableCell align="right"> <InputBase sx={{ ml: 1, flex: 1 }} type="number" name="unitPrice" value={itemField?.unitPrice} placeholder="0" readOnly /> </TableCell>
+                  <TableCell align="right"> <InputBase sx={{ ml: 1, flex: 1 }} type="number" name="discount"  value={itemField?.discount} readOnly /> </TableCell>
+                  <TableCell align="right"> <InputBase sx={{ ml: 1, flex: 1 }} type="number" name="amount"  value={((itemField?.quantity * itemField.unitPrice) - (itemField.quantity * itemField.unitPrice) * itemField.discount / 100)} readOnly /> </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      )
+    }
+
+    const PaymentHistorys = () => {
+      return (
+        <>
+          <Typography>PaymentHistory</Typography>
+          {invoice?.paymentRecords.length !== 0 && (
+            <PaymentHistory paymentRecords={invoiceData?.paymentRecords} subtotal={subTotal} createdAt={invoiceData.createdAt}/>
+          )}
+        </>
+      )
+    }
+
+    const InvoiceSummary = () => {
+      return (
+        <>
+          <Box>
+            <Typography variant="h6" style={{fontWeight: 'bold'}} gutterBottom>Invoice Summary</Typography>
+          </Box>
+          <Grid container>
+            <Grid item xs>
+              <Box>
+                <Typography variant="subtitle2" style={{color: 'gray'}}>Subtotal:</Typography>
+                <Typography variant="subtitle2" style={{color: 'gray'}}>{`VAT(${rates}%):`} </Typography>
+                <Typography variant="subtitle2" style={{color: 'gray'}}>Total : </Typography>
+                <Typography variant="subtitle2" style={{color: 'gray'}}>Paid: </Typography>
+                <Typography variant="subtitle2" style={{color: 'gray'}}>Balance : </Typography>
+              </Box>
+            </Grid>
+            <Grid item xs>
+              <Box>
+                <Typography  variant="subtitle2" style={{fontWeight: 'bold'}}>{subTotal}</Typography>
+                <Typography  variant="subtitle2" style={{fontWeight: 'bold'}}>{vat}</Typography>
+                <Typography  variant="subtitle2" style={{fontWeight: 'bold'}}>{currency} {toCommas(total)}</Typography>
+                <Typography  variant="subtitle2" style={{fontWeight: 'bold'}}>{currency} {toCommas(totalAmountReceived)}</Typography>
+                <Typography  variant="subtitle2" style={{fontWeight: 'bold'}}>{currency} {Math.round((total - totalAmountReceived)*100)/100}</Typography>
+              </Box>
+              </Grid>
+            </Grid>
+        </>
+      )
+    }
+
+    const TrackOrder = () => {
+      return (
+        <>
+          <Box sx={{p: 2}}>
+            <Box display='flex' justifyContent='space-between' >
+              <Typography variant="h6" style={{fontWeight: 'bold'}} gutterBottom>Track Order</Typography>
+            </Box>
+            <Box display='flex' justifyContent='space-between' >
+              <Button onClick={() => processOrder()}>{checkOrderStatus()}</Button>
+              <Button onClick={() => redoOrder()}>Redo</Button>
+            </Box>
+            <Steps/>
+          </Box>
+        </>
+      )
+    }
+
+
+
+
+
+    const data = [
+      {
+        data: <OrderDetails/>,
+        size: { xs:2 , sm:4, md:4 },
+      },
+      {
+        data: <Generate/>,
+        size: { xs:2 , sm:8, md:8 },
+      },
+      {
+        data: <OrderTable/>,
+        size: { xs:2 , sm:8, md:8 },
+      },
+      {
+        data: <TrackOrder/>,
+        size: { xs:2 , sm:4, md:4 },
+      },
+
+      {
+        data: <PaymentHistorys/>,
+        size: { xs:2 , sm:8, md:8 },
+      },
+      {
+        data: <InvoiceSummary/>,
+        size: { xs:2 , sm:4, md:4 },
+      },
+
+    ]
+
+
+
+    function Container1(props) {
+      const value = props.value;
+      console.log(value[0].size.xs)
+      return value.map((dat, index) => (
+          <Grid display={'flex'} className="CrmDashboardItem" item xs={dat.size.xs} sm={dat.size.sm} md={dat.size.md} key={index}>
+            <Box className='CrmDashboardBox' style={{display: 'flex',flexDirection:  'column', alignItems: 'center', justifyContent: 'center'}}>
+              {dat.data}
+            </Box>
+          </Grid>
+        ))}
+
 
   return (
-    <Box>
-    {/* <AddOrder setOpen={setOrderOpen} open={orderOpen} />
-    <Morder setOpen={setMOrderOpen} open={morderOpen} />
-    <Dorder setOpen={setDOrderOpen} open={dorderOpen} />
-    <Invoice setOpen={setInvoiceOpen} open={invoiceOpen} /> */}
-     <Modal open={open} setOpen={setOpen} invoice={invoiceData}/>
-     <Grid container>
-      <Grid item xs={3} spacing={2}>
-          <Box sx={{m: 1}}>
-          <Typography variant="h4" style={{fontWeight: 'bold'}}>Order #{invoiceData.invoiceNumber}</Typography>
-          </Box>
-      </Grid>
-      <Grid item xs={9}>
-          <Box sx={{m: 1}}>
-            <Generate />
-          </Box>
+    <>
+      <Box sx={{ flexGrow: 1 }}>
+        <Grid container alignItems={"stretch"} className='CrmDashboardContainer' spacing={{ xs: 2, md: 3 }} columns={{ xs: 2, sm: 12, md: 12 }} >
+          <Container1 value={data}/>
         </Grid>
-      </Grid>
-      <Grid container spacing={2}>
+      </Box>
 
-        
-        {/* Left Grid */}
-        <Grid item xs={9}>
-            <Grid container spacing={2}>
-              {/* Order Details */}
-              <Grid item xs={12}>
-              <Card style={{borderRadius: 10, boxShadow: 3}}>
-                <Box sx={{m: 2}}>
-                  <Typography variant="subtitle2" >Order Date: {moment(invoiceData.createdAt).format("Do MMM YYYY")}</Typography>
-                  <Typography variant="subtitle2" style={{color: 'gray'}}>Payment Status</Typography>
-                  <Typography variant="subtitle2" style={{color: checkStatus()}}>{totalAmountReceived >= total ? 'Paid':status}</Typography>
-                  <Typography variant="subtitle2" style={{color: 'gray'}}>Due Date</Typography>
-                  <Typography variant="subtitle2" >{selectedDate? moment(selectedDate).format("MMM Do YYYY") : '27th Sep 2021'}</Typography>
-                </Box>
-                
-                <Box sx={{m: 2}}><Button> Invoice </Button></Box>
-              </Card>
-              </Grid>
-              {/* Table */}
-              <Grid item xs={12}>
-                <Card style={{borderRadius: 10, boxShadow: 3}}>
-                  <Table aria-label="simple table">
-                    <TableHead>
-                        <TableRow>
-                            <TableCell>Item</TableCell>
-                            <TableCell >Qty</TableCell>
-                            <TableCell>Price</TableCell>
-                            <TableCell >Disc(%)</TableCell>
-                            <TableCell >Amount</TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                      {invoiceData?.items?.map((itemField, index) => (
-                        <TableRow key={index}>
-                            <TableCell  scope="row" style={{width: '30%' }}> {itemField.itemName}</TableCell>
-                            <TableCell align="right"> <InputBase sx={{ ml: 1, flex: 1 }} type="number" name="quantity" value={itemField?.quantity} placeholder="0" readOnly /> </TableCell>
-                            <TableCell align="right"> <InputBase sx={{ ml: 1, flex: 1 }} type="number" name="unitPrice" value={itemField?.unitPrice} placeholder="0" readOnly /> </TableCell>
-                            <TableCell align="right"> <InputBase sx={{ ml: 1, flex: 1 }} type="number" name="discount"  value={itemField?.discount} readOnly /> </TableCell>
-                            <TableCell align="right"> <InputBase sx={{ ml: 1, flex: 1 }} type="number" name="amount"  value={((itemField?.quantity * itemField.unitPrice) - (itemField.quantity * itemField.unitPrice) * itemField.discount / 100)} readOnly /> </TableCell>
-                        </TableRow>
-                      ))}
-                    </TableBody>
-                  </Table>
-                </Card>
-              </Grid>
-
-
-
-              <Grid item xs={12}>
-                <Card style={{borderRadius: 10, boxShadow: 3}}>
-                <Box sx={{m: 2}}>
-                <Typography variant="h6" style={{fontWeight: 'bold'}}> Payment History</Typography>
-                </Box>
-                  {invoice?.paymentRecords.length !== 0 && (
-                    <PaymentHistory paymentRecords={invoiceData?.paymentRecords} subtotal={subTotal} createdAt={invoiceData.createdAt}/>
-                  )}
-                </Card>
-              </Grid>
-            </Grid>
-        </Grid>
-
-        {/* Right Grid */}
-        <Grid item xs={3}>
-          <Grid container spacing={2}>
-            {/* invoice Summary */}
-            <Grid item xs={12}>
-              <Card style={{borderRadius: 10, boxShadow: 3}} sx={{p:2}}>
-                <Box>
-                  <Typography variant="h6" style={{fontWeight: 'bold'}} gutterBottom>Invoice Summary</Typography>
-                </Box>
-                <Grid container>
-                  <Grid item xs>
-                    <Box>
-                      <Typography variant="subtitle2" style={{color: 'gray'}}>Subtotal:</Typography>
-                      <Typography variant="subtitle2" style={{color: 'gray'}}>{`VAT(${rates}%):`} </Typography>
-                      <Typography variant="subtitle2" style={{color: 'gray'}}>Total : </Typography>
-                      <Typography variant="subtitle2" style={{color: 'gray'}}>Paid: </Typography>
-                      <Typography variant="subtitle2" style={{color: 'gray'}}>Balance : </Typography>
-                    </Box>
-                  </Grid>
-                  <Grid item xs>
-                    <Box>
-                      <Typography  variant="subtitle2" style={{fontWeight: 'bold'}}>{subTotal}</Typography>
-                      <Typography  variant="subtitle2" style={{fontWeight: 'bold'}}>{vat}</Typography>
-                      <Typography  variant="subtitle2" style={{fontWeight: 'bold'}}>{currency} {toCommas(total)}</Typography>
-                      <Typography  variant="subtitle2" style={{fontWeight: 'bold'}}>{currency} {toCommas(totalAmountReceived)}</Typography>
-                      <Typography  variant="subtitle2" style={{fontWeight: 'bold'}}>{currency} {Math.round((total - totalAmountReceived)*100)/100}</Typography>
-                    </Box>
-                    </Grid>
-                </Grid>
-              </Card>
-            </Grid>
-            {/* Track Order */}
-            <Grid item>
-            <Card style={{borderRadius: 10, boxShadow: 3}}>
-            <Box sx={{p: 2}}>
-              <Box display='flex' justifyContent='space-between' >
-                <Typography variant="h6" style={{fontWeight: 'bold'}} gutterBottom>Track Order</Typography>
-                {/* <Button onClick={() => processOrder()}>{checkOrderStatus()}</Button>
-                <Button onClick={() => redoOrder()}>Redo</Button> */}
-              </Box>
-              <Box display='flex' justifyContent='space-between' >
-                {/* <Typography>Admin</Typography> */}
-                <Button onClick={() => processOrder()}>{checkOrderStatus()}</Button>
-                <Button onClick={() => redoOrder()}>Redo</Button>
-              </Box>
-              <Steps/>
-            </Box>
-            </Card>
-            </Grid>
-
-          </Grid>
-        </Grid>
-
-      </Grid>
-    </Box>
+      {/* <AddOrder setOpen={setOrderOpen} open={orderOpen} />
+      <Morder setOpen={setMOrderOpen} open={morderOpen} />
+      <Dorder setOpen={setDOrderOpen} open={dorderOpen} />
+      <Invoice setOpen={setInvoiceOpen} open={invoiceOpen} /> */}
+      {/* <Modal open={open} setOpen={setOpen} invoice={invoiceData}/> */}
+    </>
   );
 }
 

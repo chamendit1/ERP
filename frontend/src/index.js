@@ -7,9 +7,35 @@ import { Provider } from 'react-redux'
 import { store } from './redux/Store'
 import 'animate.css'
 
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { createTheme, ThemeProvider, responsiveFontSizes } from '@mui/material/styles';
 
-const theme = createTheme({});
+const theme = createTheme({
+  palette: {
+    type: 'dark',
+  },
+  typography: {
+    fontSize: 17,
+    h1: {
+      fontWeight: 500,
+    },
+    h2: {
+      fontWeight: 500,
+    },
+    h3: {
+      fontWeight: 500,
+    },
+    h4: {
+      fontWeight: 600,
+    },
+    h6: {
+      fontWeight: 600,
+    },
+    h5: {
+      fontWeight: 600,
+    },
+  },
+});
+// theme = responsiveFontSizes(theme);
 
 
 

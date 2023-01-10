@@ -59,7 +59,7 @@ const Sidebar = (props) => {
   const iconsize = 'small'
 
     const Data = () => (
-        <Box className='sidebar' boxShadow={1} >
+        <Box className='sidebar'>
           <Box style={{
             display: 'flex',
             flexDirection: 'column',
@@ -90,34 +90,29 @@ const Sidebar = (props) => {
                   <p className='sidebar-text'>Admin</p>
               </Grid>
             </Box>
+            <Box className='sidebar-data' component={Link} to="/Board">
+              <Grid container justifyContent="center" alignItems='center'>
+                <Grid item className='sidebar-logo' >
+                    <PeopleAltIcon fontSize={iconsize}/>
+                </Grid>
+                  <p className='sidebar-text'>Board</p>
+              </Grid>
+            </Box>
+
+            {/* <Box className='sidebar-data' component={Link} to="/Accounting">
+              <Grid container justifyContent="center" alignItems='center'>
+                <Grid item className='sidebar-logo' >
+                    <PeopleAltIcon fontSize={iconsize}/>
+                </Grid>
+                  <p className='sidebar-text'>Accounting</p>
+              </Grid>
+            </Box> */}
+
+            {/* <Button className='sidebar-data' onClick={logout()}>
+              <p>Logout</p>
+            </Button> */}
 
             <Box>
-              {/* <Tooltip title="Open settings">
-                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-                </IconButton>
-              </Tooltip>
-              <Menu
-                sx={{ mt: '45px' }}
-                id="menu-appbar"
-                anchorEl={anchorElUser}
-                anchorOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                open={Boolean(anchorElUser)}
-                onClose={handleCloseUserMenu}
-              >
-                <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown} >
-                  <MenuItem onClick={() => openLink('settings') }>{(user?.result?.name).split(" ")[0]}</MenuItem>
-                  <MenuItem onClick={()=> logout()} >Logout</MenuItem>
-                </MenuList>
-              </Menu> */}
             </Box>
           </Box>
         </Box>
@@ -125,7 +120,7 @@ const Sidebar = (props) => {
 
 
     
-    console.log(openDrawer)
+    // console.log(openDrawer)
     return (
       <>
       {/* <Grid item xs={1} display={openDrawer.display}> */}
@@ -133,10 +128,12 @@ const Sidebar = (props) => {
           open={openDrawer.open}
           onClose={handleDrawerClose}
           // onOpen={toggleDrawer(anchor, true)}
+          // sx={{width: '20vh'}}
+          // style={{width:'20vh'}}
         >
           <Data/>
         </SwipeableDrawer>
-        <Data/>
+        {/* <Data/> */}
         {/* </Grid> */}
       </>
     )

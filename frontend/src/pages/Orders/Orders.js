@@ -7,6 +7,7 @@ import { Box } from '@mui/material';
 import { getInvoices } from '../../actions/invoiceActions';
 import OrderTable from './components/OrderTable';
 import CircularProgress from '@mui/material/CircularProgress';
+import { getBoards, updateBoard } from '../../actions/board';
 
 const headCells = [
   // {
@@ -54,11 +55,17 @@ const Orders = () => {
   const user = JSON.parse(localStorage.getItem('profile'))
   const rows = useSelector(state => state.invoices.invoices)
   const isLoading = useSelector(state => state.invoices.isLoading)
-  console.log(rows)
+  const boards = useSelector(state => state.board.boards)
+
+  console.log(boards)
 
   useEffect(() => {
       dispatch(getInvoices());
   }, [dispatch]);
+  
+  useEffect(() => {
+    dispatch(getBoards());
+  }, []);
 
   if(!user) {
     navigate('/login')
@@ -76,6 +83,7 @@ const Orders = () => {
       <OrderTable 
         rows={rows}
         head={headCells}
+        boards={boards}
       />
     </>
   );

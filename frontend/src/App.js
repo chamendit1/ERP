@@ -17,6 +17,10 @@ import RequireAuth from "./components/Auth/RequireAuth";
 import Settings from './components/Settings/Settings'
 import Users from "./pages/Admin/components/Users";
 import User from "./pages/Admin/components/User";
+import Typography from "./utils/Typography/Typography";
+import Layouts from "./components/Layouts/index";
+import Board from "./pages/Board/Board";
+import Boards from "./pages/Board/Boards";
 
 function App() {
 
@@ -24,16 +28,16 @@ function App() {
     <BrowserRouter>
       <Layout>
         <Routes>
-
-          <Route path="/login" element={<Login/>} />
           <Route path="/" element={<Home/>}/>
+          <Route path="/login" element={<Login/>} />
           {/* <Route path="/forgot" element={<Orders/>} />
           <Route path="/reset/:token" element={<Orders/>} /> */}
 
-          <Route path="/dashboard" element={<Dashboard/>}/>
-
-
-          <Route path="/Clients" element={<Clients/>} />
+          <Route path="/Dashboard" element={<Dashboard/>}/>
+          <Route path="/Board" element={<Boards/>} />
+          <Route path="/Board/:id" element={<Board/>} />
+          <Route path="/Typography" element={<Typography/>} />
+          <Route path="/Layouts" element={<Layouts/>} />
 
           <Route element={<RequireAuth allowedRoles={['CRM']} />}>
             <Route path="/CRM/*" element={<CRM/>}/>

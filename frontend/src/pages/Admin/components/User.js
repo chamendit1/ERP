@@ -75,6 +75,7 @@ const User = (props) => {
               onChange={(e) => setUserData({...userData, email: e.target.value})}
             />
 
+            <Typography>Module Access</Typography>
             <FormGroup sx={{ m: 2, width: '100%' }}>
               <FormControlLabel name='access' 
                 onChange={(e) => setUserData({...userData, access : [...userData.access , e.target.value]})}
@@ -87,6 +88,12 @@ const User = (props) => {
                 label="Accounting" 
               />
             </FormGroup>
+
+            <FormControlLabel name='status' 
+                onChange={(e) => setUserData({...userData, active :  e.target.value })}
+                control={<Checkbox value={true} />} 
+                label="Active" 
+              />
 
             {/* <Typography>Access</Typography>
             <TextField fullWidth
