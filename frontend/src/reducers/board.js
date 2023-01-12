@@ -1,7 +1,7 @@
 
 import { ADD_NEW_BOARD, UPDATE_BOARD, DELETE_BOARD,  FETCH_BOARD, FETCH_BOARDS, START_LOADING, END_LOADING } from '../actions/constants'
 
-const board = (state = { isLoading: true, board: [] }, action) => {
+const board = (state = { isLoading: true, board:{}, boards: [] }, action) => {
   // console.log(action)
     switch (action.type) {
       case START_LOADING:

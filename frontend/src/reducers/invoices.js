@@ -1,7 +1,7 @@
 
 import { FETCH_ALL, ADD_NEW, UPDATE, DELETE, GET_INVOICE, START_LOADING, END_LOADING, FETCH_INVOICE_BY_USER } from '../actions/constants'
 
-const invoices = (state = { isLoading: true, invoices: [] }, action) => {
+const invoices = (state = { isLoading: true, invoice:{}, invoices: [] }, action) => {
     switch (action.type) {
       case START_LOADING:
         return { ...state, isLoading: true };

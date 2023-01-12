@@ -5,9 +5,9 @@ import { ADD_NEW_COLUMN, UPDATE_COLUMN, DELETE_COLUMN,  FETCH_COLUMN,FETCH_COLUM
 
 export const getColumn= (id) => async (dispatch) => {
   try {
-    // console.log('Starting a')
     dispatch({ type: START_LOADING });
     const { data } = await api.fetchColumn(id);
+    // console.log(data)
     dispatch({ type: FETCH_COLUMN, payload: { client: data } });
     dispatch({ type: END_LOADING });
 
@@ -45,7 +45,7 @@ export const getColumnsbyId= (id) => async (dispatch) => {
 
 
 export const createColumn =(client, openSnackbar) => async (dispatch) => {
-  console.log(client)
+  // console.log(client)
 
     try {
         const { data } = await api.addColumn(client)
@@ -60,13 +60,12 @@ export const createColumn =(client, openSnackbar) => async (dispatch) => {
 
 
 export const updateColumn =(id, client) => async (dispatch) => {
-  console.log(id,client)
 
-    const { data } = await api.updateColumn(id, client)
-    dispatch({ type: UPDATE_COLUMN, payload: data })
-    // openSnackbar("Customer updated successfully")
     try {
-        
+      const { data } = await api.updateColumn(id, client)
+      // console.log('update')
+      dispatch({ type: UPDATE_COLUMN, payload: data })
+      dispatch({ type: END_LOADING });
     } catch (error) {
         console.log(error)
     }

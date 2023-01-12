@@ -24,7 +24,7 @@ import Logout from '@mui/icons-material/Logout';
 
 
 const Sidebar = (props) => {
-  const {openDrawer, handleDrawerClose} = props;
+  const {openDrawer, onClose, onOpen} = props;
   const location = useLocation()
   const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')))
 
@@ -34,25 +34,12 @@ const Sidebar = (props) => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
-
-  const logout =() => {
-    dispatch({ type: 'LOGOUT' })
-    navigate('/')
-    setUser(null)
-  }  
-
-  const openLink =(link) => {
-    navigate(`/${link}`)
-  }
-
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const open = Boolean(anchorEl);
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
+  // const handleClick = (event) => {
+  //   setAnchorEl(event.currentTarget);
+  // };
+  // const handleClose = () => {
+  //   setAnchorEl(null);
+  // };
 
   if(!user) return null
 
@@ -98,43 +85,20 @@ const Sidebar = (props) => {
                   <p className='sidebar-text'>Board</p>
               </Grid>
             </Box>
-
-            {/* <Box className='sidebar-data' component={Link} to="/Accounting">
-              <Grid container justifyContent="center" alignItems='center'>
-                <Grid item className='sidebar-logo' >
-                    <PeopleAltIcon fontSize={iconsize}/>
-                </Grid>
-                  <p className='sidebar-text'>Accounting</p>
-              </Grid>
-            </Box> */}
-
-            {/* <Button className='sidebar-data' onClick={logout()}>
-              <p>Logout</p>
-            </Button> */}
-
             <Box>
             </Box>
           </Box>
         </Box>
     )
-
-
-    
-    // console.log(openDrawer)
     return (
       <>
-      {/* <Grid item xs={1} display={openDrawer.display}> */}
         <SwipeableDrawer
           open={openDrawer.open}
-          onClose={handleDrawerClose}
-          // onOpen={toggleDrawer(anchor, true)}
-          // sx={{width: '20vh'}}
-          // style={{width:'20vh'}}
+          onClose={onClose}
+          onOpen={onOpen}
         >
           <Data/>
         </SwipeableDrawer>
-        {/* <Data/> */}
-        {/* </Grid> */}
       </>
     )
 }

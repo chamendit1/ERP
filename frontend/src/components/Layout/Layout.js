@@ -15,19 +15,17 @@ const Layout = ({children}) => {
   
   const handleDrawer = () => {
     setOpenDrawer({open: true, display: ''})
-    // setSize(11)
   }
 
   const handleDrawerClose = () => {
     setOpenDrawer({open: false, display: 'none'})
-    // setSize(12)
   }
 
     return (
       <>
         <Navbar />
         <Grid container>
-          { user && <Sidebar openDrawer={openDrawer} handleDrawerClose={handleDrawerClose}/>}
+          { user && <Sidebar openDrawer={openDrawer} onClose={handleDrawerClose} onOpen={handleDrawer}/>}
           <Grid item xs={12} style={{
             padding: "1rem 2rem",
             maxHeight: '100vh',

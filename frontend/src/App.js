@@ -19,8 +19,9 @@ import Users from "./pages/Admin/components/Users";
 import User from "./pages/Admin/components/User";
 import Typography from "./utils/Typography/Typography";
 import Layouts from "./components/Layouts/index";
-import Board from "./pages/Board/Board";
-import Boards from "./pages/Board/Boards";
+// import Board from "./pages/Board/Board";
+// import Boards from "./pages/Board/Boards";
+import Board from "./pages/Board";
 
 function App() {
 
@@ -34,8 +35,8 @@ function App() {
           <Route path="/reset/:token" element={<Orders/>} /> */}
 
           <Route path="/Dashboard" element={<Dashboard/>}/>
-          <Route path="/Board" element={<Boards/>} />
-          <Route path="/Board/:id" element={<Board/>} />
+          <Route path="/Board/*" element={<Board/>} />
+          {/* <Route path="/Board/:id" element={<Board/>} /> */}
           <Route path="/Typography" element={<Typography/>} />
           <Route path="/Layouts" element={<Layouts/>} />
 

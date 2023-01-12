@@ -74,15 +74,6 @@ const SubNav = ( {handleDrawer, children}) => {
         // eslint-disable-next-line
     }, [location, user]) //when location changes, set the user
 
-    const [anchorElUser, setAnchorElUser] = React.useState(null);
-  
-    const handleOpenUserMenu = (event) => {
-      setAnchorElUser(event.currentTarget);
-    };
-  
-    const handleCloseUserMenu = () => {
-      setAnchorElUser(null);
-    };
     const [open, setOpen] = React.useState(false);
     const anchorRef = React.useRef(null);
 
