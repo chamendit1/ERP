@@ -10,7 +10,7 @@ const Home = () => {
   return (
     <>
     <Grid container sx={{ height: '100%' }}>
-      <Grid item xs={12} 
+      {/* <Grid item xs={12} 
         display={'flex'} 
         alignItems={'center'} 
         justifyContent={'space-between'} 
@@ -18,7 +18,8 @@ const Home = () => {
         >
         ERP
         <Button onClick={()=> navigate('/login')}>Get started</Button>
-      </Grid>
+      </Grid> */}
+
       <Grid item xs={12} 
         display={'flex'} 
         alignItems={'center'} 
@@ -29,8 +30,6 @@ const Home = () => {
 
       </Grid>
     </Grid>
-
-
 
 
     </>

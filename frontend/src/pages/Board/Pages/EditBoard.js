@@ -2,7 +2,7 @@ import { Box, Dialog, DialogActions, DialogContent, DialogTitle, Grid, Typograph
 import React, { useEffect, useRef, useState } from 'react'
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import { useDispatch, useSelector } from 'react-redux';
-import { getColumn, getColumns, updateColumn } from '../../actions/column';
+import { getColumn, getColumns, updateColumn } from '../../../actions/column';
 
 const EditBoard = (props) => {
   	const { setOpen, open, boardId } = props

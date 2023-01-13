@@ -7,22 +7,19 @@ import { Link, useNavigate } from 'react-router-dom';
 import AddIcon from '@mui/icons-material/Add';
 // import AddBoard from './AddBoard';
 
+function refreshPage() {
+  window.location.reload(false);
+}
 
 const Boards = () => {
   const dispatch = useDispatch();
-  const [boardData, setBoardData] = useState({id: '0', label: 'untitled'})
+  const [boardData, setBoardData] = useState({id: '0', label: 'untitled', pages:[]})
   const boards = useSelector(state => state.board.boards)
   const [boardsData, setBoardsData] = useState([])
 
-  const handleSubmit =(e)=> {
-    e.preventDefault()
-    dispatch(createBoard(boardData))
-  }
-
-    
   useEffect(() => {
       dispatch(getBoards());
-    }, [dispatch, boards]);
+    }, [dispatch]);
 
   useEffect(() => {
     if(boards !== undefined && boards !== null) {
@@ -30,6 +27,11 @@ const Boards = () => {
     }
     }, [boards]);
 
+  const handleSubmit =(e)=> {
+    e.preventDefault()
+    dispatch(createBoard(boardData))
+    refreshPage()
+  }
 
   return (
     <>
@@ -42,10 +44,10 @@ const Boards = () => {
         </Grid>
         <Grid item xs={12}>
           <Grid container>
-          {boardsData.map((board) =>
+          {boardsData.map((board,index) =>
             {
               return (
-                <Grid item xs={12} style={{backgroundColor:'beige', paddingLeft:'1.5rem', paddingTop:'1rem', paddingBottom:'1rem'}}>
+                <Grid key={index} item xs={12} style={{backgroundColor:'beige', paddingLeft:'1.5rem', paddingTop:'1rem', paddingBottom:'1rem'}}>
                   <Box component={Link} to={`/Board/${board._id}`} style={{textDecoration: 'none',}}>
                     <Typography style={{ textDecoration: 'none', color: '#000' }}>{board.label}</Typography>
                   </Box>

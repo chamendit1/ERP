@@ -1,20 +1,16 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 
 import { Box } from '@mui/material';
 
 import { getInvoices } from '../../actions/invoiceActions';
-import OrderTable from './components/OrderTable';
+import OrderTablee from './components/OrderTable';
 import CircularProgress from '@mui/material/CircularProgress';
 import { getBoards, updateBoard } from '../../actions/board';
 
 const headCells = [
-  // {
-  //   id: 'ID',
-  //   numeric: false,
-  //   label: 'ID',
-  // },
+
   {
     id: 'Date',
     numeric: true,
@@ -40,12 +36,6 @@ const headCells = [
     numeric: true,
     label: 'Amount',
   },
-  // {
-  //   label: 'Edit',
-  // },
-  // {
-  //   label: 'Delete',
-  // },
 ];
 
 const Orders = () => {
@@ -53,6 +43,8 @@ const Orders = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const user = JSON.parse(localStorage.getItem('profile'))
+  const [boardsData, setBoardsData] = useState([]) 
+
   const rows = useSelector(state => state.invoices.invoices)
   const isLoading = useSelector(state => state.invoices.isLoading)
   const boards = useSelector(state => state.board.boards)
@@ -62,6 +54,10 @@ const Orders = () => {
   useEffect(() => {
       dispatch(getInvoices());
   }, [dispatch]);
+
+  useEffect(() => {
+    setBoardsData(boards)
+  }, [boards]);
   
   useEffect(() => {
     dispatch(getBoards());
@@ -80,10 +76,10 @@ const Orders = () => {
 
   return (
     <>
-      <OrderTable 
+      <OrderTablee 
         rows={rows}
         head={headCells}
-        boards={boards}
+        boards={boardsData}
       />
     </>
   );

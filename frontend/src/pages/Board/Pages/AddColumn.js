@@ -1,7 +1,7 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid, TextField, Typography } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux';
-import { createColumn, updateColumn } from '../../actions/column';
+import { createColumn, updateColumn } from '../../../actions/column';
 
 const AddColumn = (props) => {
   const { setOpen, open, boardId, column } = props

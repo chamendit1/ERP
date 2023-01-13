@@ -53,14 +53,14 @@ const Sidebar = (props) => {
             alignItems: 'center',
             }}>
 
-            <Box className='sidebar-data' component={Link} to="/Dashboard">
+            {/* <Box className='sidebar-data' component={Link} to="/Dashboard">
               <Grid container justifyContent="center" alignItems='center'>
                 <Grid item className='sidebar-logo'>
                   <DashboardIcon fontSize={iconsize}/>
                 </Grid>
                   <p className='sidebar-text'>Dashboard</p>
               </Grid>
-            </Box>
+            </Box> */}
             <Box className='sidebar-data' component={Link} to="/CRM">
               <Grid container justifyContent="center" alignItems='center'>
                 <Grid item xs={12} className='sidebar-logo' >

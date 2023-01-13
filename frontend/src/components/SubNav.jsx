@@ -100,38 +100,41 @@ const SubNav = ( {handleDrawer, children}) => {
   }, [open]);
 // console.log(location)
 
+    if(!user) return (
+        <Card style={{height: '5vh'}}>
+          <Grid container justifyContent="space-between" alignItems='center'style={{padding: '0 1.5rem', height:'3rem'}}>
+            <Grid item>
+              {/* <img style={{width: '50px', cursor: 'pointer'}} onClick={()=> navigate('/')} src="" alt="ERP" /> */}
+              <Typography>ERP</Typography>
+            </Grid>
+            <Grid item>
+            <Button onClick={()=> navigate('/login')}>Get started</Button>
+            </Grid>
+          </Grid>
+        </Card>
+    )
+
 
     return ( 
-      <Box className='subnav' padding={'1rem 0rem'} border={'1px solid black'}>
-          <Grid container sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none'}}}>
-          <Grid item marginRight={'1rem'}>
-              <IconButton onClick={handleDrawer}>
-                <MenuIcon/>
-              </IconButton>
-            </Grid>
-            <Grid item xs>
-              <Breadcrumb navigate={navigate} location={location}/>
-            </Grid>
-            <Grid item xs>
-              {children}
-            </Grid>
+      <Box sx={{ flexGrow: 1 }}>
+          <Grid container border={'1px solid black'} style={{height: '100%'}}>
             
-          </Grid>
-          <Grid container sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex'} }} >
-            <Grid item xs={0}>
-              <IconButton onClick={handleDrawer}>
-                <MenuIcon/>
-              </IconButton>
+            <Grid item xs={1} display={'flex'} alignItems={'center'} justifyContent={'center'}>
+                <IconButton onClick={handleDrawer}>
+                  <MenuIcon/>
+                </IconButton>
             </Grid>
-            <Grid item xs={10}>
-              <Breadcrumb navigate={navigate} location={location}/>
+            <Grid item xs={10} display={'flex'} alignItems={'center'}>
+                <Breadcrumb navigate={navigate} location={location}/>
             </Grid>
-            <Grid item xs={1}>
-              <Button onClick={handleLogout}>Logout</Button>
+            <Grid item xs={1} display={'flex'} justifyContent={'center'}>
+                <Button size='small' onClick={handleLogout}>out</Button>
             </Grid>
-            <Grid item xs>
-              {children}
-            </Grid>
+            {/* <Grid item xs>
+                {children}
+            </Grid> */}
+
+
           </Grid>
       </Box>
     )

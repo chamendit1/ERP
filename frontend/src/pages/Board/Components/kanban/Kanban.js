@@ -3,15 +3,14 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import { useParams } from 'react-router-dom'
 import { Box, Button, Typography, Divider, Grid } from '@mui/material';
-import { createColumn, getColumns } from '../../../actions/column';
-import { getInvoice, getInvoices, updateInvoice } from '../../../actions/invoiceActions';
+import { createColumn, getColumns } from '../../../../actions/column';
+import { getInvoice, getInvoices, updateInvoice } from '../../../../actions/invoiceActions';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
-import AddColumn from '../AddColumn';
-import EditBoard from '../EditBoard';
+import AddColumn from '../../Pages/AddColumn';
+import EditBoard from '../../Pages/EditBoard';
 import DragCard from './DragCard';
 import DragGrid from './DragGrid';
-import { getBoard } from '../../../actions/board';
-
+import { getBoard } from '../../../../actions/board';
 
 const Kanban = () => {
   	const { id } = useParams()
@@ -61,6 +60,8 @@ const Kanban = () => {
 	const handleEditBoard =()=> {
 		setEditBoard((prev) => !prev)
   }
+
+
 	const onDragEnd = (result) => {
 		const { destination, source, draggableId } = result;
 		// if the user drags and drops back in the same position
@@ -79,6 +80,7 @@ const Kanban = () => {
 		}
 	}
 	// console.log(useSelector(state => state.invoices.invoice))
+	console.log(invoicesData)
 
   return (
     <>
@@ -86,14 +88,8 @@ const Kanban = () => {
 		<EditBoard setOpen={setEditBoard} open={openEditBoard} boardId={id} columns={columnsData} />
 		<Button variant="contained" onClick={handleNewCol}>Create Column</Button>
 		<Button variant="contained" onClick={handleEditBoard}>Edit Board</Button>
-
-
-
-
-
-
 		<DragDropContext onDragEnd={onDragEnd}>
-			<Box className='gridCo' height={'85vh'}>
+			<Box className='gridCo'>
 			<Grid className='gridContainer' container spacing={6}	>
 				<Grid item >
 					<Grid container className="kanbanColumn" minWidth={'30vh'} direction="column">

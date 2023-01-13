@@ -34,7 +34,7 @@ function App() {
           {/* <Route path="/forgot" element={<Orders/>} />
           <Route path="/reset/:token" element={<Orders/>} /> */}
 
-          <Route path="/Dashboard" element={<Dashboard/>}/>
+          {/* <Route path="/Dashboard" element={<Dashboard/>}/> */}
           <Route path="/Board/*" element={<Board/>} />
           {/* <Route path="/Board/:id" element={<Board/>} /> */}
           <Route path="/Typography" element={<Typography/>} />

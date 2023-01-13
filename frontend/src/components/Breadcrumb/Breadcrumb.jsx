@@ -41,7 +41,7 @@ const Breadcrumb = props => {
         );
       })}
     </MUIBreadcrumbs>
-    <Typography variant="subtitle2" sx={{fontWeight:'bold'}}>{pathnames[isLast]}</Typography>
+    {/* <Typography variant="subtitle2" sx={{fontWeight:'bold'}}>{pathnames[isLast]}</Typography> */}
     </>
   );
 };

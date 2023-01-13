@@ -52,7 +52,6 @@ export const updateBoard =(id, client) => async (dispatch) => {
 
     const { data } = await api.updateBoard(id, client)
     dispatch({ type: UPDATE_BOARD, payload: data })
-    // openSnackbar("Customer updated successfully")
     try {
         
     } catch (error) {

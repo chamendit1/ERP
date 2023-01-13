@@ -8,6 +8,7 @@ import DragPage from './DragPage';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { getBoards, createBoard, updateBoard} from '../../../../actions/board'
 import { getColumn, createColumn, updateColumn } from '../../../../actions/column';
+import Boards from '../../../Board/Boards'
 
 const Kanban = () => {
 
@@ -37,16 +38,8 @@ const Kanban = () => {
   return (
     <Box className='kanban-container'>
       <Divider/>
-      <Box className='bar'>
-        <Button variant="contained" startIcon={<AddCircleOutlineIcon />} onClick={handleCreate}>              
-          <Typography>New Order</Typography>
-        </Button>
-        <Button variant="contained" onClick={handleSubmit}>              
-          <Typography>New Column</Typography>
-        </Button>
-      </Box>
       <Box className='kanban'>
-        <DragPage />
+        <Boards />
       </Box>
     </Box>
   )

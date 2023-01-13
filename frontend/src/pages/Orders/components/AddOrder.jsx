@@ -62,12 +62,9 @@ import { getBoard, updateBoard } from '../../../actions/board';
 
  // Add Invoice
  
- const AddOrder = ({ setOpen, open, boards}) => {
+ const AddOrder = ({ setOpen, open}) => {
      const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')))
      const [ client, setClient] = useState(null)
-     // eslint-disable-next-line 
-     console.log(boards[0]._id)
-
      const [invoiceData, setInvoiceData] = useState(initialState)
      const [rates, setRates] = useState(0)
      const [vat, setVat] = useState(0)
@@ -87,52 +84,40 @@ import { getBoard, updateBoard } from '../../../actions/board';
      const [orderStatus, setOrderStatus ] = useState('')
      const [newClientOpen, setNewClientOpen] = useState(false)
      
-    //  useEffect(() => {
-    //     dispatch(getClientsByUser({search: user?.result._id || user?.result?.googleId}));
-    //   }, [open]);
-
-    //   console.log(id)
-
-
-    // useEffect(() => {
-    //   if(id) {
-    //     dispatch(getClient(id));
-    //   }
-    // }, [open]);
+    useEffect(() => {
+      if(id) {
+        dispatch(getClient(id));
+      }
+    }, [open]);
 
 
   useEffect(() => {
-      if(invoice) {
-          //Automatically set the default invoice values as the ones in the invoice to be updated
-          setInvoiceData(invoice)
-          setRates(invoice.rates)
-          setClient(invoice.client)
-          setType(invoice.type)
-          setStatus(invoice.status)
-          setSelectedDate(invoice.dueDate)
-          setOrderStatus(invoice.orderStatus)
-      }
+    if(Object.keys(invoice).length !== 0) {
+        //Automatically set the default invoice values as the ones in the invoice to be updated
+        setInvoiceData(invoice)
+        setRates(invoice.rates)
+        setClient(invoice.client)
+        setType(invoice.type)
+        setStatus(invoice.status)
+        setSelectedDate(invoice.dueDate)
+        setOrderStatus(invoice.orderStatus)
+    }
   }, [invoice])
 
 
   useEffect(() => {
-      if(type === 'Receipt') {
-          setStatus('Paid')
-      } else {
-          setStatus('Unpaid')
-          setOrderStatus(0)
-      }
+    if(type === 'Receipt') {
+        setStatus('Paid')
+    } else {
+        setStatus('Unpaid')
+        setOrderStatus(0)
+    }
   },[type])
   
-  // const defaultProps = {
-  //     options: currencies,
-  //     getOptionLabel: (option) => option.label
-  //   };
-
   const clientsProps = {
-      options: clients,
-      getOptionLabel: (option) => option.name
-    };
+    options: clients,
+    getOptionLabel: (option) => option.name
+  };
     
   
   const handleDateChange = (date) => {

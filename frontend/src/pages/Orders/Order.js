@@ -3,7 +3,7 @@ import React, { useState, useEffect} from 'react'
 
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams, useNavigate, Link } from 'react-router-dom'
-// import { toCommas } from '../../utils/utils'
+// import { toCommas } from '../../../..'
 
 
 import { Avatar, Box, Card, Container, Grid} from '@mui/material';
@@ -41,9 +41,9 @@ import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
 
-const toCommas = (value) => {
-  return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-}
+
+
+
 
 const Order = () => {
   
@@ -71,15 +71,20 @@ const Order = () => {
     const [dorderOpen, setDOrderOpen] = useState(false)
     const [invoiceOpen, setInvoiceOpen] = useState(false)
     // const [openSnackbar, closeSnackbar] = useSnackbar()
-
-console.log(useSelector((state) => state.invoices))
     
     useEffect(() => {
         dispatch(getInvoice(id));
     },[id])
 
+    const toCommas = (value) => {
+      // console.log(value)
+      return value.toString()
+    }
+
     useEffect(() => {
-        if(invoice) {
+      
+        if(Object.keys(invoice).length !== 0) {
+          console.log(invoice)
           setInvoiceData(invoice)
           setRates(invoice.rates)
           setClient(invoice.client)
@@ -95,39 +100,41 @@ console.log(useSelector((state) => state.invoices))
         }
     }, [invoice])
 
-    const createAndDownloadPdf = () => {
-      setDownloadStatus('loading')
-      axios.post(`${process.env.REACT_APP_API}/create-pdf`, 
-      { name: invoice.client.name,
-        address: invoice.client.address,
-        phone: invoice.client.phone,
-        email: invoice.client.email,
-        dueDate: invoice.dueDate,
-        date: invoice.createdAt,
-        id: invoice.invoiceNumber,
-        notes: invoice.notes,
-        subTotal: toCommas(invoice.subTotal),
-        total: toCommas(invoice.total),
-        type: invoice.type,
-        vat: invoice.vat,
-        items: invoice.items,
-        status: invoice.status,
-        totalAmountReceived: toCommas(totalAmountReceived),
-        balanceDue: toCommas(total - totalAmountReceived),
-        company: company,
-    })
-        .then(() => axios.get(`${process.env.REACT_APP_API}/fetch-pdf`, { responseType: 'blob' }))
-        .then((res) => {
-          const pdfBlob = new Blob([res.data], { type: 'application/pdf' });
-  
-          // saveAs(pdfBlob, 'invoice.pdf')
-        }).then(() =>  setDownloadStatus('success'))
-    }
-
     let totalAmountReceived = 0
     for(var i = 0; i < invoice?.paymentRecords?.length; i++) {
         totalAmountReceived += Number(invoice?.paymentRecords[i]?.amountPaid)
     }
+
+    const createAndDownloadPdf = () => {
+    //   setDownloadStatus('loading')
+    //   axios.post(`${process.env.REACT_APP_API}/create-pdf`, 
+    //   { name: invoice.client.name,
+    //     address: invoice.client.address,
+    //     phone: invoice.client.phone,
+    //     email: invoice.client.email,
+    //     dueDate: invoice.dueDate,
+    //     date: invoice.createdAt,
+    //     id: invoice.invoiceNumber,
+    //     notes: invoice.notes,
+    //     subTotal: toCommas(invoice.subTotal),
+    //     total: toCommas(invoice.total),
+    //     type: invoice.type,
+    //     vat: invoice.vat,
+    //     items: invoice.items,
+    //     status: invoice.status,
+    //     totalAmountReceived: toCommas(totalAmountReceived),
+    //     balanceDue: toCommas(total - totalAmountReceived),
+    //     company: company,
+    // })
+    //     .then(() => axios.get(`${process.env.REACT_APP_API}/fetch-pdf`, { responseType: 'blob' }))
+    //     .then((res) => {
+    //       const pdfBlob = new Blob([res.data], { type: 'application/pdf' });
+  
+    //       // saveAs(pdfBlob, 'invoice.pdf')
+    //     }).then(() =>  setDownloadStatus('success'))
+    }
+
+
 
     function checkStatus() {
         return totalAmountReceived >= total ? "green"
@@ -163,25 +170,25 @@ console.log(useSelector((state) => state.invoices))
       'Selesai',
     ];
 
-    const Steps = () => {
-      return (
-        <Box sx={{ width: '100%' }}>
-        <Stepper activeStep={orderStatus} orientation="vertical">
-          {steps.map((label, index) => (
-            <Step key={label}>
-              <StepLabel optional={
-                index === 5 ? (
-                  <Typography variant="caption">Last step</Typography>
-                ) : null}
-              >
-                <Typography variant="subtitle2" style={{fontWeight: 'bold'}}>{label}</Typography>
-              </StepLabel>
-            </Step>
-          ))}
-        </Stepper>
-      </Box>
-      )
-    }
+    // const Steps = () => {
+    //   return (
+    //     <Box sx={{ width: '100%' }}>
+    //     <Stepper activeStep={orderStatus} orientation="vertical">
+    //       {steps.map((label, index) => (
+    //         <Step key={label}>
+    //           <StepLabel optional={
+    //             index === 5 ? (
+    //               <Typography variant="caption">Last step</Typography>
+    //             ) : null}
+    //           >
+    //             <Typography variant="subtitle2" style={{fontWeight: 'bold'}}>{label}</Typography>
+    //           </StepLabel>
+    //         </Step>
+    //       ))}
+    //     </Stepper>
+    //   </Box>
+    //   )
+    // }
 
     const editInvoice = (id) => {
       // navigate(`/edit/order/${id}`)
@@ -215,7 +222,7 @@ console.log(useSelector((state) => state.invoices))
         orderStatus: orderStatus 
        })) 
     }
-    console.log(orderStatus)
+
     function checkOrderStatus() {
       return orderStatus === 0 ? "Quotation"
             : orderStatus === 1 ? "PO"
@@ -271,9 +278,9 @@ console.log(useSelector((state) => state.invoices))
       return (
         <>
           <Typography>PaymentHistory</Typography>
-          {invoice?.paymentRecords.length !== 0 && (
+          {/* {invoice?.paymentRecords.length !== 0 && (
             <PaymentHistory paymentRecords={invoiceData?.paymentRecords} subtotal={subTotal} createdAt={invoiceData.createdAt}/>
-          )}
+          )} */}
         </>
       )
     }
@@ -309,20 +316,20 @@ console.log(useSelector((state) => state.invoices))
     }
 
     const TrackOrder = () => {
-      return (
-        <>
-          <Box sx={{p: 2}}>
-            <Box display='flex' justifyContent='space-between' >
-              <Typography variant="h6" style={{fontWeight: 'bold'}} gutterBottom>Track Order</Typography>
-            </Box>
-            <Box display='flex' justifyContent='space-between' >
-              <Button onClick={() => processOrder()}>{checkOrderStatus()}</Button>
-              <Button onClick={() => redoOrder()}>Redo</Button>
-            </Box>
-            <Steps/>
-          </Box>
-        </>
-      )
+      // return (
+      //   <>
+      //     <Box sx={{p: 2}}>
+      //       <Box display='flex' justifyContent='space-between' >
+      //         <Typography variant="h6" style={{fontWeight: 'bold'}} gutterBottom>Track Order</Typography>
+      //       </Box>
+      //       <Box display='flex' justifyContent='space-between' >
+      //         <Button onClick={() => processOrder()}>{checkOrderStatus()}</Button>
+      //         <Button onClick={() => redoOrder()}>Redo</Button>
+      //       </Box>
+      //       <Steps/>
+      //     </Box>
+      //   </>
+      // )
     }
 
 
@@ -362,7 +369,6 @@ console.log(useSelector((state) => state.invoices))
 
     function Container1(props) {
       const value = props.value;
-      console.log(value[0].size.xs)
       return value.map((dat, index) => (
           <Grid display={'flex'} className="CrmDashboardItem" item xs={dat.size.xs} sm={dat.size.sm} md={dat.size.md} key={index}>
             <Box className='CrmDashboardBox' style={{display: 'flex',flexDirection:  'column', alignItems: 'center', justifyContent: 'center'}}>

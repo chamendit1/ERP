@@ -31,10 +31,8 @@ const Layout = ({children}) => {
             maxHeight: '100vh',
             // border: '1px solid black'
             }}>
-            {user && <SubNav handleDrawer={handleDrawer} />} 
-            <Box>
-              {children}
-            </Box> 
+            <Box height={'10vh'}><SubNav handleDrawer={handleDrawer} /></Box>
+            <Box>{children}</Box> 
           </Grid>
         </Grid>
       </>

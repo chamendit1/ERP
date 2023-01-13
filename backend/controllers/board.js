@@ -40,9 +40,9 @@ export const updateBoard = async (req, res) => {
   const client = req.body
 
   if(!mongoose.Types.ObjectId.isValid(_id)) return res.status(404).send('No client with that id')
-
+  console.log(client)
   const updatedClient = await BoardModel.findByIdAndUpdate(_id, {...client, _id}, { new: true})
-
+  console.log(updatedClient)
   res.json(updatedClient)
 }
 

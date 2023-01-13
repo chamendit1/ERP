@@ -18,7 +18,7 @@ const board = (state = { isLoading: true, board:{}, boards: [] }, action) => {
       case ADD_NEW_BOARD:
         return { ...state, board: [...state.board, action.payload] };
       case UPDATE_BOARD:
-        return { ...state, board: state.board.map((board) => (board._id === action.payload._id ? action.payload : board)) };
+        return { ...state, board: state.board._id === action.payload._id ? action.payload : state.board };
       case DELETE_BOARD:
         return { ...state, board: state.board.filter((board) => board._id !== action.payload) };
       default:
