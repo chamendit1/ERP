@@ -4,8 +4,10 @@ import * as api from '../api/index'
 import { ADD_NEW, UPDATE, DELETE, GET_INVOICE, START_LOADING, END_LOADING, FETCH_ALL } from './constants'
 
  export const getInvoices = () => async (dispatch)=> {
+
      try {
          dispatch({ type: START_LOADING })
+        //  console.log('s')
          const { data } = await api.fetchInvoices()
         //  console.log(data)
          dispatch({ type: FETCH_ALL, payload: data });
@@ -74,6 +76,8 @@ export const getInvoice = (id) => async (dispatch)=> {
 }
 
 export const createInvoice =(invoice, history, openSnackbar) => async (dispatch) => {
+    console.log(invoice)
+
     try {
         dispatch({ type: START_LOADING })
         const { data } = await api.addInvoice(invoice)
@@ -88,6 +92,7 @@ export const createInvoice =(invoice, history, openSnackbar) => async (dispatch)
 }
 
 export const updateInvoice =(id, invoice, openSnackbar) => async (dispatch) => {
+    console.log(invoice)
     try {
         const { data } = await api.updateInvoice(id, invoice)
         dispatch({ type: UPDATE, payload: data })

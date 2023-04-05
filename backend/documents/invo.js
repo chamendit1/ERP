@@ -17,7 +17,9 @@ export default function (
       status,
       totalAmountReceived,
       balanceDue,
-      company,
+	  totalText,
+	  totalFormat,
+    //   company,
    }) {
     const today = new Date();
 return `
@@ -25,13 +27,12 @@ return `
 <html>
 	<head>
 		<meta charset="utf-8" />
-		<title>A simple, clean, and responsive HTML invoice template</title>
-
 		<style>
 			.invoice-box {
-				max-width: 800px;
+				max-width: 2400px;
+				max-height: 800px;
 				margin: auto;
-				padding: 30px;
+				padding: 15px;
 				border: 1px solid #eee;
 				box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
 				font-size: 16px;
@@ -49,7 +50,6 @@ return `
 			.invoice-box table td {
 				padding: 5px;
 				vertical-align: top;
-
 			}
 
 			.invoice-box table tr td:nth-child(2) {
@@ -57,13 +57,12 @@ return `
 			}
 
 			.invoice-box table tr.top table td {
-				padding-bottom: 20px;
+				padding-bottom: 10px;
 			}
 
 			.invoice-box table tr.top table td.title {
-				font-size: 45px;
-				line-height: 45px;
-				color: #333;
+				font-size: 20px;
+				font-weight: bold;
 			}
 
 			.invoice-box table tr.information table td {
@@ -71,9 +70,12 @@ return `
 			}
 
 			.invoice-box table tr.heading td {
-				background: #eee;
+				border-top: 1px solid #ddd;
 				border-bottom: 1px solid #ddd;
 				font-weight: bold;
+			}
+			.invoice-box table tr.data td {
+				border-bottom: 1px solid #ddd;
 			}
 
 			.invoice-box table tr.details td {
@@ -88,9 +90,13 @@ return `
 				border-bottom: none;
 			}
 
-			.invoice-box table tr.total td:nth-child(4) {
+			.invoice-box table tr.total td:nth-child(3) {
 				border-top: 2px solid #eee;
+			}
+
+			.invoice-box table tr.total td:nth-child(4) {
 				font-weight: bold;
+				border-top: 2px solid #eee;
 			}
 
 			@media only screen and (max-width: 600px) {
@@ -104,6 +110,13 @@ return `
 					width: 100%;
 					display: block;
 					text-align: center;
+					border: 1px solid #eee;
+				}
+				.invoice-box table tr.information td table tr td.notes {
+					width: 50%;
+					// display: block;
+					// text-align: center;
+					// border: 1px solid #eee;
 				}
 			}
 
@@ -130,40 +143,20 @@ return `
 					<td colspan="4">
 						<table>
 							<tr>
-								<td class="title">
-									<img src=${company.logo} style="width: 100%; max-width: 60px"/>
+								<td class="title" width="60%">
+										Indo Plastik Jaya </br> </br>
+										Surat Jalan No: ${id}
 								</td>
 
-								<td>
-									Invoice #: ${id}<br />
-									Created: ${moment(date).format('ll')}<br />
-									Due: ${moment(dueDate).format('ll')}
-								</td>
-							</tr>
-						</table>
-					</td>
-				</tr>
-
-				<tr class="information">
-					<td colspan="4">
-						<table>
-							<tr>
-								<td>
-									Sparksuite, Inc.<br />
-									12345 Sunny Road<br />
-									Sunnyville, CA 12345
-								</td>
-
-								<td>
-                                    ${name}<br />
-									John Doe<br />
-									${email}
+								<td style="text-align:left;">
+										Jakarta, ${moment(date).format('MMMM Do YYYY')} </br>
+										Kepada Yth: </br>
+										${name}
 								</td>
 							</tr>
 						</table>
 					</td>
 				</tr>
-
 
                 <tr class="heading">
                     <td>Item</td>
@@ -173,7 +166,7 @@ return `
                 </tr>
 
                 ${items.map((item) => (
-                `<tr>
+                `<tr class="data">
                     <td>${item.itemName}</td>
                     <td style="text-align: left">${item.quantity}</td>
                     <td style="text-align: left">Rp ${item.unitPrice}</td>
@@ -181,54 +174,38 @@ return `
                 </tr>`
                 ))
                 }
-                <tr class="total">
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td style="text-align: right">Total: Rp ${subTotal}</td>
-                </tr>
 
-				<tr class="heading">
-					<td>Invoice Summary</td>
+				<tr class="total">
 					<td></td>
-				</tr>
-
-				<tr class="item">
+                    <td></td>
 					<td>Subtotal</td>
-					<td>Rp ${subTotal}</td>
+					<td style="text-align: right">Rp ${subTotal}</td>
 				</tr>
 
-				<tr class="item">
+				<tr class="total">
+					<td></td>
+                    <td></td>
 					<td>Vat</td>
-					<td>Rp ${vat}</td>
+					<td style="text-align: right">Rp ${vat}</td>
 				</tr>
-                <tr class="item">
+                <tr class="total">
+					<td></td>
+                    <td></td>
                     <td>Total</td>
-                    <td>Rp ${total}</td>
+                    <td style="text-align: right">Rp ${totalFormat}</td>
                 </tr>
-                <tr class="item">
-                    <td>Total Amount Received</td>
-                    <td>Rp ${totalAmountReceived}</td>
-                </tr>
-
-				<tr class="item last">
-					<td>Balance Due</td>
-					<td>Rp ${balanceDue}</td>
-				</tr>
-
 				<tr class="information">
-				<td colspan="4">
-					<table>
-						<tr>
-							<td>
-								Notes
-								<br />
-								${notes}
-							</td>
-						</tr>
-					</table>
-				</td>
-			</tr>
+					<td colspan="2">
+						Notes
+						<br />
+						
+						${totalText} Rupiah </br>
+						${notes}
+					</td>
+					<td colspan="2">
+						Hormat Kami,
+					</td>
+				</tr>
 			</table>
 		</div>
 	</body>

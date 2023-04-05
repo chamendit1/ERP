@@ -49,7 +49,7 @@ const Clients = () => {
   },[location, dispatch])
 
 
-  console.log(useSelector(state => state.clients))
+  // console.log(useSelector(state => state.clients))
 
   if(isLoading) {
     return  <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', paddingTop: '20px'}}>

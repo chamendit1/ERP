@@ -170,13 +170,13 @@ const EnhancedTableToolbar = (props) => {
         </Typography>
       ) : (
         <Typography
-          sx={{ flex: '1 1 100%' }}
+          sx={{ flex: '1 1 100%', fontWeight: 'bold' }}
           // variant="subtitle1"
           
           id="tableTitle"
           component="div"
         >
-          {/* Customer */}
+          Customers
         </Typography>
       )}
       <AddClient setOpen={setOpen} open={open} />

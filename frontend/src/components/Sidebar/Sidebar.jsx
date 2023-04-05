@@ -11,7 +11,7 @@ import ReceiptIcon from '@mui/icons-material/Receipt';
 // import Receipt from '@mui/icons-material/Receipt';
 import { useDispatch } from 'react-redux'
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-
+import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import Divider from '@mui/material/Divider';
 // import IconButton from '@mui/material/IconButton';
@@ -53,22 +53,38 @@ const Sidebar = (props) => {
             alignItems: 'center',
             }}>
 
-            {/* <Box className='sidebar-data' component={Link} to="/Dashboard">
+            <Box className='sidebar-data' component={Link} to="/Dashboard">
               <Grid container justifyContent="center" alignItems='center'>
                 <Grid item className='sidebar-logo'>
                   <DashboardIcon fontSize={iconsize}/>
                 </Grid>
                   <p className='sidebar-text'>Dashboard</p>
               </Grid>
-            </Box> */}
-            <Box className='sidebar-data' component={Link} to="/CRM">
+            </Box>
+            <Box className='sidebar-data' component={Link} to="/CRM/Clients">
+              <Grid container justifyContent="center" alignItems='center'>
+                <Grid item xs={12} className='sidebar-logo' >
+                    <PeopleAltIcon fontSize={iconsize}/>
+                </Grid>
+                  <p className='sidebar-text'>Pelanggan</p>
+              </Grid>
+            </Box>
+            <Box className='sidebar-data' component={Link} to="/CRM/Orders">
+              <Grid container justifyContent="center" alignItems='center'>
+                <Grid item xs={12} className='sidebar-logo' >
+                    <AttachMoneyIcon fontSize={iconsize}/>
+                </Grid>
+                  <p className='sidebar-text'>Penjualan</p>
+              </Grid>
+            </Box>
+            {/* <Box className='sidebar-data' component={Link} to="/CRM">
               <Grid container justifyContent="center" alignItems='center'>
                 <Grid item xs={12} className='sidebar-logo' >
                     <PeopleAltIcon fontSize={iconsize}/>
                 </Grid>
                   <p className='sidebar-text'>CRM</p>
               </Grid>
-            </Box>
+            </Box> */}
             <Box className='sidebar-data' component={Link} to="/Admin">
               <Grid container justifyContent="center" alignItems='center'>
                 <Grid item className='sidebar-logo' >
@@ -77,14 +93,14 @@ const Sidebar = (props) => {
                   <p className='sidebar-text'>Admin</p>
               </Grid>
             </Box>
-            <Box className='sidebar-data' component={Link} to="/Board">
+            {/* <Box className='sidebar-data' component={Link} to="/Board">
               <Grid container justifyContent="center" alignItems='center'>
                 <Grid item className='sidebar-logo' >
                     <PeopleAltIcon fontSize={iconsize}/>
                 </Grid>
                   <p className='sidebar-text'>Board</p>
               </Grid>
-            </Box>
+            </Box> */}
             <Box>
             </Box>
           </Box>

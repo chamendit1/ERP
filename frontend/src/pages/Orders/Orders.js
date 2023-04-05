@@ -7,7 +7,6 @@ import { Box } from '@mui/material';
 import { getInvoices } from '../../actions/invoiceActions';
 import OrderTablee from './components/OrderTable';
 import CircularProgress from '@mui/material/CircularProgress';
-import { getBoards, updateBoard } from '../../actions/board';
 
 const headCells = [
 
@@ -43,44 +42,46 @@ const Orders = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const user = JSON.parse(localStorage.getItem('profile'))
-  const [boardsData, setBoardsData] = useState([]) 
+  // const [boardsData, setBoardsData] = useState([]) 
 
   const rows = useSelector(state => state.invoices.invoices)
   const isLoading = useSelector(state => state.invoices.isLoading)
-  const boards = useSelector(state => state.board.boards)
+  // const boards = useSelector(state => state.board.boards)
 
-  console.log(boards)
+  // console.log(boards)
 
   useEffect(() => {
       dispatch(getInvoices());
   }, [dispatch]);
 
-  useEffect(() => {
-    setBoardsData(boards)
-  }, [boards]);
+  // useEffect(() => {
+  //   setBoardsData(boards)
+  // }, [boards]);
   
-  useEffect(() => {
-    dispatch(getBoards());
-  }, []);
-
+  // useEffect(() => {
+  //   dispatch(getBoards());
+  // }, []);
+  console.log(rows)
   if(!user) {
     navigate('/login')
   }
-  console.log(rows)
 
-  if(isLoading) {
-    return  <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', paddingTop: '20px'}}>
-        <CircularProgress />
-      </div>
-  }
+  // if(isLoading) {
+  //   return  <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', paddingTop: '20px'}}>
+  //       <CircularProgress />
+  //     </div>
+  // }
 
   return (
     <>
-      <OrderTablee 
-        rows={rows}
-        head={headCells}
-        boards={boardsData}
-      />
+      <Box sx={{ flexGrow: 1 }}>
+        
+        <OrderTablee 
+          rows={rows}
+          head={headCells}
+          // boards={boardsData}
+        />
+      </Box>
     </>
   );
 }

@@ -25,6 +25,9 @@ import Board from "./pages/Board";
 
 function App() {
 
+
+
+
   return (
     <BrowserRouter>
       <Layout>
@@ -34,8 +37,8 @@ function App() {
           {/* <Route path="/forgot" element={<Orders/>} />
           <Route path="/reset/:token" element={<Orders/>} /> */}
 
-          {/* <Route path="/Dashboard" element={<Dashboard/>}/> */}
-          <Route path="/Board/*" element={<Board/>} />
+          <Route path="/Dashboard" element={<Dashboard/>}/>
+          {/* <Route path="/Board/*" element={<Board/>} /> */}
           {/* <Route path="/Board/:id" element={<Board/>} /> */}
           <Route path="/Typography" element={<Typography/>} />
           <Route path="/Layouts" element={<Layouts/>} />
@@ -44,11 +47,11 @@ function App() {
             <Route path="/CRM/*" element={<CRM/>}/>
             <Route path="/Client/:id" element={<Client/>} />
             <Route path="/Order/:id" element={<Order/>} />
-            <Route path="/sales" element={<Sales/>} />
+            {/* <Route path="/sales" element={<Sales/>} /> */}
           </Route>
 
           <Route element={<RequireAuth allowedRoles={['Accounting']} />}>
-            <Route path="/Accounting" element={<Accounting/>}/>
+            {/* <Route path="/Accounting" element={<Accounting/>}/> */}
           </Route>
 
           {/* <Route element={<RequireAuth allowedRoles={['Admin']} />}> */}

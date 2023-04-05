@@ -16,7 +16,7 @@ export const signin =(formData) => async(dispatch) => {
         console.log(data)
         // openSnackbar("Signin successfull")
         // history.push('/dashboard')
-        window.location.href="/dashboard"
+        window.location.href="/Dashboard"
 
     } catch (error) {
         console.log(error?.response?.data?.message)

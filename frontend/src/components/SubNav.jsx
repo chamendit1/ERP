@@ -3,6 +3,7 @@ import { useNavigate, useLocation } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import decode from 'jwt-decode'
 import MenuIcon from '@mui/icons-material/Menu';
+import LogoutIcon from '@mui/icons-material/Logout';
 // import Button from '@material-ui/core/Button';
 // import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 // import Grow from '@material-ui/core/Grow';
@@ -101,7 +102,7 @@ const SubNav = ( {handleDrawer, children}) => {
 // console.log(location)
 
     if(!user) return (
-        <Card style={{height: '5vh'}}>
+        <Card>
           <Grid container justifyContent="space-between" alignItems='center'style={{padding: '0 1.5rem', height:'3rem'}}>
             <Grid item>
               {/* <img style={{width: '50px', cursor: 'pointer'}} onClick={()=> navigate('/')} src="" alt="ERP" /> */}
@@ -117,24 +118,18 @@ const SubNav = ( {handleDrawer, children}) => {
 
     return ( 
       <Box sx={{ flexGrow: 1 }}>
-          <Grid container border={'1px solid black'} style={{height: '100%'}}>
-            
-            <Grid item xs={1} display={'flex'} alignItems={'center'} justifyContent={'center'}>
+          <Grid container style={{height: '100%'}} spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 12, md: 12 }}>
+            <Grid item display={'flex'} alignItems={'center'}>
                 <IconButton onClick={handleDrawer}>
                   <MenuIcon/>
                 </IconButton>
             </Grid>
-            <Grid item xs={10} display={'flex'} alignItems={'center'}>
+            <Grid item xs={2} sm={8} md={4} display={'flex'} alignItems={'center'}>
                 <Breadcrumb navigate={navigate} location={location}/>
             </Grid>
-            <Grid item xs={1} display={'flex'} justifyContent={'center'}>
-                <Button size='small' onClick={handleLogout}>out</Button>
+            <Grid item xs display={'flex'} justifyContent={'flex-end'}>
+                <Button size='small' onClick={handleLogout}><LogoutIcon fontSize='small'/></Button>
             </Grid>
-            {/* <Grid item xs>
-                {children}
-            </Grid> */}
-
-
           </Grid>
       </Box>
     )

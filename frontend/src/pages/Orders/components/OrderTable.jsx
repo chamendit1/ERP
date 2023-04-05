@@ -62,13 +62,6 @@ function stableSort(array, comparator) {
   return stabilizedThis.map((el) => el[0]);
 }
 
-
-
-
-
-
-
-
 function EnhancedTableHead(props) {
   const { onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort, headCells } =
     props;
@@ -178,7 +171,7 @@ const EnhancedTableToolbar = (props) => {
           // id="tableTitle"
           // component="div"
         >
-          DataTable Simple
+         Orders
         </Typography>
       )}
       <AddOrder setOpen={setOpen} open={open} boards={boards}/>

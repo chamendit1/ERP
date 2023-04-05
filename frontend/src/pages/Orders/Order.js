@@ -3,7 +3,6 @@ import React, { useState, useEffect} from 'react'
 
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams, useNavigate, Link } from 'react-router-dom'
-// import { toCommas } from '../../../..'
 
 
 import { Avatar, Box, Card, Container, Grid} from '@mui/material';
@@ -29,8 +28,8 @@ import ButtonGroup from '@mui/material/ButtonGroup';
 
 import Modal from '../../components/Payments/Modal'
 import axios from 'axios';
-// import { saveAs } from 'file-saver';
-// import AddOrder from './AddOrder'
+import { saveAs } from 'file-saver';
+import AddOrder from './components/AddOrder';
 import PaymentHistory from './components/PaymentHistory'
 // import Morder from '../Morder';
 // import Invoice from '../Invoice';
@@ -40,6 +39,8 @@ import PaymentHistory from './components/PaymentHistory'
 import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
+
+import numberToText from 'number-to-text/converters/id'
 
 
 
@@ -67,6 +68,9 @@ const Order = () => {
     const [downloadStatus, setDownloadStatus] = useState(null)
     const [company, setCompany] = useState({})
     const [open, setOpen ] = useState(false)
+    const [totalText, setTotalText] = useState('')
+    const [totalFormat, setTotalFormat] = useState('')
+    const [notes, setNotes] = useState('')
     const [morderOpen, setMOrderOpen] = useState(false)
     const [dorderOpen, setDOrderOpen] = useState(false)
     const [invoiceOpen, setInvoiceOpen] = useState(false)
@@ -74,17 +78,20 @@ const Order = () => {
     
     useEffect(() => {
         dispatch(getInvoice(id));
-    },[id])
+    },[id, orderOpen])
 
     const toCommas = (value) => {
       // console.log(value)
       return value.toString()
     }
+    function currencyFormat(num) {
+      return num.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
+   }
 
     useEffect(() => {
       
         if(Object.keys(invoice).length !== 0) {
-          console.log(invoice)
+          // console.log(invoice)
           setInvoiceData(invoice)
           setRates(invoice.rates)
           setClient(invoice.client)
@@ -97,6 +104,8 @@ const Order = () => {
           setTotal(invoice.total)
           setCompany(invoice?.businessDetails?.data?.data)
           setOrderStatus(invoice.orderStatus)
+          setTotalText(numberToText.convertToText(invoice.total))
+          setTotalFormat(currencyFormat(invoice.total))
         }
     }, [invoice])
 
@@ -104,37 +113,41 @@ const Order = () => {
     for(var i = 0; i < invoice?.paymentRecords?.length; i++) {
         totalAmountReceived += Number(invoice?.paymentRecords[i]?.amountPaid)
     }
+    // console.log(invoice.notes)
 
     const createAndDownloadPdf = () => {
-    //   setDownloadStatus('loading')
-    //   axios.post(`${process.env.REACT_APP_API}/create-pdf`, 
-    //   { name: invoice.client.name,
-    //     address: invoice.client.address,
-    //     phone: invoice.client.phone,
-    //     email: invoice.client.email,
-    //     dueDate: invoice.dueDate,
-    //     date: invoice.createdAt,
-    //     id: invoice.invoiceNumber,
-    //     notes: invoice.notes,
-    //     subTotal: toCommas(invoice.subTotal),
-    //     total: toCommas(invoice.total),
-    //     type: invoice.type,
-    //     vat: invoice.vat,
-    //     items: invoice.items,
-    //     status: invoice.status,
-    //     totalAmountReceived: toCommas(totalAmountReceived),
-    //     balanceDue: toCommas(total - totalAmountReceived),
-    //     company: company,
-    // })
-    //     .then(() => axios.get(`${process.env.REACT_APP_API}/fetch-pdf`, { responseType: 'blob' }))
-    //     .then((res) => {
-    //       const pdfBlob = new Blob([res.data], { type: 'application/pdf' });
-  
-    //       // saveAs(pdfBlob, 'invoice.pdf')
-    //     }).then(() =>  setDownloadStatus('success'))
+      setDownloadStatus('loading')
+      axios.post(`${process.env.REACT_APP_API}/create-pdf`, 
+      { name: invoice.client.name,
+        address: invoice.client.address,
+        phone: invoice.client.phone,
+        email: invoice.client.email,
+        dueDate: invoice.dueDate,
+        date: invoice.createdAt,
+        id: invoice.invoiceNumber,
+        notes: invoice.notes,
+        subTotal: toCommas(invoice.subTotal),
+        total: toCommas(invoice.total),
+        type: invoice.type,
+        vat: invoice.vat,
+        items: invoice.items,
+        status: invoice.status,
+        totalAmountReceived: toCommas(totalAmountReceived),
+        balanceDue: toCommas(total - totalAmountReceived),
+        company: company,
+        totalText: totalText,
+        totalFormat: totalFormat,
+    })
+        .then(() => axios.get(`${process.env.REACT_APP_API}/fetch-pdf`, { responseType: 'blob' }))
+        .then((res) => {
+          const pdfBlob = new Blob([res.data], { type: 'application/pdf' });
+          
+          // saveAs(pdfBlob, 'invoice.pdf')
+        }).then(() =>  { 
+          window.open('http://www.localhost:5001/fetch-pdf') 
+          setDownloadStatus('success')
+        })
     }
-
-
 
     function checkStatus() {
         return totalAmountReceived >= total ? "green"
@@ -144,22 +157,19 @@ const Order = () => {
              : "red";
     }
 
-
-
     const Generate = () => {
       return(
         <ButtonGroup orientation="horizontal" variant="contained" size="small" fullWidth={true}>
-          <Button onClick={() => goMorder(invoiceData._id)}>Manufacturing Order</Button>
-          <Button onClick={() => goInvoice(invoiceData._id)}>Invoice</Button>
-          <Button onClick={() => goDorder(invoiceData._id)}>Surat Jalan</Button>
-          <Button>Kwitansi</Button>
-          <Button onClick={createAndDownloadPdf}>Generate Invoice</Button>
-          <Button onClick={() => setOpen((prev) => !prev)}>Record Payment</Button>
+          {/* <Button onClick={() => goMorder(invoiceData._id)}>Manufacturing Order</Button> */}
+          {/* <Button onClick={() => goInvoice(invoiceData._id)}>Invoice</Button> */}
+          <Button onClick={() => goDorder(invoiceData._id)}>Faktur</Button>
+          {/* <Button>Kwitansi</Button> */}
+          <Button onClick={createAndDownloadPdf}>Surat Jalan</Button>
+          {/* <Button onClick={() => setOpen((prev) => !prev)}>Record Payment</Button> */}
           <Button onClick={() => editInvoice(invoiceData._id)}>Edit Order</Button>
         </ButtonGroup>
       )
     }
-
 
     const steps = [
       'Quotation',
@@ -169,26 +179,6 @@ const Order = () => {
       'Bill',
       'Selesai',
     ];
-
-    // const Steps = () => {
-    //   return (
-    //     <Box sx={{ width: '100%' }}>
-    //     <Stepper activeStep={orderStatus} orientation="vertical">
-    //       {steps.map((label, index) => (
-    //         <Step key={label}>
-    //           <StepLabel optional={
-    //             index === 5 ? (
-    //               <Typography variant="caption">Last step</Typography>
-    //             ) : null}
-    //           >
-    //             <Typography variant="subtitle2" style={{fontWeight: 'bold'}}>{label}</Typography>
-    //           </StepLabel>
-    //         </Step>
-    //       ))}
-    //     </Stepper>
-    //   </Box>
-    //   )
-    // }
 
     const editInvoice = (id) => {
       // navigate(`/edit/order/${id}`)
@@ -233,8 +223,6 @@ const Order = () => {
             : "Error";
     }
 
-    
-
     const OrderDetails= () => {
       return (
         <Box sx={{m: 2}}>
@@ -247,6 +235,19 @@ const Order = () => {
         </Box>
       )
     }
+
+    // console.log(invoiceData)
+    const BillTo= () => {
+      return (
+        <Box sx={{m: 2}} >
+          <Typography variant="h6" style={{fontWeight: 'bold'}}>Bill To:</Typography>
+          <Typography variant="subtitle2" >{invoiceData.client.name}</Typography>
+          <Typography variant="subtitle2" >{invoiceData.client.email}</Typography>
+          <Typography variant="subtitle2" >{invoiceData.client.phone}</Typography>
+          <Typography variant="subtitle2" >{invoiceData.client.address}</Typography>
+        </Box>
+      )
+    }
     const OrderTable= () => {
       return (
         <Table aria-label="simple table">
@@ -255,7 +256,7 @@ const Order = () => {
                   <TableCell>Item</TableCell>
                   <TableCell >Qty</TableCell>
                   <TableCell>Price</TableCell>
-                  <TableCell >Disc(%)</TableCell>
+                  {/* <TableCell >Disc(%)</TableCell> */}
                   <TableCell >Amount</TableCell>
               </TableRow>
           </TableHead>
@@ -263,10 +264,10 @@ const Order = () => {
             {invoiceData?.items?.map((itemField, index) => (
               <TableRow key={index}>
                   <TableCell  scope="row" style={{width: '30%' }}> {itemField.itemName}</TableCell>
-                  <TableCell align="right"> <InputBase sx={{ ml: 1, flex: 1 }} type="number" name="quantity" value={itemField?.quantity} placeholder="0" readOnly /> </TableCell>
-                  <TableCell align="right"> <InputBase sx={{ ml: 1, flex: 1 }} type="number" name="unitPrice" value={itemField?.unitPrice} placeholder="0" readOnly /> </TableCell>
-                  <TableCell align="right"> <InputBase sx={{ ml: 1, flex: 1 }} type="number" name="discount"  value={itemField?.discount} readOnly /> </TableCell>
-                  <TableCell align="right"> <InputBase sx={{ ml: 1, flex: 1 }} type="number" name="amount"  value={((itemField?.quantity * itemField.unitPrice) - (itemField.quantity * itemField.unitPrice) * itemField.discount / 100)} readOnly /> </TableCell>
+                  <TableCell align="left"> <InputBase sx={{ ml: 1, flex: 1 }} type="number" name="quantity" value={itemField?.quantity} placeholder="0" readOnly /> </TableCell>
+                  <TableCell align="left"> <InputBase sx={{ ml: 1, flex: 1 }} type="number" name="unitPrice" value={itemField?.unitPrice} placeholder="0" readOnly /> </TableCell>
+                  {/* <TableCell align="right"> <InputBase sx={{ ml: 1, flex: 1 }} type="number" name="discount"  value={itemField?.discount} readOnly /> </TableCell> */}
+                  <TableCell align="left"> Rp {currencyFormat((itemField?.quantity * itemField.unitPrice) - (itemField.quantity * itemField.unitPrice) * itemField.discount / 100)} </TableCell>
               </TableRow>
             ))}
           </TableBody>
@@ -274,24 +275,13 @@ const Order = () => {
       )
     }
 
-    const PaymentHistorys = () => {
-      return (
-        <>
-          <Typography>PaymentHistory</Typography>
-          {/* {invoice?.paymentRecords.length !== 0 && (
-            <PaymentHistory paymentRecords={invoiceData?.paymentRecords} subtotal={subTotal} createdAt={invoiceData.createdAt}/>
-          )} */}
-        </>
-      )
-    }
-
     const InvoiceSummary = () => {
       return (
         <>
-          <Box>
-            <Typography variant="h6" style={{fontWeight: 'bold'}} gutterBottom>Invoice Summary</Typography>
-          </Box>
-          <Grid container>
+          <Grid container sx={{m: 2}}>
+            <Grid item xs={12}>
+              <Typography variant="h6" style={{fontWeight: 'bold'}} gutterBottom>Invoice Summary</Typography>
+            </Grid>
             <Grid item xs>
               <Box>
                 <Typography variant="subtitle2" style={{color: 'gray'}}>Subtotal:</Typography>
@@ -303,11 +293,11 @@ const Order = () => {
             </Grid>
             <Grid item xs>
               <Box>
-                <Typography  variant="subtitle2" style={{fontWeight: 'bold'}}>{subTotal}</Typography>
-                <Typography  variant="subtitle2" style={{fontWeight: 'bold'}}>{vat}</Typography>
-                <Typography  variant="subtitle2" style={{fontWeight: 'bold'}}>{currency} {toCommas(total)}</Typography>
-                <Typography  variant="subtitle2" style={{fontWeight: 'bold'}}>{currency} {toCommas(totalAmountReceived)}</Typography>
-                <Typography  variant="subtitle2" style={{fontWeight: 'bold'}}>{currency} {Math.round((total - totalAmountReceived)*100)/100}</Typography>
+                <Typography  variant="subtitle2" style={{fontWeight: 'bold'}}>{currency} {currencyFormat(subTotal)}</Typography>
+                <Typography  variant="subtitle2" style={{fontWeight: 'bold'}}>{currency} {currencyFormat(vat)}</Typography>
+                <Typography  variant="subtitle2" style={{fontWeight: 'bold'}}>{currency} {currencyFormat(total)}</Typography>
+                <Typography  variant="subtitle2" style={{fontWeight: 'bold'}}>{currency} {currencyFormat(totalAmountReceived)}</Typography>
+                <Typography  variant="subtitle2" style={{fontWeight: 'bold'}}>{currency} {currencyFormat(Math.round((total - totalAmountReceived)*100)/100)}</Typography>
               </Box>
               </Grid>
             </Grid>
@@ -315,7 +305,71 @@ const Order = () => {
       )
     }
 
-    const TrackOrder = () => {
+
+
+    const data = [
+      {
+        data: <Generate/>,
+        size: { xs:12 , sm:12, md:12 },
+      },
+      {
+        data: <BillTo/>,
+        size: { xs:2 , sm:8, md:8 },
+      },
+      {
+        data: <OrderDetails/>,
+        size: { xs:2 , sm:4, md:4 },
+      },
+      {
+        data: <OrderTable/>,
+        size: { xs:12 , sm:12, md:12 },
+      },
+      // {
+      //   data: <PaymentHistorys/>,
+      //   size: { xs:2 , sm:8, md:8 },
+      // },
+      {
+        data: <InvoiceSummary/>,
+        size: { xs:2 , sm:12 ,md:12 },
+      },
+
+    ]
+
+
+
+    function Container1(props) {
+      const value = props.value;
+      return value.map((dat, index) => (
+          <Grid display={'flex'} className="CrmDashboardItem" item xs={dat.size.xs} sm={dat.size.sm} md={dat.size.md} key={index}>
+            <Box className='CrmDashboardBox' style={{display: 'flex',flexDirection:  'column', alignItems: 'left', justifyContent: 'center'}}>
+              {dat.data}
+            </Box>
+          </Grid>
+        ))}
+
+
+  return (
+    <>
+      <Box sx={{ flexGrow: 1 }}>
+        <Grid container alignItems={"stretch"} spacing={{ xs: 2, md: 3 }} columns={{ xs: 2, sm: 12, md: 12 }} >
+          <Container1 value={data}/>
+        </Grid>
+      </Box>
+
+      <AddOrder setOpen={setOrderOpen} open={orderOpen} />
+      {/* <Morder setOpen={setMOrderOpen} open={morderOpen} />
+      <Dorder setOpen={setDOrderOpen} open={dorderOpen} />
+      <Invoice setOpen={setInvoiceOpen} open={invoiceOpen} /> */}
+      <Modal open={open} setOpen={setOpen} invoice={invoiceData}/>
+    </>
+  );
+}
+
+export default Order
+
+
+
+    // const TrackOrder = () => {
       // return (
       //   <>
       //     <Box sx={{p: 2}}>
@@ -330,69 +384,37 @@ const Order = () => {
       //     </Box>
       //   </>
       // )
-    }
+    // }
 
 
 
+    // const PaymentHistorys = () => {
+    //   return (
+    //     <>
+    //       <Typography>PaymentHistory</Typography>
+    //       {/* {invoice?.paymentRecords.length !== 0 && (
+    //         <PaymentHistory paymentRecords={invoiceData?.paymentRecords} subtotal={subTotal} createdAt={invoiceData.createdAt}/>
+    //       )} */}
+    //     </>
+    //   )
+    // }
 
-
-    const data = [
-      {
-        data: <OrderDetails/>,
-        size: { xs:2 , sm:4, md:4 },
-      },
-      {
-        data: <Generate/>,
-        size: { xs:2 , sm:8, md:8 },
-      },
-      {
-        data: <OrderTable/>,
-        size: { xs:2 , sm:8, md:8 },
-      },
-      {
-        data: <TrackOrder/>,
-        size: { xs:2 , sm:4, md:4 },
-      },
-
-      {
-        data: <PaymentHistorys/>,
-        size: { xs:2 , sm:8, md:8 },
-      },
-      {
-        data: <InvoiceSummary/>,
-        size: { xs:2 , sm:4, md:4 },
-      },
-
-    ]
-
-
-
-    function Container1(props) {
-      const value = props.value;
-      return value.map((dat, index) => (
-          <Grid display={'flex'} className="CrmDashboardItem" item xs={dat.size.xs} sm={dat.size.sm} md={dat.size.md} key={index}>
-            <Box className='CrmDashboardBox' style={{display: 'flex',flexDirection:  'column', alignItems: 'center', justifyContent: 'center'}}>
-              {dat.data}
-            </Box>
-          </Grid>
-        ))}
-
-
-  return (
-    <>
-      <Box sx={{ flexGrow: 1 }}>
-        <Grid container alignItems={"stretch"} className='CrmDashboardContainer' spacing={{ xs: 2, md: 3 }} columns={{ xs: 2, sm: 12, md: 12 }} >
-          <Container1 value={data}/>
-        </Grid>
-      </Box>
-
-      {/* <AddOrder setOpen={setOrderOpen} open={orderOpen} />
-      <Morder setOpen={setMOrderOpen} open={morderOpen} />
-      <Dorder setOpen={setDOrderOpen} open={dorderOpen} />
-      <Invoice setOpen={setInvoiceOpen} open={invoiceOpen} /> */}
-      {/* <Modal open={open} setOpen={setOpen} invoice={invoiceData}/> */}
-    </>
-  );
-}
-
-export default Order
+    // const Steps = () => {
+    //   return (
+    //     <Box sx={{ width: '100%' }}>
+    //     <Stepper activeStep={orderStatus} orientation="vertical">
+    //       {steps.map((label, index) => (
+    //         <Step key={label}>
+    //           <StepLabel optional={
+    //             index === 5 ? (
+    //               <Typography variant="caption">Last step</Typography>
+    //             ) : null}
+    //           >
+    //             <Typography variant="subtitle2" style={{fontWeight: 'bold'}}>{label}</Typography>
+    //           </StepLabel>
+    //         </Step>
+    //       ))}
+    //     </Stepper>
+    //   </Box>
+    //   )
+    // }

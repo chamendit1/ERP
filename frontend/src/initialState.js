@@ -3,6 +3,10 @@ export const initialState = {
     items: [
         {itemName: '', unitPrice: '', quantity: '', discount: ''},
     ],
+
+    client : [
+        {name: '', email: '', phone: '', address: ''}
+    ],
     total: 0,
     notes: '',
     rates: '',

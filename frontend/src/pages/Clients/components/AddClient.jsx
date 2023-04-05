@@ -14,25 +14,9 @@
  
  import { useDispatch, useSelector } from 'react-redux'
  import { createClient, updateClient } from '../../../actions/clientActions'
-//  import { useSnackbar } from 'react-simple-snackbar'
  import { getClient } from '../../../actions/clientActions';
 
  import { useParams } from 'react-router-dom'
- 
-//  const styles = (theme) => ({
-//    root: {
-//      margin: 0,
-//      padding: theme.spacing(2),
-//      backgroundColor: '#1976D2',
-//      marginLeft: 0,
-//    },
-//    closeButton: {
-//      position: 'absolute',
-//      right: theme.spacing(1),
-//      top: theme.spacing(1),
-//      color: 'white',
-//    },
-//  });
  
  const DTitle = (props) => {
    const { children, classes, onClose, ...other } = props;
@@ -54,80 +38,60 @@
      const [clientData, setClientData] = useState({ name: '', email: '', phone: '', address: '', userId: ''})
      const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')))
      const dispatch = useDispatch()
-    //  const client = useSelector((state)=> currentId ? state.clients.clients.find((c) => c._id === currentId) : null)
-     // eslint-disable-next-line 
-    //  const [openSnackbar, closeSnackbar] = useSnackbar()
+     const client = useSelector((state)=> state.clients.client)
      const { id } = useParams()
+     
+     
 
-     
-    //  useEffect(() => {
-    //   dispatch(getClient(id));
-    //   // eslint-disable-next-line
-    // }, [id]);
- 
-    //  useEffect(() => {
-    //    if(client) {
-    //      setClientData(client)
-    //    }
-    //  }, [client])
+     useEffect(() => {
+      if (id) {
+        dispatch(getClient(id));
+      }
+    }, [id]);
  
      useEffect(() => {
-       setUser(JSON.parse(localStorage.getItem('profile')))
-       // setClientData({...clientData, userId: user?.result?._id})
-     },[location])
- 
- 
-     useEffect(() => {
-       var checkId = user?.result?._id
-       if(checkId !== undefined) {
-         setClientData({...clientData, userId: [checkId]})
-       } else {
-         setClientData({...clientData, userId: [user?.result?.googleId]})
+       if(client) {
+         setClientData(client)
        }
+     }, [client])
+ 
+    //  useEffect(() => {
+    //    setUser(JSON.parse(localStorage.getItem('profile')))
+    //   //  setClientData({...clientData, userId: user?.result?._id})
+    //  },[location])
+ 
+ 
+    //  useEffect(() => {
+    //    var checkId = user?.result?._id
+    //    if(checkId !== undefined) {
+    //      setClientData({...clientData, userId: [checkId]})
+    //    } else {
+    //      setClientData({...clientData, userId: [user?.result?.googleId]})
+    //    }
        
-     },[location])
+    //  },[location])
  
+    const handleSubmitClient =(e)=> {
+        e.preventDefault()
+        if(id) {
+          dispatch(updateClient(id, clientData))
+        } else {
+          dispatch(createClient(clientData))
+        }
+        clear()
+        handleClose()
+    }
  
-     const handleSubmitClient =(e)=> {
-         e.preventDefault()
-         if(currentId) {
-           dispatch(updateClient(currentId, clientData))
-         } else {
-           dispatch(createClient(clientData))
-         }
-         clear()
-         handleClose()
-     }
- 
-   const clear =() => {
-     setClientData({ name: '', email: '', phone: '', address: '', userId: [] })
-   }
-     
-   const handleClose = () => {
-     setOpen(false);
-   };
- 
-   const inputStyle = {
-     display: "block",
-     padding: "1.4rem 0.75rem",
-     width: "100%",
-     fontSize: "0.8rem",
-     lineHeight: 1.25,
-     color: "#55595c",
-     backgroundColor: "#fff",
-     backgroundImage: "none",
-     backgroundClip: "padding-box",
-     borderTop: "0",
-     borderRight: "0",
-     borderBottom: "1px solid #eee",
-     borderLeft: "0",
-     borderRadius: "3px",
-     transition: "all 0.25s cubic-bezier(0.4, 0, 1, 1)"
- }
- 
- 
+    const clear =() => {
+      setClientData({ name: '', email: '', phone: '', address: '', userId: [] })
+    }
+      
+    const handleClose = () => {
+      setOpen(false);
+    };
+
    return (
-     <div>
+     <>
          <form >
        <Dialog onClose={handleClose} open={open} fullWidth  PaperProps={{ borderRadius: 100 }}>
              <DTitle id="customized-dialog-title" onClose={handleClose} >
@@ -135,6 +99,10 @@
              </DTitle>
              <DialogContent dividers>
               <div className="customInputs">
+                Title
+                First Name
+                Last Name
+                PP
                 <Typography variant='body2' sx={{fontWeight: 'bold'}}>Company Name</Typography>
                   <TextField fullWidth
                       id="fullWidth" 
@@ -176,7 +144,7 @@
              </DialogActions>
        </Dialog>
          </form>
-     </div>
+     </>
    );
  }
  

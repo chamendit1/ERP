@@ -31,6 +31,11 @@ const navItems = [
     link: '/crm/sales',
     name: 'Sales',
     logo: <PeopleAltIcon fontSize="small"/>
+  },
+  {
+    link: '/Board',
+    name: 'Board',
+    logo: <PeopleAltIcon fontSize="small"/>
   }
 ]
 

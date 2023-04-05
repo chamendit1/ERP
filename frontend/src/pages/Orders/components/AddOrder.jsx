@@ -6,7 +6,7 @@ import Dialog from '@mui/material/Dialog';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import Typography from '@mui/material/Typography';
-import { TextField } from '@mui/material';
+import { TextareaAutosize, TextField } from '@mui/material';
 import Autocomplete from '@mui/material/Autocomplete';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -40,13 +40,14 @@ import { initialState } from '../../../initialState'
 import AddClient from '../../Clients/components/AddClient' // Need to cross check with original
 import { DialogTitle, DialogContent , DialogActions } from '@mui/material';
 import { getBoard, updateBoard } from '../../../actions/board';
+import AddIcon from '@mui/icons-material/Add';
 
  
  const DTitle = (props) => {
   const { children, classes, onClose, ...other } = props;
   return (
-    <DialogTitle disableTypography {...other} style={{padding: '1rem 2rem'}}>
-      <Typography variant="h6">{children}</Typography>
+    <DialogTitle disabletypography={'true'} {...other} style={{padding: '1rem 2rem'}}>
+      <Typography>{children}</Typography>
       {onClose ? (
         <IconButton aria-label="close" onClick={onClose} style={{position:'absolute', right: '1rem', top: '13px' }}>
           <CloseIcon />
@@ -85,10 +86,11 @@ import { getBoard, updateBoard } from '../../../actions/board';
      const [newClientOpen, setNewClientOpen] = useState(false)
      
     useEffect(() => {
-      if(id) {
-        dispatch(getClient(id));
-      }
-    }, [open]);
+      dispatch(getClientsByUser({ search: user?.result?._id }));
+      // console.log('r')
+    }, [id]);
+
+    // console.log(useSelector((state) => state.clients))
 
 
   useEffect(() => {
@@ -184,9 +186,10 @@ const handleRates =(e) => {
       // console.log(values)
   }
   // console.log(rows[0]._id)
+
   const handleSubmit =  async (e ) => {
       e.preventDefault()
-      if(invoice) {
+      if(Object.keys(invoice).length !== 0) {
       // dispatch(updateBoard(boards[orderStatus]._id, {...boards[orderStatus], taskId: [...boards[orderStatus].taskId, invoiceData.invoiceNumber]}))
        dispatch(updateInvoice( invoice._id, {
            ...invoiceData, 
@@ -198,7 +201,8 @@ const handleRates =(e) => {
            dueDate: selectedDate, 
            client, 
            type: type, 
-           status: status 
+           status: status ,
+           owner: client._id, 
           })) 
        //navigate(`/invoice/${invoice._id}`)
        handleClose()
@@ -238,10 +242,6 @@ const handleRates =(e) => {
     }
 
 
-
-
- 
-
    const handleClose = () => {
      setOpen(false);
    };
@@ -251,8 +251,6 @@ const handleRates =(e) => {
     setInvoiceData({ initialState })
   }
 
-  console.log(invoiceData)
-
   return (
     <div>
     <AddClient setOpen={setNewClientOpen} open={newClientOpen} />
@@ -261,8 +259,9 @@ const handleRates =(e) => {
         <DTitle id="customized-dialog-title" onClose={handleClose} style={{paddingLeft: '20px', color: 'white'}}>
           {'New Order'}
         </DTitle>
-             
+
         <DialogContent dividers>
+
            <Container >
             <Grid container justifyContent="space-between" >
                   <Typography variant="overline" style={{color: 'gray'}} >Order #: </Typography>
@@ -274,7 +273,8 @@ const handleRates =(e) => {
 
           <Container>
             <Grid container justifyContent="space-between" style={{marginTop: '40px'}} >
-              <Grid item style={{width: '50%'}}>
+              
+              <Grid item xs={6}>
                 <Container>
                   <Typography variant="overline" style={{color: 'gray', paddingRight: '3px'}} gutterBottom>Bill to</Typography>
                   {client  && (
@@ -314,30 +314,30 @@ const handleRates =(e) => {
                   }
                 </Container>
               </Grid>
-              <Grid item style={{width: '40%', marginRight: 20, textAlign: 'right'}}>
+              <Grid item xs style={{marginRight: 20, textAlign: 'right'}}>
                   <Typography variant="overline" style={{color: 'gray'}} gutterBottom>Status</Typography>
                   <Typography variant="h6" gutterBottom style={{color: (type === 'Receipt' ? 'green' : 'red')}}>{(type === 'Receipt' ? 'Paid' : 'Unpaid')}</Typography>
                   <Typography variant="overline" style={{color: 'gray'}} gutterBottom>Date</Typography>
                   <Typography variant="body2" gutterBottom>{moment().format("MMM Do YYYY")}</Typography>
                   <Typography variant="overline" style={{color: 'gray'}} gutterBottom>Due Date</Typography>
                   <Typography variant="body2" gutterBottom>{selectedDate? moment(selectedDate).format("MMM Do YYYY") : '27th Sep 2021'}</Typography>
-                  <Typography variant="overline" gutterBottom>Amount</Typography>
-                  <Typography variant="h6" gutterBottom>{currency} {toCommas(total)}</Typography>
+               /   <Typography variant="overline" gutterBottom>Amount</Typography>
+               /   <Typography variant="body2" fontWeight={'bold'} gutterBottom>{currency} {toCommas(total)}</Typography>
               </Grid>
             </Grid>
           </Container>
             
             
-          <div>
-            <TableContainer component={Paper} className="tb-container">
-              <Table aria-label="simple table" style={{width: '100%'}}>
+          <>
+            <TableContainer >
+              <Table aria-label="simple table" style={{width: '100%', border:'1px solid #eee'}}>
                   <TableHead>
                     <TableRow>
                         <TableCell>Item</TableCell>
                         <TableCell >Qty</TableCell>
                         <TableCell>Price</TableCell>
-                        <TableCell >Disc(%)</TableCell>
-                        <TableCell >Amount</TableCell>
+                        {/* <TableCell >Disc(%)</TableCell> */}
+                        <TableCell >Total</TableCell>
                         <TableCell >Action</TableCell>
                     </TableRow>
                   </TableHead>
@@ -347,7 +347,7 @@ const handleRates =(e) => {
                       <TableCell  scope="row" style={{width: '40%' }}> <InputBase style={{width: '100%'}} outline="none" sx={{ ml: 1, flex: 1 }} type="text" name="itemName" onChange={e => handleChange(index, e)} value={itemField.itemName} placeholder="Item name or description" /> </TableCell>
                       <TableCell align="right"> <InputBase sx={{ ml: 1, flex: 1 }} type="number" name="quantity" onChange={e => handleChange(index, e)} value={itemField.quantity} placeholder="0" /> </TableCell>
                       <TableCell align="right"> <InputBase sx={{ ml: 1, flex: 1 }} type="number" name="unitPrice" onChange={e => handleChange(index, e)} value={itemField.unitPrice} placeholder="0" /> </TableCell>
-                      <TableCell align="right"> <InputBase sx={{ ml: 1, flex: 1 }} type="number" name="discount"  onChange={e => handleChange(index, e)} value={itemField.discount} placeholder="0" /> </TableCell>
+                      {/* <TableCell align="right"> <InputBase sx={{ ml: 1, flex: 1 }} type="number" name="discount"  onChange={e => handleChange(index, e)} value={itemField.discount} placeholder="0" /> </TableCell> */}
                       <TableCell align="right"> <InputBase sx={{ ml: 1, flex: 1 }} type="number" name="amount" onChange={e => handleChange(index, e)}  value={(itemField.quantity * itemField.unitPrice) - (itemField.quantity * itemField.unitPrice) * itemField.discount / 100} disabled /> </TableCell>
                       <TableCell align="right"> 
                         <IconButton onClick={() =>handleRemoveField(index)}>
@@ -356,36 +356,66 @@ const handleRates =(e) => {
                       </TableCell>
                     </TableRow>
                   ))}
+
                   </TableBody>
               </Table>
             </TableContainer>
             <div>
-                <button onClick={handleAddField}>+</button>
+                <Button variant="contained" size="small" onClick={handleAddField}><AddIcon/></Button>
             </div>
-        </div>
+        </>
 
 
-        <div>
-            <div>Invoice Summary</div>
-            <div>
-                <p>Sub total:</p>
-                <h4>{subTotal}</h4>
-            </div>
-            <div>
-                <p>VAT(%):</p>
-                <h4>{vat}</h4>
-            </div>
-            <div>
-                <p>Total</p>
-                <h4 style={{color: "black", fontSize: "18px", lineHeight: "8px"}}>{currency} {toCommas(total)}</h4>
-            </div>
-        </div>
+        <Grid container>
+          <Grid item xs={6}>
+            <Grid container spacing={3} padding={2} >
+                <Grid item xs={12}>
+                    <TextField 
+                        type="text" 
+                        step="any" 
+                        name="rates" 
+                        id="rates" 
+                        value={rates} 
+                        onChange={handleRates} 
+                        placeholder="e.g 10" 
+                        label="Tax Rates(%)"
+                    />
+                </Grid>
+                <Grid item xs={12}>
+                    <LocalizationProvider dateAdapter={AdapterDateFns}>
+                        <DesktopDatePicker
+                          label="Date&Time picker"
+                          value={selectedDate}
+                          onChange={handleDateChange}
+                          renderInput={(params) => <TextField {...params} />}
+                        />
+                    </ LocalizationProvider>
+                </Grid>
+            </Grid>
+          </Grid>
+          <Grid item xs={6}>
+            <Table style={{ border:'1px solid #eee' }}>
+              <TableRow>
+                <TableCell>Sub Total:</TableCell>
+                <TableCell>{subTotal}</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>VAT(%):</TableCell>
+                <TableCell>{vat}</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>Total:</TableCell>
+                <TableCell>{currency} {toCommas(total)}</TableCell>
+              </TableRow>
+            </Table>
+          </Grid>
+        </Grid>
 
         
-        <div>
+        {/* <div>
             <Container >
                 <Grid container >
-                    <Grid item style={{marginTop: '16px', marginRight: 10}}>
+                    <Grid item xs>
                         <TextField 
                             type="text" 
                             step="any" 
@@ -397,8 +427,7 @@ const handleRates =(e) => {
                             label="Tax Rates(%)"
                         />
                     </Grid>
-                    <Grid item style={{marginRight: 10}} >
-                        
+                    <Grid item xs>
                         <LocalizationProvider dateAdapter={AdapterDateFns}>
                             <DesktopDatePicker
                               label="Date&Time picker"
@@ -409,17 +438,17 @@ const handleRates =(e) => {
                         </ LocalizationProvider>
                     </Grid>
                 </Grid>
-                
             </Container>
+        </div> */}
+        <div>
+            <Typography variant='subtitle2'>Notes/Terms</Typography>
+            <TextareaAutosize
+              minRows={5}
+              placeholder="Provide additional details or terms of service"
+              onChange={(e) => setInvoiceData({...invoiceData, notes: e.target.value})}
+              value={invoiceData.notes}
+            />
         </div>
-            <div>
-                <h4>Notes/Terms</h4>
-                <textarea 
-                    placeholder="Provide additional details or terms of service"
-                    onChange={(e) => setInvoiceData({...invoiceData, notes: e.target.value})}
-                    value={invoiceData.notes}
-                />
-            </div>
              </DialogContent>
              <DialogActions>
              <Grid container justifyContent="center">

@@ -52,7 +52,7 @@ const Login = () => {
     }
 
     if(user) {
-      navigate('/CRM')
+      navigate('/Dashboard')
     }
 
     console.log(formData)

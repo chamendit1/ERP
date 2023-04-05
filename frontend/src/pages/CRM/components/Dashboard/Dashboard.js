@@ -34,6 +34,12 @@ const Dashboard = () => {
       text: <Typography>Accounting</Typography>,
       to: '/Accounting',
     },
+    {
+      id: 4,
+      icon: <AttachMoneyIcon className='dashboardIcon' fontSize='large'/>,
+      text: <Typography>Board</Typography>,
+      to: '/Board',
+    },
   ]
 
   function Container1(props) {

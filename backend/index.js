@@ -63,7 +63,6 @@ const transporter = nodemailer.createTransport({
 })
 
 
-var options = { format: 'A4' };
 // //SEND PDF INVOICE VIA EMAIL
 // app.post('/send-pdf', (req, res) => {
 //     const { email, company } = req.body
@@ -109,9 +108,8 @@ var options = { format: 'A4' };
 //     });
 // });
 
-app.post('/create-pdf', (req, res) => {
-    
-    pdf.create(invo(req.body), {}).toFile(`invoice.pdf`, (err) => {
+app.post('/create-pdf', (req, res) => {    
+    pdf.create(invo(req.body), {height: '9.5in', width: '11in'}).toFile(`invoice.pdf`, (err) => {
         if(err) {
             res.send(Promise.reject());
         }
@@ -120,14 +118,14 @@ app.post('/create-pdf', (req, res) => {
     });
 });
 
-app.post('/create-mo', (req, res) => {
-    pdf.create(mo(req.body), {}).toFile(`invoice.pdf`, (err) => {
-        if(err) {
-            res.send(Promise.reject());
-        }
-        res.send(Promise.resolve());
-    });
-});
+// app.post('/create-mo', (req, res) => {
+//     pdf.create(mo(req.body), {}).toFile(`invoice.pdf`, (err) => {
+//         if(err) {
+//             res.send(Promise.reject());
+//         }
+//         res.send(Promise.resolve());
+//     });
+// });
 
 //SEND PDF INVOICE
 app.get('/fetch-pdf', (req, res) => {
