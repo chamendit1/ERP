@@ -10,16 +10,16 @@ const useAuth = () => {
     let status = "Employee"
     const user = JSON.parse(localStorage.getItem('profile'))
     // console.log(localStorage)
+    console.log(user)
 
     if (user.token) {
         const { email, role, access } = user.result
-        // console.log(user.result)
-        // console.log(role)
         isManager = role.includes('Manager')
         isAdmin = role.includes('Admin')
 
         if (isManager) status = "Manager"
         if (isAdmin) status = "Admin"
+        console.log(user)
 
         return { email, role, access, status, isManager, isAdmin }
     }

@@ -92,7 +92,7 @@ export const createInvoice =(invoice, history, openSnackbar) => async (dispatch)
 }
 
 export const updateInvoice =(id, invoice, openSnackbar) => async (dispatch) => {
-    console.log(invoice)
+    console.log(invoice.orderStatus)
     try {
         const { data } = await api.updateInvoice(id, invoice)
         dispatch({ type: UPDATE, payload: data })

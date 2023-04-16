@@ -89,7 +89,6 @@ const Order = () => {
    }
 
     useEffect(() => {
-      
         if(Object.keys(invoice).length !== 0) {
           // console.log(invoice)
           setInvoiceData(invoice)
@@ -197,21 +196,30 @@ const Order = () => {
     }
 
     const processOrder = () => {
-      setOrderStatus(orderStatus+1);
-      updateOrder();
+      if( orderStatus < 5 && orderStatus >= 0) {
+        setOrderStatus(parseInt(orderStatus)+1);
+        updateOrder(parseInt(orderStatus)+1);
+      } else {
+        setOrderStatus(0)
+      }
     }
     const redoOrder = () => {
-      if( orderStatus > 0)
-      setOrderStatus(orderStatus-1);
-      updateOrder();
+      if( orderStatus > 0 && orderStatus <= 5) {
+        setOrderStatus(parseInt(orderStatus)-1);
+        updateOrder(parseInt(orderStatus)-1);
+      } else {
+        setOrderStatus(0)
+      }
     }
 
-    const updateOrder = () => {
+    const updateOrder = (stat) => {
       dispatch(updateInvoice( invoice._id, {
         ...invoiceData, 
-        orderStatus: orderStatus 
+        orderStatus: stat
        })) 
     }
+
+    // console.log(invoice.orderStatus)
 
     function checkOrderStatus() {
       return orderStatus === 0 ? "Quotation"
@@ -305,6 +313,44 @@ const Order = () => {
       )
     }
 
+    const TrackOrder = () => {
+      return (
+        <>
+          <Box sx={{p: 2}}>
+            <Box display='flex' justifyContent='space-between' >
+              <Typography variant="h6" style={{fontWeight: 'bold'}} gutterBottom>Track Order</Typography>
+            </Box>
+            <Box display='flex' justifyContent='space-between' >
+              <Button variant="contained" onClick={() => processOrder()}>Next</Button>
+              {/* Admin */}
+              {/* <Button variant="contained" onClick={() => redoOrder()}>Back</Button> */}
+            </Box>
+            <Steps/>
+          </Box>
+        </>
+      )
+    }
+
+    const Steps = () => {
+      return (
+        <Box sx={{ width: '100%' }}>
+        <Stepper activeStep={parseInt(orderStatus)} orientation="vertical">
+          {steps.map((label, index) => (
+            <Step key={label}>
+              <StepLabel optional={
+                index === 5 ? (
+                  <Typography variant="caption">Last step</Typography>
+                ) : null}
+              >
+                <Typography variant="subtitle2" style={{fontWeight: 'bold'}}>{label}</Typography>
+              </StepLabel>
+            </Step>
+          ))}
+        </Stepper>
+      </Box>
+      )
+    }
+
 
 
     const data = [
@@ -323,6 +369,14 @@ const Order = () => {
       {
         data: <OrderTable/>,
         size: { xs:12 , sm:12, md:12 },
+      },
+      // {
+      //   data: <Steps/>,
+      //   size: { xs:2 , sm:8, md:8 },
+      // },
+      {
+        data: <TrackOrder/>,
+        size: { xs:2 , sm:8, md:8 },
       },
       // {
       //   data: <PaymentHistorys/>,
@@ -369,22 +423,7 @@ export default Order
 
 
 
-    // const TrackOrder = () => {
-      // return (
-      //   <>
-      //     <Box sx={{p: 2}}>
-      //       <Box display='flex' justifyContent='space-between' >
-      //         <Typography variant="h6" style={{fontWeight: 'bold'}} gutterBottom>Track Order</Typography>
-      //       </Box>
-      //       <Box display='flex' justifyContent='space-between' >
-      //         <Button onClick={() => processOrder()}>{checkOrderStatus()}</Button>
-      //         <Button onClick={() => redoOrder()}>Redo</Button>
-      //       </Box>
-      //       <Steps/>
-      //     </Box>
-      //   </>
-      // )
-    // }
+
 
 
 
@@ -399,22 +438,3 @@ export default Order
     //   )
     // }
 
-    // const Steps = () => {
-    //   return (
-    //     <Box sx={{ width: '100%' }}>
-    //     <Stepper activeStep={orderStatus} orientation="vertical">
-    //       {steps.map((label, index) => (
-    //         <Step key={label}>
-    //           <StepLabel optional={
-    //             index === 5 ? (
-    //               <Typography variant="caption">Last step</Typography>
-    //             ) : null}
-    //           >
-    //             <Typography variant="subtitle2" style={{fontWeight: 'bold'}}>{label}</Typography>
-    //           </StepLabel>
-    //         </Step>
-    //       ))}
-    //     </Stepper>
-    //   </Box>
-    //   )
-    // }

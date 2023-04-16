@@ -16,7 +16,6 @@ export const getProfiles = () => async (dispatch) => {
   try {
     dispatch({ type: START_LOADING })
     const { data } = await api.fetchProfiles();
-    // console.log(data)
     dispatch({ type: FETCH_PROFILES, payload: data });
     dispatch({ type: END_LOADING })
 

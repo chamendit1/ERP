@@ -83,15 +83,15 @@ const Client = () => {
   }, [client])
 
   const data = [
-    {
-      text: <Typography variant="subtitle2" sx={{fontWeight: 'bold'}}>Profile</Typography>,
-    },
-    {
-      text: <Typography variant="subtitle2" sx={{fontWeight: 'bold'}}>Transactions</Typography>,
-    },
-    {
-      text: <Typography variant="subtitle2" sx={{fontWeight: 'bold'}}>Invoices</Typography>,
-    },
+    // {
+    //   text: <Typography variant="subtitle2" sx={{fontWeight: 'bold'}}>Profile</Typography>,
+    // },
+    // {
+    //   text: <Typography variant="subtitle2" sx={{fontWeight: 'bold'}}>Transactions</Typography>,
+    // },
+    // {
+    //   text: <Typography variant="subtitle2" sx={{fontWeight: 'bold'}}>Invoices</Typography>,
+    // },
   ]
 
   return (

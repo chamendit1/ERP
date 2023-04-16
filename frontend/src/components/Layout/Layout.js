@@ -15,7 +15,7 @@ const Layout = ({children}) => {
   const user = JSON.parse(localStorage.getItem('profile'))
   const [openDrawer, setOpenDrawer] = useState({open: false, display: 'none'});
   // const [size, setSize]= useState(12);
-  
+  // console.log(user)
   const handleDrawer = () => {
     setOpenDrawer({open: true, display: ''})
   }

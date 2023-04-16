@@ -24,6 +24,8 @@ import Layouts from "./components/Layouts/index";
 import Board from "./pages/Board";
 
 function App() {
+  // const user = JSON.parse(localStorage.getItem('profile'))
+  // console.log(user)
 
 
 
@@ -43,16 +45,16 @@ function App() {
           <Route path="/Typography" element={<Typography/>} />
           <Route path="/Layouts" element={<Layouts/>} />
 
-          <Route element={<RequireAuth allowedRoles={['CRM']} />}>
+          <Route element={<RequireAuth allowedRoles={'CRM'} />}>
             <Route path="/CRM/*" element={<CRM/>}/>
             <Route path="/Client/:id" element={<Client/>} />
             <Route path="/Order/:id" element={<Order/>} />
             {/* <Route path="/sales" element={<Sales/>} /> */}
           </Route>
 
-          <Route element={<RequireAuth allowedRoles={['Accounting']} />}>
+          {/* <Route element={<RequireAuth allowedRoles={['Accounting']} />}> */}
             {/* <Route path="/Accounting" element={<Accounting/>}/> */}
-          </Route>
+          {/* </Route> */}
 
           {/* <Route element={<RequireAuth allowedRoles={['Admin']} />}> */}
             <Route path="/Admin" element={<Admin/>}/>

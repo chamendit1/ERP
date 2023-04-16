@@ -5,7 +5,7 @@ const userSchema = mongoose.Schema({
     email: {type: String, required: true, unique: true},
     password: {type: String, required: true},
     role: {type: String, required: true},
-    access: [String],
+    access: {CRM: Boolean, Accounting: Boolean},
     active: Boolean,
     resetToken:String,
     expireToken:Date,

@@ -15,7 +15,7 @@ import '../Auth.css'
 
 import { Avatar, Button, Card, Grid, Typography, Box, Select, MenuItem, InputLabel, OutlinedInput, FormControl, FormGroup, FormControlLabel, Checkbox} from '@mui/material'
 
-const initialState ={ firstName: '', lastName: '', email: '', password: '', confirmPassword: '', profilePicture: '', role: '', access: []}
+const initialState ={ firstName: '', lastName: '', email: '', password: '', confirmPassword: '', profilePicture: '', role: ''}
 
 const Login = () => {
 
@@ -27,15 +27,21 @@ const Login = () => {
     const [showPassword, setShowPassword] = useState(false);
     //  // eslint-disable-next-line 
     const user = JSON.parse(localStorage.getItem('profile'))
-    
+    // const [checked1, setChecked1] = React.useState(false);
+    // const [checked2, setChecked2] = React.useState(false);
+
     const handleShowPassword = () => setShowPassword(!showPassword);
     const handleChange =(e)=> {
         setFormData( {...formData, [e.target.name] : e.target.value} )
     }
-    const handleAccess =(e)=> {
-      setFormData( {...formData, 
-        [e.target.name] : [...formData.access , e.target.value] } )
-  }
+    // const handleAccess1 =(e)=> {
+    //   setChecked1(e.target.checked);
+    //   setFormData( {...formData, [e.target.name] : {...formData.access , [e.target.value] : e.target.checked } } )
+    // }
+    // const handleAccess2 =(e)=> {
+    //   setChecked2(e.target.checked);
+    //   setFormData( {...formData, [e.target.name] : {...formData.access , [e.target.value] : e.target.checked } } )
+    // }
 
     const handleSubmit =(e) => {
         e.preventDefault()
@@ -91,10 +97,18 @@ const Login = () => {
                     <MenuItem value={'Employee'}>Employee</MenuItem>
                   </Select>
                 </FormControl>
-                <FormGroup sx={{ m: 2, width: '100%' }}>
-                  <FormControlLabel name='access' onChange={handleAccess} control={<Checkbox value={'CRM'} />} label="CRM" />
-                  <FormControlLabel name='access' onChange={handleAccess} control={<Checkbox value={'Accounting'} />} label="Accounting" />
-                </FormGroup>
+                {/* <FormGroup sx={{ m: 2, width: '100%' }}>
+                  <FormControlLabel 
+                    checked={checked1} 
+                    name='access' 
+                    onChange={handleAccess1} 
+                    control={<Checkbox value={'CRM'} />} label="CRM" />
+                  <FormControlLabel 
+                    checked={checked2} 
+                    name='access' 
+                    onChange={handleAccess2} 
+                    control={<Checkbox value={'Accounting'} />} label="Accounting" />
+                </FormGroup> */}
               
               </>
               )

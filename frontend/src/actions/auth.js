@@ -1,9 +1,20 @@
 import * as api from '../api/index'
-import { AUTH, CREATE_PROFILE } from './constants'
+import { AUTH, CREATE_PROFILE, FETCH_USERS, START_LOADING, END_LOADING, UPDATE_USER } from './constants'
 
 
 
+export const getUsers = () => async (dispatch) => {
 
+    try {
+      dispatch({ type: START_LOADING })
+      const { data } = await api.fetchUsers();
+      console.log(data)
+      dispatch({ type: FETCH_USERS, payload: data });
+      dispatch({ type: END_LOADING })
+  
+    } catch (error) {
+      console.log(error);
+    } };
 
 
 export const signin =(formData) => async(dispatch) => {
@@ -13,7 +24,7 @@ export const signin =(formData) => async(dispatch) => {
         const { data } = await api.signIn(formData)
 
         dispatch({ type: AUTH, data})
-        console.log(data)
+        // console.log(data)
         // openSnackbar("Signin successfull")
         // history.push('/dashboard')
         window.location.href="/Dashboard"
@@ -25,7 +36,6 @@ export const signin =(formData) => async(dispatch) => {
 }
 
 export const signup =(formData) => async(dispatch) => {
-
     try {
         //Sign up the user
         const { data } = await api.signUp(formData)
@@ -39,7 +49,7 @@ export const signup =(formData) => async(dispatch) => {
             contactAddress: '', 
             logo: '', 
             website: '',
-            access: data?.result?.access,
+            // access: data?.result?.access,
             role: data?.result?.role,  
         });
         dispatch({ type: CREATE_PROFILE, payload: info });
@@ -53,12 +63,12 @@ export const signup =(formData) => async(dispatch) => {
     }
 }
 
-export const update =(formData) => async(dispatch) => {
+export const update =(id, formData) => async(dispatch) => {
 
     try {
         //Sign up the user
-        const { data } = await api.update(formData)
-        dispatch({ type: AUTH, data})
+        const { data } = await api.update(id, formData)
+        dispatch({ type: UPDATE_USER, data})
         // openSnackbar("Sign up successfull")
 
     } catch (error) {

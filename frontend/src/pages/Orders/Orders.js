@@ -61,7 +61,7 @@ const Orders = () => {
   // useEffect(() => {
   //   dispatch(getBoards());
   // }, []);
-  console.log(rows)
+  // console.log(rows)
   if(!user) {
     navigate('/login')
   }

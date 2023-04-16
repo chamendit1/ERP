@@ -72,7 +72,7 @@ export const deleteProduct =(id) => API.delete(`/products/${id}`)
 
 
 export const fetchClient = (id) => API.get(`/clients/${id}`);
-//export const fetchClients = (page) => API.get(`/clients?page=${page}`);
+export const fetchClients = () => API.get('/clients');
 export const addClient =( client ) => API.post('/clients', client)
 export const updateClient = (id, updatedClient) => API.patch(`/clients/${id}`, updatedClient)
 export const deleteClient =(id) => API.delete(`/clients/${id}`)
@@ -81,9 +81,11 @@ export const fetchClientsByUser = (searchQuery) => API.get(`/clients?searchQuery
 
 export const signIn =(formData)=> API.post('/users/signin', formData)
 export const signUp =(formData)=> API.post('/users/signup', formData)
-export const update = (formData) => API.post('/users/update', formData)
+export const update = (id, formData) => API.post(`/users/${id}`, formData)
 export const forgot = (formData) => API.post('/users/forgot', formData);
 export const reset = (formData) => API.post('/users/reset', formData);
+export const fetchUsers = () => API.get('/users/users');
+
 
 export const fetchProfilesBySearch = (searchQuery) => API.get(`/profiles/search?searchQuery=${searchQuery.search || searchQuery.year || 'none'}`);
 export const fetchProfile = (id) => API.get(`/profiles/${id}`)

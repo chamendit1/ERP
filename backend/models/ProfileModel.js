@@ -9,7 +9,7 @@ const profileSchema = mongoose.Schema({
     logo: String,
     website: String,
     role: {type: String, required: true},
-    access: [String],
+    access: {CRM: Boolean, Accounting: Boolean},
     active: Boolean,
     userId: [String],
 })

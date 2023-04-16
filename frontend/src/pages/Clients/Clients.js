@@ -48,8 +48,9 @@ const Clients = () => {
     dispatch(getClientsByUser({ search: user?.result?._id }));
   },[location, dispatch])
 
+  // console.log(user?.result?._id)
 
-  // console.log(useSelector(state => state.clients))
+  // console.log(useSelector(state => state))
 
   if(isLoading) {
     return  <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', paddingTop: '20px'}}>

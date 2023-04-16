@@ -85,12 +85,12 @@ const Sidebar = (props) => {
                   <p className='sidebar-text'>CRM</p>
               </Grid>
             </Box> */}
-            <Box className='sidebar-data' component={Link} to="/Admin">
+            <Box className='sidebar-data' component={Link} to="/users">
               <Grid container justifyContent="center" alignItems='center'>
                 <Grid item className='sidebar-logo' >
                     <PeopleAltIcon fontSize={iconsize}/>
                 </Grid>
-                  <p className='sidebar-text'>Admin</p>
+                  <p className='sidebar-text'>Users (Admin)</p>
               </Grid>
             </Box>
             {/* <Box className='sidebar-data' component={Link} to="/Board">

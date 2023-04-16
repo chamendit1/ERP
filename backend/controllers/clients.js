@@ -34,12 +34,13 @@ export const getClient = async (req, res) => {
 }
 
  export const getClients = async (req, res) => {
-     const userId = req.body
+    //  const userId = req.body
+    // console.log('log')
 
      try {
-         const allClients = await ClientModel.find({userId: userId}).sort({_id:-1}) 
+         const allClients = await ClientModel.find({}).sort({_id:-1}) 
         //find({}).sort({_id:-1}) to sort according to date of creation
-
+        // console.log(allClients)
         res.status(200).json(allClients)
 
      } catch (error) {

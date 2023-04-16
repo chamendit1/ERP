@@ -13,10 +13,18 @@ const PASS =  process.env.SMTP_PASS
 
 import User from '../models/userModel.js'
 
+export const getUsers = async (req, res) => { 
+    try {
+        const allUsers = await User.find().sort({ _id: -1 });
+        res.status(200).json(allUsers);
+    } catch (error) {
+        res.status(404).json({ message: error.message });
+    }
+  }
 
 export const signin = async (req, res)=> {
     const { email, password } = req.body //Coming from formData
-
+    console.log(req)
     try {
         const existingUser = await User.findOne({ email })
 
@@ -41,7 +49,7 @@ export const signin = async (req, res)=> {
 
 export const signup = async (req, res)=> {
     const { email, password, confirmPassword, firstName, lastName, role, access, active} = req.body
-    // console.log(role)
+    console.log(access)
     try {
         const existingUser = await User.findOne({ email })
 
@@ -56,20 +64,21 @@ export const signup = async (req, res)=> {
         const token = jwt.sign({ email: result.email, id: result._id }, SECRET, { expiresIn: "1h" })
         
         res.status(200).json({ result, token })
-        // console.log({ result, token })
+        console.log({ result, token })
 
     } catch (error) {
         // console.log(error)
+        // console.log(access)
         res.status(500).json({ message: "Something went wrong"}) 
     }
 }
 
 
 export const updateUser = async (req, res) => {
+    const { id: _id } = req.params;
+    console.log(req)
     const formData = req.body
-    const { id: _id } = req.params
-    console.log(formData)
-    const existingUser = await User.findOne({ email })
+    // const existingUser = await User.findOne({ email })
     // if(!existingUser) return res.status(404).send('No user with this id found')
 
     const updatedUser = await User.findByIdAndUpdate(_id, formData, {new: true})

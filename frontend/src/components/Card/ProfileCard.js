@@ -24,6 +24,7 @@ const ProfileCard = (props) => {
     setOpen(false);
     // setSelectedValue(value);
   };
+  // console.log(props.data.access.CRM)
   return (
     <Card sx={{ maxWidth: 345 }}>
       <CardActionArea>
@@ -44,7 +45,10 @@ const ProfileCard = (props) => {
             {props.email}
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            Access: {props.access}
+            CRM: {props.access.CRM.toString()}
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            Accounting: {props.access.Accounting.toString()}
           </Typography>
         </CardContent>
       </CardActionArea>

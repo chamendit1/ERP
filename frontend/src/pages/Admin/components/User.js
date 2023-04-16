@@ -4,25 +4,24 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Select, MenuItem, InputLabel, OutlinedInput, FormControl, FormGroup, FormControlLabel, Checkbox} from '@mui/material'
 
 import { getProfile, updateProfile } from '../../../actions/profile';
+import { update } from '../../../actions/auth';
 
 const User = (props) => {
   const { onClose,  open, id, data } = props;
-  const [userData, setUserData] = useState({ access: [], name: '', email: '', phone: '', address: '', userId: []})
-  // const { profile } = useSelector((state) => state.profiles)
-  // const location = useLocation()
+  const [userData, setUserData] = useState({ access: [], name: '', email: '', userId: []})
   const dispatch = useDispatch();
-
-  //  useEffect(() => {
-  //   dispatch(getProfile(id));
-  //   // eslint-disable-next-line
-  // }, [id, location]);
+  const [checked1, setChecked1] = React.useState(false);
+  const [checked2, setChecked2] = React.useState(false);
 
 
   useEffect(() => {
     setUserData(data)
+    setChecked1(data.access.CRM)
+    setChecked2(data.access.Accounting)
+
   }, [data, dispatch]);
 
-  console.log(userData)
+  // console.log(userData)
   // console.log()
   const handleClose = () => {
     onClose();
@@ -32,11 +31,21 @@ const User = (props) => {
     if(id) {
       // console.log(userData)
       dispatch(updateProfile(id, userData))
+      dispatch(update(id, userData))
     } 
     // clear()
     handleClose()
   }
 
+  const handleChange1 = (e) => {
+    setChecked1(e.target.checked);
+    setUserData({...userData, access: {...userData.access, CRM : e.target.checked}})
+  };
+
+  const handleAccess2 = (e) => {
+    setChecked2(e.target.checked);
+    setUserData({...userData, access: {...userData.access, Accounting : e.target.checked}})
+  };
 
   return (
     <>
@@ -77,14 +86,17 @@ const User = (props) => {
 
             <Typography>Module Access</Typography>
             <FormGroup sx={{ m: 2, width: '100%' }}>
+
               <FormControlLabel name='access' 
-                onChange={(e) => setUserData({...userData, access : [...userData.access , e.target.value]})}
+                onChange={handleChange1}
                 control={<Checkbox value={'CRM'} />} 
+                checked={checked1}
                 label="CRM" 
               />
               <FormControlLabel name='access' 
-                onChange={(e) => setUserData({...userData, access : [...userData.access , e.target.value]})}
+                onChange={handleAccess2}
                 control={<Checkbox value={'Accounting'} />} 
+                checked={checked2}
                 label="Accounting" 
               />
             </FormGroup>

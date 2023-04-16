@@ -44,19 +44,18 @@ import {
 import '../css/navbar.css'
 import Breadcrumb from './Breadcrumb/Breadcrumb';
 
-
-
 const SubNav = ( {handleDrawer, children}) => {
     const dispatch = useDispatch()
     const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')))
     const navigate = useNavigate()
     const location = useLocation()
 
-
     useEffect(() => {
         setUser(JSON.parse(localStorage.getItem('profile')))
     },[location])
-
+    // dispatch({ type: 'LOGOUT' })
+    // navigate('/')
+    // setUser(null)
 
     const handleLogout = () => {
         dispatch({ type: 'LOGOUT' })
@@ -99,7 +98,7 @@ const SubNav = ( {handleDrawer, children}) => {
 
     prevOpen.current = open;
   }, [open]);
-// console.log(location)
+  // console.log(user)
 
     if(!user) return (
         <Card>
@@ -114,6 +113,7 @@ const SubNav = ( {handleDrawer, children}) => {
           </Grid>
         </Card>
     )
+    // console.log(user)
 
 
     return ( 
@@ -128,6 +128,9 @@ const SubNav = ( {handleDrawer, children}) => {
                 <Breadcrumb navigate={navigate} location={location}/>
             </Grid>
             <Grid item xs display={'flex'} justifyContent={'flex-end'}>
+                {/* {user.result.access} <br/> */}
+                {/* {user.result.role} <br/> */}
+                {/* {user.result.email} */}
                 <Button size='small' onClick={handleLogout}><LogoutIcon fontSize='small'/></Button>
             </Grid>
           </Grid>

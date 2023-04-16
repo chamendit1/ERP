@@ -17,10 +17,11 @@ export const getClient = (id) => async (dispatch) => {
 };
 
 
-export const getClientsByUser =(searchQuery) => async (dispatch) => {
+export const getClientsByUser =() => async (dispatch) => {
     try {
       dispatch({ type: START_LOADING })
-      const  { data: { data } } = await api.fetchClientsByUser(searchQuery)
+      const  { data } = await api.fetchClients()
+      console.log(data)
       dispatch({ type: FETCH_CLIENTS_BY_USER, payload: data });
       dispatch({ type: END_LOADING })
     } catch (error) {
