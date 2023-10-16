@@ -5,7 +5,7 @@ import { ADD_NEW_CLIENT, UPDATE_CLIENT, DELETE_CLIENT, FETCH_CLIENTS_BY_USER, FE
 
 export const getClient = (id) => async (dispatch) => {
   try {
-    // console.log('Starting a')
+    // console.log(id)
     dispatch({ type: START_LOADING });
     const { data } = await api.fetchClient(id);
     dispatch({ type: FETCH_CLIENT, payload: { client: data } });

@@ -9,7 +9,7 @@ const DragGrid = (props) => {
     
     return (				
         <Grid item xs key={index}>
-            <Grid container className="kanbanColumn" direction="column">
+            <Grid container className="kanbanColumn" minWidth={'30vh'} direction="column">
                 <Grid item className="kanbanTitleContainer" xs={0} padding={'1rem'} display={'flex'} alignItems={'center'} justifyContent={'space-between'}>
                     <Typography>{column.label}</Typography>
                     <Button onClick={() => handleEditCol(column)}><EditIcon fontSize='small'/></Button>

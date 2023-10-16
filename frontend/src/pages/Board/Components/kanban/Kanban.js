@@ -65,7 +65,7 @@ const Kanban = () => {
 	const onDragEnd = (result) => {
 		const { destination, source, draggableId } = result;
 		// if the user drags and drops back in the same position
-		// console.log(result)
+		console.log(result)
 		if (
 		destination.droppableId === source.droppableId &&
 		destination.index === source.index
@@ -80,7 +80,7 @@ const Kanban = () => {
 		}
 	}
 	// console.log(useSelector(state => state.invoices.invoice))
-	console.log(invoicesData)
+	 console.log(order)
 
   return (
     <>
@@ -90,8 +90,11 @@ const Kanban = () => {
 		<Button variant="contained" onClick={handleEditBoard}>Edit Board</Button>
 		<DragDropContext onDragEnd={onDragEnd}>
 			<Box className='gridCo'>
-			<Grid className='gridContainer' container spacing={6}	>
-				<Grid item >
+			<Grid className='gridContainer' wrap='nowrap' container spacing={2}	>
+				
+				
+				
+				<Grid item xs>
 					<Grid container className="kanbanColumn" minWidth={'30vh'} direction="column">
 						<Grid item className="kanbanTitleContainer" xs={0} padding={'1rem'}>
 							<Typography>New Task</Typography>
@@ -101,7 +104,9 @@ const Kanban = () => {
 								{(droppableProvided, droppableSnapshot) => (
 									<Grid className="droppableGrid" key={'1'} {...droppableProvided.droppableProps} ref={droppableProvided.innerRef}>
 										{invoicesData.map((invoice, index) => {
-											if(invoice.orderStatus === '0') {
+											console.log(invoice.orderStatus)
+											if(invoice.orderStatus >= 0 ) {
+												// console.log(invoice)
 												return (													
 												<Draggable key={invoice._id} draggableId={invoice._id} index={index}>
 													{(draggableProvided, draggableSnapshot) => (
@@ -123,7 +128,7 @@ const Kanban = () => {
 					.sort((a, b) => a.id-b.id)
 					.map((column,index) => {
 						const order = invoicesData.filter((invoice) => {
-							if(invoice.orderStatus === String(column._id)) {
+							if(invoice.orderStatus === column._id) {
 								return invoice._id
 							}
 						})

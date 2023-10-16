@@ -7,7 +7,7 @@ import { ADD_NEW, UPDATE, DELETE, GET_ORDER, START_LOADING, END_LOADING, FETCH_A
      try {
          dispatch({ type: START_LOADING })
          const { data } = await api.fetchOrders()
-         console.log(data)
+        //  console.log(data)
          dispatch({ type: FETCH_ALL, payload: data });
          dispatch({ type: END_LOADING })
          
@@ -33,7 +33,7 @@ import { ADD_NEW, UPDATE, DELETE, GET_ORDER, START_LOADING, END_LOADING, FETCH_A
 export const getOrder = (id) => async (dispatch)=> {
     try {
         const { data } = await api.fetchOrder(id)
-        console.log( data )
+        // console.log( data )
         dispatch({ type: GET_ORDER, payload: data  })
     } catch (error) {
         console.log(error)
@@ -43,9 +43,9 @@ export const getOrder = (id) => async (dispatch)=> {
 export const createOrder =(order, history) => async (dispatch) => {
     try {
         dispatch({ type: START_LOADING })
-        console.log(order)
+        // console.log(order)
         const { data } = await api.addOrder(order)
-        console.log(data)
+        // console.log(data)
         dispatch({ type: ADD_NEW, payload: data })
         // history.push(`/order/${data._id}`)
         dispatch({ type: END_LOADING })

@@ -128,9 +128,6 @@ const SubNav = ( {handleDrawer, children}) => {
                 <Breadcrumb navigate={navigate} location={location}/>
             </Grid>
             <Grid item xs display={'flex'} justifyContent={'flex-end'}>
-                {/* {user.result.access} <br/> */}
-                {/* {user.result.role} <br/> */}
-                {/* {user.result.email} */}
                 <Button size='small' onClick={handleLogout}><LogoutIcon fontSize='small'/></Button>
             </Grid>
           </Grid>

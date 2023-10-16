@@ -35,16 +35,16 @@ const Board = () => {
 
 	// console.log(boardData)
 
-	const pages =  [
-		{
-			page: 'Kanban',
-			link: <Kanban/>,
-		},
-		{
-			page: 'Table',
-			link: <Table/>,
-		}
-	]
+	// const pages =  [
+	// 	{
+	// 		page: 'Kanban',
+	// 		link: <Kanban/>,
+	// 	},
+	// 	{
+	// 		page: 'Table',
+	// 		link: <Table/>,
+	// 	}
+	// ]
 
 	// console.log(pages[0].link)
   return (

@@ -5,8 +5,10 @@ import { useNavigate } from 'react-router-dom'
 import { Box } from '@mui/material';
 
 import { getInvoices } from '../../actions/invoiceActions';
-import OrderTablee from './components/OrderTable';
+import OrderTable from './components/OrderTable';
 import CircularProgress from '@mui/material/CircularProgress';
+// import { getColumn, getColumns } from '../../actions/column';
+import { getColumn, getColumns } from '../../actions/column';
 
 const headCells = [
 
@@ -42,26 +44,23 @@ const Orders = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const user = JSON.parse(localStorage.getItem('profile'))
-  // const [boardsData, setBoardsData] = useState([]) 
-
+  // const { client }= useSelector(state => state.clients)
+  const [orderStatus, setOrderStatus ] = useState(0)
   const rows = useSelector(state => state.invoices.invoices)
-  const isLoading = useSelector(state => state.invoices.isLoading)
-  // const boards = useSelector(state => state.board.boards)
+  const columns = useSelector(state => state.column.columns)
 
-  // console.log(boards)
+  useEffect(() => {
+    dispatch(getColumns());
+  }, [dispatch]);
 
   useEffect(() => {
       dispatch(getInvoices());
   }, [dispatch]);
 
-  // useEffect(() => {
-  //   setBoardsData(boards)
-  // }, [boards]);
-  
-  // useEffect(() => {
-  //   dispatch(getBoards());
-  // }, []);
-  // console.log(rows)
+  // console.log(useSelector(state => state.invoices))
+
+
+
   if(!user) {
     navigate('/login')
   }
@@ -76,10 +75,10 @@ const Orders = () => {
     <>
       <Box sx={{ flexGrow: 1 }}>
         
-        <OrderTablee 
+        <OrderTable
           rows={rows}
+          columns={columns}
           head={headCells}
-          // boards={boardsData}
         />
       </Box>
     </>
@@ -87,3 +86,17 @@ const Orders = () => {
 }
 
 export default Orders
+
+  // const boards = useSelector(state => state.board.boards)
+  // const [boardsData, setBoardsData] = useState([]) 
+
+  // console.log(boards)
+
+    // useEffect(() => {
+  //   setBoardsData(boards)
+  // }, [boards]);
+  
+  // useEffect(() => {
+  //   dispatch(getBoards());
+  // }, []);
+  // console.log(rows)

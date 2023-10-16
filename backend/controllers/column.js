@@ -14,6 +14,17 @@ export const getColumn = async (req, res) => {
     }
 }
 
+export const getColumnbyBoard = async (req, res) => {
+  const { board } = req.params;
+
+  try {
+      const columns = await ColumnModel.find({board: board});
+      res.status(200).json({ data: columns })
+    } catch (err) {
+      res.status(500).json(err)
+    }
+}
+
 export const createColumn = async (req, res) => {
     try {
         const client = req.body

@@ -2,7 +2,7 @@ import axios from 'axios'
 
 // const API = axios.create({ baseURL: 'http://localhost:5000'})
 const API = axios.create({ baseURL: process.env.REACT_APP_API})
-// const API2 = axios.create({ baseURL: process.env.REACT_APP_API2})
+const API2 = axios.create({ baseURL: process.env.REACT_APP_API2})
 
 API.interceptors.request.use((req) => {
     if(localStorage.getItem('profile')) {
@@ -24,14 +24,6 @@ export const addBoard =( board ) => API.post('/board', board)
 export const updateBoard = (id, updatedBoard) => API.patch(`/board/${id}`, updatedBoard)
 export const deleteBoard =(id) => API.delete(`/board/${id}`)
 
-export const fetchInvoices =() => API.get('/invoices')
-export const fetchInvoice =(id) => API.get(`/invoices/${id}`)
-export const fetchInvoicesByClient = (id) => API.get(`/invoices/clients/${id}`);
-
-export const addInvoice =( invoice ) => API.post('/invoices', invoice)
-export const updateInvoice = (id, updatedInvoice) => API.patch(`/invoices/${id}`, updatedInvoice)
-export const deleteInvoice =(id) => API.delete(`/invoices/${id}`)
-//export const fetchInvoicesByUser = (searchQuery) => API.get(`/invoices/invoices?searchQuery=${searchQuery.search}`);
 
 export const fetchTransactions =() => API.get('/Transaction')
 export const fetchTransaction =(id) => API.get(`/Transaction/${id}`)
@@ -43,15 +35,15 @@ export const deleteTransaction =(id) => API.delete(`/Transaction/${id}`)
 
 
 
-
+export const addOrder =( order ) => API.post('/order', order)
 export const fetchOrders =() => API.get('/order')
 export const fetchOrder =(id) => API.get(`/order/${id}`)
+// export const updateOrder = (id, updatedOrder) => API.patch(`/orders/${id}`, updatedOrder)
+// export const deleteOrder =(id) => API.delete(`/orders/${id}`)
 
 // export const fetchOrdersByClient = (id) => API.get(`/order/${id}`);
 
-export const addOrder =( order ) => API.post('/order', order)
-// export const updateOrder = (id, updatedOrder) => API.patch(`/orders/${id}`, updatedOrder)
-// export const deleteOrder =(id) => API.delete(`/orders/${id}`)
+
 
 
 export const fetchInventories =() => API.get('/inventories')
@@ -62,21 +54,40 @@ export const addInventory =( inventory ) => API.post('/inventories', inventory)
 export const updateInventory = (id, updatedInventory) => API.patch(`/inventories/${id}`, updatedInventory)
 export const deleteInventory =(id) => API.delete(`/inventories/${id}`)
 
+
+
+
+
+
 export const fetchProducts =() => API.get('/products')
 export const fetchProduct =(id) => API.get(`/products/${id}`)
 
-export const addProduct =( product ) => API.post('/products', product)
+export const addProduct =( product ) => API2.post('/products', product)
 export const updateProduct= (id, updatedProduct) => API.patch(`/products/${id}`, updatedProduct)
 export const deleteProduct =(id) => API.delete(`/products/${id}`)
 
 
 
-export const fetchClient = (id) => API.get(`/clients/${id}`);
-export const fetchClients = () => API.get('/clients');
-export const addClient =( client ) => API.post('/clients', client)
-export const updateClient = (id, updatedClient) => API.patch(`/clients/${id}`, updatedClient)
-export const deleteClient =(id) => API.delete(`/clients/${id}`)
-export const fetchClientsByUser = (searchQuery) => API.get(`/clients?searchQuery=${searchQuery.search}`);
+
+
+
+export const fetchInvoices =() => API2.get('/invoices')
+export const fetchInvoice =(id) => API2.get(`/invoices/${id}`)
+export const fetchInvoicesByClient = (id) => API.get(`/invoices/clients/${id}`);
+
+export const addInvoice =( invoice ) => API2.post('/invoices', invoice)
+export const updateInvoice = (id, updatedInvoice) => API.patch(`/invoices/${id}`, updatedInvoice)
+export const deleteInvoice =(id) => API.delete(`/invoices/${id}`)
+//export const fetchInvoicesByUser = (searchQuery) => API.get(`/invoices/invoices?searchQuery=${searchQuery.search}`);
+
+
+
+export const fetchClient = (id) => API2.get(`/clients/${id}`);
+export const fetchClients = () => API2.get('/clients');
+export const addClient =( client ) => API2.post('/clients', client)
+export const updateClient = (id, updatedClient) => API2.patch(`/clients/${id}`, updatedClient)
+export const deleteClient =(id) => API2.delete(`/clients/${id}`)
+// export const fetchClientsByUser = (searchQuery) => API.get(`/clients?searchQuery=${searchQuery.search}`);
 
 
 export const signIn =(formData)=> API.post('/users/signin', formData)

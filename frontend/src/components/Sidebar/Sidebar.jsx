@@ -31,16 +31,6 @@ const Sidebar = (props) => {
   useEffect(() => {
     setUser(JSON.parse(localStorage.getItem('profile')))
   }, [location])
-  const navigate = useNavigate()
-  const dispatch = useDispatch()
-
-  // const handleClick = (event) => {
-  //   setAnchorEl(event.currentTarget);
-  // };
-  // const handleClose = () => {
-  //   setAnchorEl(null);
-  // };
-
   if(!user) return null
 
   const iconsize = 'small'
@@ -77,28 +67,54 @@ const Sidebar = (props) => {
                   <p className='sidebar-text'>Penjualan</p>
               </Grid>
             </Box>
-            {/* <Box className='sidebar-data' component={Link} to="/CRM">
+            <Box className='sidebar-data' component={Link} to="/CRM">
               <Grid container justifyContent="center" alignItems='center'>
                 <Grid item xs={12} className='sidebar-logo' >
                     <PeopleAltIcon fontSize={iconsize}/>
                 </Grid>
                   <p className='sidebar-text'>CRM</p>
               </Grid>
-            </Box> */}
-            <Box className='sidebar-data' component={Link} to="/users">
+            </Box>
+            {/* <Box className='sidebar-data' component={Link} to="/users">
               <Grid container justifyContent="center" alignItems='center'>
                 <Grid item className='sidebar-logo' >
                     <PeopleAltIcon fontSize={iconsize}/>
                 </Grid>
                   <p className='sidebar-text'>Users (Admin)</p>
               </Grid>
-            </Box>
-            {/* <Box className='sidebar-data' component={Link} to="/Board">
+            </Box> */}
+            {/* <Box className='sidebar-data' component={Link} to="/Employees">
               <Grid container justifyContent="center" alignItems='center'>
                 <Grid item className='sidebar-logo' >
                     <PeopleAltIcon fontSize={iconsize}/>
                 </Grid>
-                  <p className='sidebar-text'>Board</p>
+                  <p className='sidebar-text'>Empolyees</p>
+              </Grid>
+            </Box> */}
+            <Box className='sidebar-data' component={Link} to="/Admin">
+              <Grid container justifyContent="center" alignItems='center'>
+                <Grid item className='sidebar-logo' >
+                    <PeopleAltIcon fontSize={iconsize}/>
+                </Grid>
+                  <p className='sidebar-text'>Admin</p>
+              </Grid>
+            </Box>
+
+            <Box className='sidebar-data' component={Link} to="/todo">
+              <Grid container justifyContent="center" alignItems='center'>
+                <Grid item className='sidebar-logo' >
+                    <PeopleAltIcon fontSize={iconsize}/>
+                </Grid>
+                  <p className='sidebar-text'>TodoTest</p>
+              </Grid>
+            </Box>
+
+            {/* <Box className='sidebar-data' component={Link} to="/ClientLayout">
+              <Grid container justifyContent="center" alignItems='center'>
+                <Grid item className='sidebar-logo' >
+                    <PeopleAltIcon fontSize={iconsize}/>
+                </Grid>
+                  <p className='sidebar-text'>ClientLayout</p>
               </Grid>
             </Box> */}
             <Box>
@@ -108,13 +124,14 @@ const Sidebar = (props) => {
     )
     return (
       <>
-        <SwipeableDrawer
+        <Drawer
           open={openDrawer.open}
           onClose={onClose}
           onOpen={onOpen}
+          variant="persistent"
         >
           <Data/>
-        </SwipeableDrawer>
+        </Drawer>
       </>
     )
 }

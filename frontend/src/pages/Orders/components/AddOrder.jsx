@@ -30,10 +30,10 @@ import { useDispatch, useSelector } from 'react-redux'
 // import { useSnackbar } from 'react-simple-snackbar'
 import { useParams, useNavigate} from 'react-router-dom'
 import { createInvoice, getInvoice, updateInvoice } from '../../../actions/invoiceActions';
-import { getClientsByUser, getClient } from '../../../actions/clientActions'
+import { getClientsByUser } from '../../../actions/clientActions'
 import moment from 'moment'
 // import { toCommas } from '../../utils/utils'
-import { initialState } from '../../../initialState'
+import { initialState, orderItemState } from '../../../initialState'
 // import currencies from '../../currencies.json'
 // import InvoiceType from '../../components/Invoice/InvoiceType'
 // import stylecss from './Order.module.css'
@@ -41,6 +41,8 @@ import AddClient from '../../Clients/components/AddClient' // Need to cross chec
 import { DialogTitle, DialogContent , DialogActions } from '@mui/material';
 import { getBoard, updateBoard } from '../../../actions/board';
 import AddIcon from '@mui/icons-material/Add';
+import { addProduct } from '../../../api';
+import { createProduct } from '../../../actions/productActions';
 
  
  const DTitle = (props) => {
@@ -84,14 +86,14 @@ import AddIcon from '@mui/icons-material/Add';
      const navigate = useNavigate()
      const [orderStatus, setOrderStatus ] = useState('')
      const [newClientOpen, setNewClientOpen] = useState(false)
+
+
+     const [orderItem, setOrderItem] = useState({items: [{itemName: '', quantity: '', price: ''}]})
      
     useEffect(() => {
-      dispatch(getClientsByUser({ search: user?.result?._id }));
-      // console.log('r')
-    }, [id]);
-
-    // console.log(useSelector((state) => state.clients))
-
+      if(open === true)
+        dispatch(getClientsByUser({ search: user?.result?._id }));
+    }, [id,open]);
 
   useEffect(() => {
     if(Object.keys(invoice).length !== 0) {
@@ -105,6 +107,10 @@ import AddIcon from '@mui/icons-material/Add';
         setOrderStatus(invoice.orderStatus)
     }
   }, [invoice])
+//  console.log(invoiceData)
+  // useEffect(() => {
+  //   setOrderItem(orderItem)
+  // },[orderItem])
 
 
   useEffect(() => {
@@ -126,6 +132,8 @@ import AddIcon from '@mui/icons-material/Add';
     setSelectedDate(date);
   };
 
+  // console.log(selectedDate)
+
 const handleRates =(e) => {
   setRates(e.target.value)
   setInvoiceData((prevState) => ({...prevState, tax: e.target.value}))
@@ -134,11 +142,13 @@ const handleRates =(e) => {
   // console.log(invoiceData)
   // Change handler for dynamically added input field
   const handleChange =(index, e) => {
-      const values = [...invoiceData.items]
+      const values = [...orderItem.items]
       values[index][e.target.name] = e.target.value
-      setInvoiceData({...invoiceData, items: values})
-      
+      // setInvoiceData({...invoiceData, items: values})
+      setOrderItem({...orderItem, items: values})
   }
+
+  console.log(orderItem)
 
   useEffect(() => {
           //Get the subtotal
@@ -176,19 +186,21 @@ const handleRates =(e) => {
 
   const handleAddField = (e) => {
       e.preventDefault()
-      setInvoiceData((prevState) => ({...prevState, items: [...prevState.items,  {itemName: '', unitPrice: '', quantity: '', discount: '', amount: '' }]}))
+      // setOrderItem((prevState) => ({...prevState, items: [...prevState.items,  {itemName: '', unitPrice: '', quantity: '',  amount: '', orderNumber: invoiceData.invoiceNumber }]}))
+      dispatch(createProduct(orderItem))
   }
 
   const handleRemoveField =(index) => {
-      const values = invoiceData.items
-      values.splice(index, 1)
-      setInvoiceData((prevState) => ({...prevState, values}))
+      // const values = invoiceData.items
+      // values.splice(index, 1)
+      // setOrderItem((prevState) => ({...prevState, values}))
       // console.log(values)
   }
   // console.log(rows[0]._id)
 
   const handleSubmit =  async (e ) => {
       e.preventDefault()
+      // dispatch(createProduct(orderItem))
       if(Object.keys(invoice).length !== 0) {
       // dispatch(updateBoard(boards[orderStatus]._id, {...boards[orderStatus], taskId: [...boards[orderStatus].taskId, invoiceData.invoiceNumber]}))
        dispatch(updateInvoice( invoice._id, {
@@ -342,13 +354,12 @@ const handleRates =(e) => {
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                  {invoiceData.items.map((itemField, index) => (
+                  {orderItem.items.map((itemField, index) => (
                     <TableRow key={index}>
                       <TableCell  scope="row" style={{width: '40%' }}> <InputBase style={{width: '100%'}} outline="none" sx={{ ml: 1, flex: 1 }} type="text" name="itemName" onChange={e => handleChange(index, e)} value={itemField.itemName} placeholder="Item name or description" /> </TableCell>
                       <TableCell align="right"> <InputBase sx={{ ml: 1, flex: 1 }} type="number" name="quantity" onChange={e => handleChange(index, e)} value={itemField.quantity} placeholder="0" /> </TableCell>
                       <TableCell align="right"> <InputBase sx={{ ml: 1, flex: 1 }} type="number" name="unitPrice" onChange={e => handleChange(index, e)} value={itemField.unitPrice} placeholder="0" /> </TableCell>
-                      {/* <TableCell align="right"> <InputBase sx={{ ml: 1, flex: 1 }} type="number" name="discount"  onChange={e => handleChange(index, e)} value={itemField.discount} placeholder="0" /> </TableCell> */}
-                      <TableCell align="right"> <InputBase sx={{ ml: 1, flex: 1 }} type="number" name="amount" onChange={e => handleChange(index, e)}  value={(itemField.quantity * itemField.unitPrice) - (itemField.quantity * itemField.unitPrice) * itemField.discount / 100} disabled /> </TableCell>
+                      <TableCell align="right"> <InputBase sx={{ ml: 1, flex: 1 }} type="number" name="amount" onChange={e => handleChange(index, e)}  value={(itemField.quantity * itemField.unitPrice) - (itemField.quantity * itemField.unitPrice) / 100} disabled /> </TableCell>
                       <TableCell align="right"> 
                         <IconButton onClick={() =>handleRemoveField(index)}>
                           <DeleteOutlineRoundedIcon style={{width: '20px', height: '20px'}}/>

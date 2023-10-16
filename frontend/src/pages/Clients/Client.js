@@ -1,17 +1,19 @@
 import React, { useState, useEffect} from 'react'
-import { useParams } from 'react-router-dom'
+import { Route, Routes, useParams, Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { clientState } from '../../initialState'
 import { getClient } from '../../actions/clientActions'
-import { Card, Grid, Box, Avatar, Typography, IconButton } from '@mui/material'
+import { Card, Grid, Box, Avatar, Typography, IconButton, ButtonGroup, Button } from '@mui/material'
 
 import { getInvoicesByClient } from '../../actions/invoiceActions'
 
 import OrderTable from '../Orders/components/OrderTable'
 import AddClient from './components/AddClient'
-import AddCircleOutline from '@mui/icons-material/AddCircleOutline'
-import ModeEditIcon from '@mui/icons-material/ModeEdit';
+import ClientCard from './components/ClientCard'
+import ClientDetails from './components/ClientDetails'
+// import AddCircleOutline from '@mui/icons-material/AddCircleOutline'
+
 const headCells = [
   // {
   //   id: 'ID',
@@ -58,100 +60,100 @@ const Client = () => {
   const [ClientData, setClientData] = useState(clientState)
   const {client} = useSelector((state) => state.clients)
   const [open, setOpen] = useState(false)
-
   const rows = useSelector(state => state.invoices.invoices)
-
 
   useEffect(() => {
     dispatch(getClient(id));
-  },[id])
+  },[id, dispatch])
 
   useEffect(() => {
     dispatch(getInvoicesByClient(id));
   },[id])
 
-  // console.log(ClientData)
-
-  const editClient= (id) => {
-    setOpen((prev) => !prev)
-  }
-
   useEffect(() => {
-      if(client) {
-          setClientData(client)
-      }
+    if(client) {
+      setClientData(client)
+    }
   }, [client])
 
-  const data = [
-    // {
-    //   text: <Typography variant="subtitle2" sx={{fontWeight: 'bold'}}>Profile</Typography>,
-    // },
-    // {
-    //   text: <Typography variant="subtitle2" sx={{fontWeight: 'bold'}}>Transactions</Typography>,
-    // },
-    // {
-    //   text: <Typography variant="subtitle2" sx={{fontWeight: 'bold'}}>Invoices</Typography>,
-    // },
-  ]
 
   return (
     <>
-    <AddClient setOpen={setOpen} open={open} />
-    <Box sx={{ flexGrow: 1 }}>
-      <Grid className='ClientContainer' container spacing={{ xs: 2, md: 3 }} columns={{ xs: 2, sm: 6, md: 6, lg:12 }}>
+      <AddClient setOpen={setOpen} open={open} />
 
-        <Grid className='ClientItem' item xs={2} sm={6} md={6} lg={6}>
-          <Card style={{borderRadius: 10, boxShadow: 3}} sx={{p: 2}}>
-          <Grid container>
-            <Grid item >
-              <Avatar variant="rounded" sx={{ height: '100%', width: '80px' }}></Avatar>
-            </Grid>
-            <Grid item xs sx={{p: 1}}>
-              <Typography variant="h6">{ClientData?.name}</Typography>
-              <Typography variant="subtitle2">{ClientData?.email}</Typography>
-              <Typography variant="subtitle2">{ClientData?.phone}</Typography>
-              <Typography variant="subtitle2">{ClientData?.address}</Typography>
 
-            </Grid>
-            <Grid item >
-              <IconButton onClick={() => editClient()}>
-                <ModeEditIcon/>
-              </IconButton>
+      
+        <Grid container spacing={{ xs: 1, md: 1 }}>
+          <Grid item xs={12} sm={12} md={12} lg={12}>
+            {/* Main */}
+            <Typography variant="h6">{ClientData?.name}</Typography>
+          </Grid>
+          <Grid item xs={12} sm={3} md={3} lg={2}>
+            <ClientCard ClientData={ClientData} />
+          </Grid> 
+
+
+
+
+
+
+
+          
+          <Grid item xs={12} sm={9} md={9} lg={10}>
+            <Grid container>
+                <Card style={{backgroundColor: 'white', borderRadius: 10, boxShadow: 3}}>
+                  <ButtonGroup variant="text" aria-label="text button group">
+                    <Button component={Link} to="./">Details</Button>
+                    <Button component={Link} to="./order">Orders</Button>
+                  </ButtonGroup>
+
+                  <Routes>
+                    <Route 
+                      path="/" 
+                      element={<ClientDetails client={client}/>}
+                    />
+                    <Route path="/order" 
+                      element={<OrderTable 
+                      rows={rows} 
+                      head={headCells}
+                      title='Orders' />}/>
+                  </Routes>
+                  </Card>
             </Grid>
           </Grid>
-          </Card>
         </Grid>
+    </>
+  )
+}
 
+export default Client
+
+  // const data = [
+  //   {
+  //     text: <Typography variant="subtitle2" sx={{fontWeight: 'bold'}}>Profile</Typography>,
+  //   },
+  //   {
+  //     text: <Typography variant="subtitle2" sx={{fontWeight: 'bold'}}>Transactions</Typography>,
+  //   },
+  //   {
+  //     text: <Typography variant="subtitle2" sx={{fontWeight: 'bold'}}>Invoices</Typography>,
+  //   },
+  // ]
+
+      {/* 
         {data.map((dat, index) => (
           <Grid className="" item xs={2} sm={6} md={6} key={index}>
             <Card style={{borderRadius: 10, boxShadow: 3}} sx={{p: 2}}>
               {dat.text}
             </Card>
           </Grid>
-        ))}
+        ))} 
+      */}
 
-
+      {/* 
         <Grid item xs sm xl>
-          <Card style={{borderRadius: 10, boxShadow: 3}}>
-            <OrderTable
-              rows={rows}
-              head={headCells}
-              title='Orders'
-            />
-          </Card>
-        </Grid>
-
-        {/* <Grid item xs sm xl>
           <Card style={{borderRadius: 10, boxShadow: 3}} sx={{p: 2}}>
               <Typography variant="subtitle2" sx={{fontWeight: 'bold'}}>Bill</Typography>
           </Card>
-        </Grid> */}
-
-
-      </Grid>
-    </Box>
-    </>
-  )
-}
-
-export default Client
+        </Grid> 
+      */}

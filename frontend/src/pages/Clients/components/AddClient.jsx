@@ -41,13 +41,13 @@
      const client = useSelector((state)=> state.clients.client)
      const { id } = useParams()
      
-     
+     console.log(id)
 
      useEffect(() => {
       if (id) {
         dispatch(getClient(id));
       }
-    }, [id]);
+    }, [id, open]);
  
      useEffect(() => {
        if(client) {

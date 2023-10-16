@@ -1,7 +1,8 @@
 
 import { ALL_CLIENTS, ADD_NEW_CLIENT, UPDATE_CLIENT, DELETE_CLIENT, FETCH_CLIENTS_BY_USER, FETCH_CLIENT, START_LOADING, END_LOADING } from '../actions/constants'
 
-const clients = (state = { isLoading: true, clients: [] }, action) => {
+const clients = (state = { isLoading: true, clients: [], client: {} }, action) => {
+  // console.log(state)
     switch (action.type) {
       case START_LOADING:
         return { ...state, isLoading: true };

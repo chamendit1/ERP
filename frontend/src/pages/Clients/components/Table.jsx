@@ -290,7 +290,7 @@ export default function EnhancedTable({ rows, head }) {
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
-
+  console.log(rows)
   return (
     <Card style={{borderRadius: 10, boxShadow: 3}} key='card'>
       <EnhancedTableToolbar 
@@ -315,10 +315,10 @@ export default function EnhancedTable({ rows, head }) {
               {stableSort(rows, getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
-                  const isItemSelected = isSelected(row._id);
+                  const isItemSelected = isSelected(row.client_id);
                   return (
                     <TableRow
-                      key={row._id}
+                      key={row.client_id}
                       hover
                       role="checkbox"
                       aria-checked={isItemSelected}
@@ -330,21 +330,21 @@ export default function EnhancedTable({ rows, head }) {
                         <Checkbox
                           
                           color="primary"
-                          onClick={(event) => handleClick(event, row._id)}
+                          onClick={(event) => handleClick(event, row.client_id)}
                           checked={isItemSelected}/>
-                        {index}
+                        {row.client_id}
                         </Box>
                       </TableCell>
-                      <TableCell  align="left" onClick={() => openClient(row._id)}>{row.name}</TableCell>
-                      <TableCell  style={{width: '20%'}} align="left" onClick={() => openClient(row._id)}>{row.email}</TableCell>
-                      <TableCell  style={{width: '20%'}} align="left" onClick={() => openClient(row._id)}>{row.phone}</TableCell>
+                      <TableCell  align="left" onClick={() => openClient(row.client_id)}>{row.name}</TableCell>
+                      <TableCell  style={{width: '20%'}} align="left" onClick={() => openClient(row.client_id)}>{row.email}</TableCell>
+                      <TableCell  style={{width: '20%'}} align="left" onClick={() => openClient(row.client_id)}>{row.phone}</TableCell>
                       <TableCell  style={{ width: '3%'}}>
-                        <IconButton  onClick={() => editClient(row._id)}>
+                        <IconButton  onClick={() => editClient(row.client_id)}>
                           <BorderColorIcon  style={{width: '20px', height: '20px'}} />
                         </IconButton>
                       </TableCell>
                       <TableCell style={{ width: '3%'}} >
-                        <IconButton onClick={() => handleDelete(row._id)}>
+                        <IconButton onClick={() => handleDelete(row.client_id)}>
                           <DeleteOutlineRoundedIcon  style={{width: '20px', height: '20px'}} />
                         </IconButton>
                       </TableCell>

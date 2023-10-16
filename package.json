@@ -1,0 +1,20 @@
+{
+  "name": "postgres",
+  "version": "1.0.0",
+  "description": "Built with the MERN stack (MongoDB, Express, React and NodeJS).   * [Introduction](#introduction)   * [Key Features](#key-features)   * [Technologies used](#technologies-used)       - [Client](#client)       - [Server](#server)       - [Database](#database)   * [Configuration and Setup](#configuration-and-setup)   * [Troubleshooting](#troubleshooting)   * [Appreciation](#appreciation)   * [Author](#author)   * [License](#license)",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chamendit1/ERP.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/chamendit1/ERP/issues"
+  },
+  "homepage": "https://github.com/chamendit1/ERP#readme"
+}

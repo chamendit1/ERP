@@ -2,6 +2,8 @@
 import { FETCH_ALL, ADD_NEW, UPDATE, DELETE, GET_INVOICE, START_LOADING, END_LOADING, FETCH_INVOICE_BY_USER } from '../actions/constants'
 
 const invoices = (state = { isLoading: true, invoice:{}, invoices: [] }, action) => {
+  // console.log(action)
+  
     switch (action.type) {
       case START_LOADING:
         return { ...state, isLoading: true };
@@ -28,6 +30,7 @@ const invoices = (state = { isLoading: true, invoice:{}, invoices: [] }, action)
       default:
         return state;
     }
+
   };
 
   export default invoices

@@ -7,9 +7,9 @@ import { ADD_NEW, UPDATE, DELETE, GET_INVOICE, START_LOADING, END_LOADING, FETCH
 
      try {
          dispatch({ type: START_LOADING })
-        //  console.log('s')
-         const { data } = await api.fetchInvoices()
-        //  console.log(data)
+         const data  = await api.fetchInvoices()
+        console.log(data)
+
          dispatch({ type: FETCH_ALL, payload: data });
          dispatch({ type: END_LOADING })
      } catch (error) {
@@ -21,8 +21,8 @@ import { ADD_NEW, UPDATE, DELETE, GET_INVOICE, START_LOADING, END_LOADING, FETCH
     console.log(id)
     try {
         dispatch({ type: START_LOADING })
-        const { data } = await api.fetchInvoicesByClient(id)
-        console.log(data)
+        const data = await api.fetchInvoicesByClient(id)
+        // console.log(data)
         dispatch({ type: FETCH_ALL, payload: data}); //Need Check
         dispatch({ type: END_LOADING })
         console.log(data)
@@ -65,11 +65,16 @@ export const getInvoice = (id) => async (dispatch)=> {
     const user = JSON.parse(localStorage.getItem('profile'))
 
     try {
-        const { data } = await api.fetchInvoice(id)
-        const businessDetails = await api.fetchProfilesByUser({search: user?.result?._id || user?.result?.googleId})
-        const invoiceData = {...data, businessDetails}
+        dispatch({ type: START_LOADING })
+        const  data  = await api.fetchInvoice(id)
+        // const businessDetails = await api.fetchProfilesByUser({search: user?.result?._id || user?.result?.googleId})
+        // const invoiceData = {...data, businessDetails}
         // console.log(invoiceData)
-        dispatch({ type: GET_INVOICE, payload: invoiceData  })
+        // dispatch({ type: GET_INVOICE, payload: invoiceData  })
+        dispatch({ type: GET_INVOICE, payload: data  })
+        dispatch({ type: END_LOADING })
+
+
     } catch (error) {
         console.log(error)
     }

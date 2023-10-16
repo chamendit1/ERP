@@ -17,20 +17,24 @@
 .kanban {
     height: 100%;
     margin: 0;
+    
 }
 
 .gridCo {
     /* border: 1px solid rgb(150, 21, 110); */
     margin: 0;
     height: 100%;
-    width: 200vh;
+    width: 100%;
     display: flex;
-
+    overflow-y: scroll;
 }
 
 .gridContainer {
     margin: 0;
     padding: 2rem 1rem;
+    /* width: 300vh; */
+
+    
 }
 
 

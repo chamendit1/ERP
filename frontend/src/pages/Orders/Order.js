@@ -41,9 +41,19 @@ import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
 
 import numberToText from 'number-to-text/converters/id'
+import { getBoard, updateBoard } from '../../actions/board'
+import { getColumn, getColumns } from '../../actions/column';
+
+import { getClient } from '../../actions/clientActions'
 
 
+const toCommas = (value) => {
+  return value.toString()
+}
 
+function currencyFormat(num) {
+  return num.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
+}
 
 
 const Order = () => {
@@ -57,7 +67,7 @@ const Order = () => {
     const [subTotal, setSubTotal] = useState(0)
     const [rates, setRates] = useState(0)
     const [vat, setVat] = useState(0)
-    const [client, setClient] = useState([])
+    const [clientId, setClientId] = useState({_id:''})
     const [type, setType] = React.useState('')
     const [orderOpen, setOrderOpen] = useState(false)
     const navigate = useNavigate()
@@ -75,25 +85,49 @@ const Order = () => {
     const [dorderOpen, setDOrderOpen] = useState(false)
     const [invoiceOpen, setInvoiceOpen] = useState(false)
     // const [openSnackbar, closeSnackbar] = useSnackbar()
-    
+    const columns = useSelector(state => state.column.columns)
+    const column = useSelector(state => state.column.column)
+    const [trackStatus, setTrackStatus ] = useState(0)
+    const { client } = useSelector((state) => state.clients)
+    const [clientData, setClientData] = useState({name:'',email:'', phone:'', address:''})
+    const isLoading = useSelector(state => state.invoices.isLoading)
+
+    // console.log(useSelector((state) => state.clients.isLoading)
+    // console.log(useSelector((state) => state))
+
+
+
     useEffect(() => {
         dispatch(getInvoice(id));
-    },[id, orderOpen])
+    },[id])
 
-    const toCommas = (value) => {
-      // console.log(value)
-      return value.toString()
-    }
-    function currencyFormat(num) {
-      return num.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
-   }
+    useEffect(() => {
+      if(isLoading === false)
+        dispatch(getClient(clientId));
+    },[clientId])
+
+    // console.log(client)
+
+    useEffect(() => {
+      dispatch(getColumns());
+    }, [dispatch]);
+
+    useEffect(() => {
+      dispatch(getColumn(orderStatus));
+    }, [orderStatus]);
+
+      useEffect(() => {
+          setTrackStatus(column.id)
+    }, [column])
+
+    console.log(column)
 
     useEffect(() => {
         if(Object.keys(invoice).length !== 0) {
           // console.log(invoice)
           setInvoiceData(invoice)
           setRates(invoice.rates)
-          setClient(invoice.client)
+          setClientId(invoice.client._id)
           setType(invoice.type)
           setStatus(invoice.status)
           setSelectedDate(invoice.dueDate)
@@ -108,11 +142,20 @@ const Order = () => {
         }
     }, [invoice])
 
+
+
+  useEffect(() => {
+    if(Object.keys(client).length !== 0) {
+      setClientData(client)
+      console.log(clientData)
+    }
+  },[client])
+
+
     let totalAmountReceived = 0
     for(var i = 0; i < invoice?.paymentRecords?.length; i++) {
         totalAmountReceived += Number(invoice?.paymentRecords[i]?.amountPaid)
     }
-    // console.log(invoice.notes)
 
     const createAndDownloadPdf = () => {
       setDownloadStatus('loading')
@@ -170,15 +213,6 @@ const Order = () => {
       )
     }
 
-    const steps = [
-      'Quotation',
-      'Purchase Order',
-      'Manufacturing Order',
-      'Delivery',
-      'Bill',
-      'Selesai',
-    ];
-
     const editInvoice = (id) => {
       // navigate(`/edit/order/${id}`)
       setOrderOpen((prev) => !prev)
@@ -194,41 +228,11 @@ const Order = () => {
     const goDorder = (id) => {
       setDOrderOpen((prev) => !prev)
     }
-
-    const processOrder = () => {
-      if( orderStatus < 5 && orderStatus >= 0) {
-        setOrderStatus(parseInt(orderStatus)+1);
-        updateOrder(parseInt(orderStatus)+1);
-      } else {
-        setOrderStatus(0)
-      }
-    }
-    const redoOrder = () => {
-      if( orderStatus > 0 && orderStatus <= 5) {
-        setOrderStatus(parseInt(orderStatus)-1);
-        updateOrder(parseInt(orderStatus)-1);
-      } else {
-        setOrderStatus(0)
-      }
-    }
-
     const updateOrder = (stat) => {
       dispatch(updateInvoice( invoice._id, {
         ...invoiceData, 
         orderStatus: stat
        })) 
-    }
-
-    // console.log(invoice.orderStatus)
-
-    function checkOrderStatus() {
-      return orderStatus === 0 ? "Quotation"
-            : orderStatus === 1 ? "PO"
-            : orderStatus === 2 ? "MO"
-            : orderStatus === 3 ? "Delivery"
-            : orderStatus === 4 ? "Bill"
-            : orderStatus === 5 ? "Selesai"
-            : "Error";
     }
 
     const OrderDetails= () => {
@@ -244,15 +248,14 @@ const Order = () => {
       )
     }
 
-    // console.log(invoiceData)
     const BillTo= () => {
       return (
         <Box sx={{m: 2}} >
           <Typography variant="h6" style={{fontWeight: 'bold'}}>Bill To:</Typography>
-          <Typography variant="subtitle2" >{invoiceData.client.name}</Typography>
-          <Typography variant="subtitle2" >{invoiceData.client.email}</Typography>
-          <Typography variant="subtitle2" >{invoiceData.client.phone}</Typography>
-          <Typography variant="subtitle2" >{invoiceData.client.address}</Typography>
+          <Typography variant="subtitle2" >{clientData.name}</Typography>
+          <Typography variant="subtitle2" >{clientData.email}</Typography>
+          <Typography variant="subtitle2" >{clientData.phone}</Typography>
+          <Typography variant="subtitle2" >{clientData.address}</Typography>
         </Box>
       )
     }
@@ -312,7 +315,6 @@ const Order = () => {
         </>
       )
     }
-
     const TrackOrder = () => {
       return (
         <>
@@ -320,37 +322,21 @@ const Order = () => {
             <Box display='flex' justifyContent='space-between' >
               <Typography variant="h6" style={{fontWeight: 'bold'}} gutterBottom>Track Order</Typography>
             </Box>
-            <Box display='flex' justifyContent='space-between' >
-              <Button variant="contained" onClick={() => processOrder()}>Next</Button>
-              {/* Admin */}
-              {/* <Button variant="contained" onClick={() => redoOrder()}>Back</Button> */}
+            <Box sx={{ width: '100%' }}>
+              <Stepper activeStep={parseInt(trackStatus)} orientation="vertical">
+                {columns.sort((a,b) => a.id > b.id ? 1 : -1).map((column) => (
+                  <Step key={column._id}>
+                    <StepLabel>
+                      <Typography variant="subtitle2" style={{fontWeight: 'bold'}}>{column.label}</Typography>
+                    </StepLabel>
+                  </Step>
+                ))}
+              </Stepper>
             </Box>
-            <Steps/>
           </Box>
         </>
       )
     }
-
-    const Steps = () => {
-      return (
-        <Box sx={{ width: '100%' }}>
-        <Stepper activeStep={parseInt(orderStatus)} orientation="vertical">
-          {steps.map((label, index) => (
-            <Step key={label}>
-              <StepLabel optional={
-                index === 5 ? (
-                  <Typography variant="caption">Last step</Typography>
-                ) : null}
-              >
-                <Typography variant="subtitle2" style={{fontWeight: 'bold'}}>{label}</Typography>
-              </StepLabel>
-            </Step>
-          ))}
-        </Stepper>
-      </Box>
-      )
-    }
-
 
 
     const data = [
@@ -360,23 +346,19 @@ const Order = () => {
       },
       {
         data: <BillTo/>,
-        size: { xs:2 , sm:8, md:8 },
+        size: { xs:6 , sm:8, md:8 },
       },
       {
         data: <OrderDetails/>,
-        size: { xs:2 , sm:4, md:4 },
+        size: { xs:6 , sm:4, md:4 },
       },
       {
         data: <OrderTable/>,
-        size: { xs:12 , sm:12, md:12 },
+        size: { xs:10 , sm:8, md:8 },
       },
-      // {
-      //   data: <Steps/>,
-      //   size: { xs:2 , sm:8, md:8 },
-      // },
       {
         data: <TrackOrder/>,
-        size: { xs:2 , sm:8, md:8 },
+        size: { xs:2 , sm:4, md:4},
       },
       // {
       //   data: <PaymentHistorys/>,

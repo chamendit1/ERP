@@ -205,7 +205,7 @@ EnhancedTableToolbar.propTypes = {
 
 
 
-export default function EnhancedTable({ rows, head, boards }) {
+export default function EnhancedTable({ rows, head, boards, columns }) {
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('calories');
   const [selected, setSelected] = React.useState([]);
@@ -214,6 +214,8 @@ export default function EnhancedTable({ rows, head, boards }) {
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const dispatch = useDispatch()
   const navigate = useNavigate()
+
+  console.log(rows)
 
 
   const handleRequestSort = (event, property) => {
@@ -280,11 +282,14 @@ export default function EnhancedTable({ rows, head, boards }) {
     return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
   }
 
+
+  // Can Put to util functions
   function checkStatus(status) {
-    return status === "Partial" ? {border: 'solid 0px #1976d2', backgroundColor: '#baddff', padding: '8px 18px', borderRadius: '20px' }
-        : status === "Paid" ? {border: 'solid 0px green', backgroundColor: '#a5ffcd', padding: '8px 18px', borderRadius: '20px' }
-        : status === "Unpaid" ? {border: 'solid 0px red', backgroundColor: '#ffaa91', padding: '8px 18px', borderRadius: '20px' }
-        : "red";
+    return (
+      <>
+        {columns.map((column) => {if(status === column._id) return column.label})}
+      </>
+    )
   }
 
 
@@ -296,9 +301,9 @@ export default function EnhancedTable({ rows, head, boards }) {
 
 
   const Cell = ({children, row}) => (
-    <TableCell onClick={() => openInvoice(row._id)}><Typography  variant='subtitle2'>{children}</Typography></TableCell>
+    <TableCell onClick={() => openInvoice(row.order_id)}><Typography  variant='subtitle2'>{children}</Typography></TableCell>
   )
-
+    console.log(rows)
   return (
     <Box className='OrderTable' >
       <EnhancedTableToolbar 
@@ -341,12 +346,13 @@ export default function EnhancedTable({ rows, head, boards }) {
                             onClick={(event) => handleClick(event, row._id)}
                             checked={isItemSelected}
                           />
-                          <Typography variant='subtitle2'>#{row.invoiceNumber} </Typography>
+                          <Typography variant='subtitle2'>{row.order_id} </Typography>
                         </Box>
                       </TableCell>
                       <Cell row={row}>{moment(row.createdAt).format('Do MMM YY')}</Cell>
-                      <Cell row={row}><button style={checkStatus(row.status)}>{row.status}</button></Cell>
-                      <Cell row={row}>{row.client.name}</Cell>
+                      {/* <Cell row={row}><button style={checkStatus(row.status)}>{row.status}</button></Cell> */}
+                      <Cell row={row}>{checkStatus(row.orderStatus)}</Cell>
+                      <Cell row={row}>{row.name}</Cell>
                       <Cell row={row}>{moment(row.dueDate).fromNow()}</Cell>
                       <Cell row={row}>{row.currency} {row.total? toCommas(row.total): row.total}</Cell>
                     </TableRow>

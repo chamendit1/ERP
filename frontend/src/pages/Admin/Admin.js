@@ -30,6 +30,10 @@ const Admin = () => {
         <Button variant="outlined" onClick={() => { navigate('/Accounting')}}> Accounting</Button> */}
         <Button variant="outlined" onClick={() => { navigate('/Typography')}}> Typography</Button>
         <Button variant="outlined" onClick={() => { navigate('/Layouts')}}> Layouts</Button>
+        <Button variant="outlined" onClick={() => { navigate('/Layouts')}}> Table</Button>
+        <Button variant="outlined" onClick={() => { navigate('/Board')}}> Board</Button>
+        <Button variant="outlined" onClick={() => { navigate('/Gantt')}}> Gantt</Button>
+
       </Grid>
     </Grid>
     </>

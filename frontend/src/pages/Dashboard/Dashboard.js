@@ -41,6 +41,8 @@ const Dashboard = () => {
     },
   ]
 
+  // console.log()
+
   return (
     <>
     {/* <AddDashboard setOpen={setOpen} open={open}/>  */}

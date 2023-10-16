@@ -1,5 +1,5 @@
 import React, { useEffect} from 'react'
-import { getClientsByUser } from '../../actions/clientActions'
+// import { getClientsByUser } from '../../actions/clientActions'
 import { useDispatch, useSelector } from 'react-redux'
 import Table from './components/Table'
 import OrderTable from './components/OrderTable'
