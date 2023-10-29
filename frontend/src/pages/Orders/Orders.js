@@ -7,6 +7,8 @@ import { Box } from '@mui/material';
 import { getInvoices } from '../../actions/invoiceActions';
 import OrderTable from './components/OrderTable';
 import CircularProgress from '@mui/material/CircularProgress';
+import { orderTable } from '../../tableState';
+import Table from '../Clients/components/Table'
 
 const headCells = [
   // {
@@ -73,9 +75,10 @@ const Orders = () => {
 
   return (
     <>
-      <OrderTable 
+      <OrderTable
         rows={rows}
         head={headCells}
+        rowsState={orderTable}
       />
     </>
   );

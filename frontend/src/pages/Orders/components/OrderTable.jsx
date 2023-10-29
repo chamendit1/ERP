@@ -218,6 +218,8 @@ export default function EnhancedTable({ rows, head }) {
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
+  console.log(rows)
+
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';

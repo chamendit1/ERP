@@ -19,6 +19,7 @@ import profile from './routes/profile.js'
 import inventoryRoutes from './routes/inventories.js'
 import productRoutes from './routes/products.js'
 import purchaseRoutes from './routes/purchase.js'
+import feasibilityRoutes from './routes/feasibility.js'
 
 // import pdfTemplate from './documents/index.js'
 import inv from './documents/invoice.js'
@@ -43,6 +44,9 @@ app.use('/profiles', profile)
 app.use('/inventories', inventoryRoutes)
 app.use('/products', productRoutes)
 app.use('/purchase', purchaseRoutes)
+app.use('/feasibility', feasibilityRoutes)
+
+
 
 
 

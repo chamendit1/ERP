@@ -25,16 +25,16 @@ import { useNavigate } from 'react-router-dom';
 
 
 import { useDispatch } from 'react-redux'
-import { deleteClient, deleteClients } from '../../../actions/clientActions';
+import { deleteClient, deleteClients } from '../../actions/clientActions';
 // import { useSnackbar } from 'react-simple-snackbar'
-import AddClient from './AddClient'
+// import AddClient from './AddClient'
 
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { useState } from 'react';
 import DeleteOutlineRoundedIcon from '@mui/icons-material/DeleteOutlineRounded';
 import BorderColorIcon from '@mui/icons-material/BorderColor';
-import { clientState } from '../../../initialState';
-import { headerTable } from '../../../tableState';
+import { clientState } from '../../initialState';
+import { headerTable } from '../../tableState';
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -181,7 +181,7 @@ const EnhancedTableToolbar = (props) => {
           {/* Customer */}
         </Typography>
       )}
-      <AddClient setOpen={setOpen} open={open} />
+      {/* <AddClient setOpen={setOpen} open={open} /> */}
       {
           <IconButton onClick={() => setOpen((prev) => !prev) }>
             <AddCircleOutlineIcon />
@@ -224,13 +224,15 @@ export default function EnhancedTable({ data, header, rowsState }) {
   const [rows, setRows] = React.useState([rowsState])
   const [head, setHead] = React.useState([headerTable])
 
-    React.useEffect(() => {
-      setRows(data)
-    },[data])
+  console.log(rows)
 
-    React.useEffect(() => {
-      setHead(header)
-    },[header])
+    // React.useEffect(() => {
+    //   setRows(data)
+    // },[data])
+
+    // React.useEffect(() => {
+    //   setHead(header)
+    // },[header])
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';

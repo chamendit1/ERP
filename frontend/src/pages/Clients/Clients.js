@@ -1,9 +1,14 @@
-import React, { useEffect} from 'react'
+import React, {useState, useEffect} from 'react'
 import { getClientsByUser } from '../../actions/clientActions'
 import { useDispatch, useSelector } from 'react-redux'
 import { useLocation } from 'react-router-dom'
 import Table from './components/Table'
 import CircularProgress from '@mui/material/CircularProgress';
+import AddClient from './components/AddClient'
+import { IconButton } from '@mui/material'
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import { clientState } from '../../initialState'
+
 
 const headCells = [
 
@@ -44,12 +49,13 @@ const Clients = () => {
   const location = useLocation()
   const {clients} = useSelector((state) => state.clients)
   const isLoading = useSelector(state => state.clients.isLoading)
+  const [open, setOpen] = useState(false)
+
+  console.log(open)
+
   useEffect(() => {
     dispatch(getClientsByUser({ search: user?.result?._id }));
   },[location, dispatch])
-
-
-  console.log(useSelector(state => state.clients))
 
   if(isLoading) {
     return  <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', paddingTop: '20px'}}>
@@ -57,12 +63,19 @@ const Clients = () => {
       </div>
   }
 
+  // Need to add + button
+  
 
   if(clients.length === 0) {
     return  <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', paddingTop: '20px', margin: '80px'}}>
-      {/* <NoData /> */}
-    <p style={{padding: '40px', color: 'gray', textAlign: 'center'}}>No customers yet. Click the plus icon to add customer</p>
-  
+              <AddClient setOpen={setOpen} open={open} />
+              
+              <p style={{padding: '40px', color: 'gray', textAlign: 'center'}}>
+                No customers yet. Click the plus icon to add customer
+                <IconButton onClick={() => setOpen((prev) => !prev) }>
+                  <AddCircleOutlineIcon />
+                </IconButton>
+              </p>
     </div>
   }
 
@@ -70,8 +83,9 @@ const Clients = () => {
   return (
     <>
       <Table
-        rows={clients}
-        head={headCells}
+        data={clients}
+        header={headCells}
+        rowsState={clientState}
       />
     </>
 

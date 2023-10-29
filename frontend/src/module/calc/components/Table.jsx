@@ -27,7 +27,7 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux'
 import { deleteClient, deleteClients } from '../../../actions/clientActions';
 // import { useSnackbar } from 'react-simple-snackbar'
-import AddClient from './AddClient'
+// import AddClient from './AddClient'
 
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { useState } from 'react';
@@ -181,7 +181,7 @@ const EnhancedTableToolbar = (props) => {
           {/* Customer */}
         </Typography>
       )}
-      <AddClient setOpen={setOpen} open={open} />
+      {/* <AddClient setOpen={setOpen} open={open} /> */}
       {
           <IconButton onClick={() => setOpen((prev) => !prev) }>
             <AddCircleOutlineIcon />
@@ -224,13 +224,15 @@ export default function EnhancedTable({ data, header, rowsState }) {
   const [rows, setRows] = React.useState([rowsState])
   const [head, setHead] = React.useState([headerTable])
 
-    React.useEffect(() => {
-      setRows(data)
-    },[data])
+  console.log(rows)
 
-    React.useEffect(() => {
-      setHead(header)
-    },[header])
+    // React.useEffect(() => {
+    //   setRows(data)
+    // },[data])
+
+    // React.useEffect(() => {
+    //   setHead(header)
+    // },[header])
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -287,12 +289,12 @@ export default function EnhancedTable({ data, header, rowsState }) {
     dispatch(deleteClient(selected))
   }
  
-  const openClient = (id) => {
-    navigate(`/client/${id}`)
+  const handleOpen = (id) => {
+    navigate(`/calc/${id}`)
   }
 
-  const editClient = (id) => {
-    navigate(`/edit/client/${id}`)
+  const handleEdit = (id) => {
+    navigate(`/edit/calc/${id}`)
   }
 
 
@@ -346,11 +348,11 @@ export default function EnhancedTable({ data, header, rowsState }) {
                         {index}
                         </Box>
                       </TableCell>
-                      <TableCell  align="left" onClick={() => openClient(row._id)}>{row.name}</TableCell>
-                      <TableCell  style={{width: '20%'}} align="left" onClick={() => openClient(row._id)}>{row.email}</TableCell>
-                      <TableCell  style={{width: '20%'}} align="left" onClick={() => openClient(row._id)}>{row.phone}</TableCell>
+                      <TableCell  align="left" onClick={() => handleOpen(row._id)}>{row.name}</TableCell>
+                      <TableCell  style={{width: '20%'}} align="left" onClick={() => handleOpen(row._id)}>{row.email}</TableCell>
+                      <TableCell  style={{width: '20%'}} align="left" onClick={() => handleOpen(row._id)}>{row.phone}</TableCell>
                       <TableCell  style={{ width: '3%'}}>
-                        <IconButton  onClick={() => editClient(row._id)}>
+                        <IconButton  onClick={() => handleEdit(row._id)}>
                           <BorderColorIcon  style={{width: '20px', height: '20px'}} />
                         </IconButton>
                       </TableCell>

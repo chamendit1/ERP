@@ -10,8 +10,7 @@ import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
 import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
 
 import ReceiptIcon from '@mui/icons-material/Receipt';
-// import Receipt from '@mui/icons-material/Receipt';
-
+import CalculateIcon from '@mui/icons-material/Calculate';
 const Sidebar = () => {
 
   const location = useLocation()
@@ -104,6 +103,15 @@ const Sidebar = () => {
                 <ReceiptIcon fontSize="large"/>
               </Box>
               <Typography className='sidebar-text'>Sales</Typography>
+            </Grid>
+          </Box>
+
+          <Box className='sidebar-data' component={Link} to="/Calc">
+            <Grid container justifyContent="center" alignItems='center'>
+              <Box className='sidebar-logo'>
+                <CalculateIcon fontSize="large"/>
+              </Box>
+              <Typography className='sidebar-text'>Calc</Typography>
             </Grid>
           </Box>
           

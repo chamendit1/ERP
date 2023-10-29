@@ -13,6 +13,7 @@ import CRM from "./pages/CRM";
 import LayoutNav from "./components/Layout/LayoutNav";
 import Sales from './pages/Sales'
 import Navbar from "./components/Navbar";
+import Calc from "./module/calc"
 
 const WithNav = () => <LayoutNav>
   <Routes>
@@ -36,6 +37,7 @@ function App() {
           <Route path="/login" element={<Login/>} />
           <Route path="/" element={<Home/>}/>
 
+          <Route path="/calc" element={<Calc/>}/>
           <Route path="/crm/*" element={<CRM/>}/>
           {/* <Route path="/client-list" element={<Clients/>}/>
           <Route path="/order-list" element={<Orders/>}/> */}
